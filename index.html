@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+    :root{
+        background-color: rgb(10, 10, 10);
+        color:rgb(255, 255, 255);
+    }
+
+    #name{
+        font-family:'Trebuchet MS', sans-serif;
+        font-size: 40px;
+        background-color: rgb(34, 33, 33);
+        color:rgb(255, 255, 255);
+        margin-top: -5px;
+        margin-right: -5px;
+        margin-left: -5px;
+    }
+
+    #about-me{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    #skills{
+        width:150px;
+        margin-top: 50px;
+    }
+
+    #ed-text{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    div{
+        background-color: rgb(37, 37, 37);
+        border-radius:25px;
+        justify-content: center;
+    }
+
+    h1,h2,p,li{
+        font-family: 'Calibri', sans-serif;
+    }
+
+    .center{
+        text-align: center;
+    }
+
+    .flex-container{
+        display: flex;
+        justify-content: center;
+        background-color:rgb(10,10,10);
+    }
+
+    .flex-inside{
+        flex: 1;
+        border: 2px solid yellow;
+    }
+
+    .image{
+        width: 20%;
+        padding: 5px;
+        background-color: rgb(10,10,10);
+        text-align:center;
+    }
+
+    .image-row::after{
+        clear: both;
+        display:table;
+        content:"";
+    }
+
+    .bottomdiv{
+        width: 200px;
+        height: 200px;
+    }
+
+    .button{
+        transition-duration: 0.3s;
+    }
+
+    .button:hover{
+        background-color: rgb(41, 154, 182);
+        color: black;
+    }
+
+</style>
+
+<head>
+    <h1 id="name" class="center">Sahith Vavilala</h1> 
+</head>
+
+<body>
+
+    <div class="flex-container">
+        <div style="width: 750px">
+            <h2 class="center" style="margin-bottom:10px">About Me</h2>
+            <hr style="width: 50%; height: 3px; color: rgb(10, 10, 10)">
+            <p id="about-me" class="center">Hello! My name is Sahith Vavilala and I am an aspiring Software Engineer.
+                I am going into my junior year studying Computer Engineering (B.S.) at University of California, Irvine.
+                I am very interested in learning more about the software field and the new technologies
+                that come out.
+            </p>
+            <p id="about-me" class="center">
+                Other interests I have are watching/playing basketball 
+                (<span style="color:yellow">Go </span> <span style="color:purple">Lakers!</span>), 
+                playing video games, exploring new places, and going on roadtrips. I am always working on something
+                new as well!  
+            </p>
+        </div>
+    </div>
+
+    <div class="flex-container">
+        <div id="skills">
+            <h2 class="center" style="margin-bottom:10px">Skills</h2>
+            <hr style="width: 50%; height: 3px; color: rgb(10, 10, 10)">
+            <ul>
+                <li>C</li>
+                <li>C++</li>
+                <li>Python</li>
+                <li>Java</li>
+                <li>Linux</li>
+                <li>Assembly</li>
+                <li>HTML5/CSS</li>
+                <li>and more!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="image-row flex-container" style ="margin-top: 25px; background-color: rgb(10,10,10)">
+        <div class="image">
+            <img src="./webpics/c.png" alt="C logo" style="width: 20% ">
+        </div>
+        <div class="image">
+            <img src="./webpics/cpp.png" alt="C++ logo" style="width: 20% ">
+        </div>
+        <div class="image">
+            <img src="./webpics/python.png" alt="Python logo" style="width: 20% ">
+        </div>
+        <div class="image">
+            <img src="./webpics/java.png" alt="Java logo" style="width: 20% ">
+        </div>
+        <div class="image">
+            <img src="./webpics/linux.png" alt="Linux logo" style="width: 20% ">
+        </div>
+    </div>
+
+    <div class="flex-container" style="margin-top:25px">
+        <div style="width: 1000px">
+            <h2 class="center" >Education</h2>
+            <hr style="width: 50%; height: 3px; color: rgb(10, 10, 10)">
+            <p id = "ed-text" class="center"><span style="color:maroon"><b>Simi Valley High School</b></span> (2016-2020) - This is where I started my coding journey. I was curious about programming and started by taking 
+                a course which focused on Python and Javascript. I was entralled by the process of tackling problems through the coding logic and decided to take AP Computer Science A 
+                the following year.
+            </p>
+            <p class="center">
+                This led me to study at...
+            </p>
+            <p id = "ed-text" class="center"><span style="color:yellow"><b>University of California, Irvine </b></span> ! (2020-present) - This is where I now study Computer Engineering. The reason why I chose Computer 
+                Engineering over Computer Science was because I also was fascinated by the inner workings of the computer. This provided me the best of both worlds, learning both hardware
+                and software! Since starting, I have learned and have solified my skills in C, Python, VHDL, and more. I look forward to continuing learning more at UCI.
+            </p>
+        </div>
+    </div>
+
+    <div class="flex-container" style="margin-top:25px">
+        <div class="flex-child red bottomdiv" style="text-align: center; margin-right: 100px">
+            <h2 class="center">Projects</h2>
+            <hr style="width: 50%; height: 3px; color: rgb(10, 10, 10); margin-top:-10px; margin-bottom: 10px;">
+            <button class = "button" onclick=" window.open('https://github.com/sahithrv','_blank')"  style="border-radius: 8px">GitHub</button>
+        </div>
+
+        <div class="flex-child blue bottomdiv" style= "text-align: center; margin-left: 100px">
+            <h2 class="center">Contact</h2>
+            <hr style="width: 50%; height: 3px; color: rgb(10, 10, 10); margin-top: -10px; margin-bottom: 10px;">
+            <button class = "button" onclick=" window.open('https://www.linkedin.com/in/sahith-vavilala-487271215/','_blank')" style="border-radius: 8px">LinkedIn</button>
+            <p></p>
+            <button class = "button" onclick= "document.location = 'mailto:sahithv24@gmail.com'" style="border-radius: 8px">Email</button>
+        </div>
+    </div>
+
+
+</body>
+</html>
