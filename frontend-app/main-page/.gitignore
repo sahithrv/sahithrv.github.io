@@ -1,0 +1,12 @@
+.next/
+node_modules/
+out/
+dist/
+*.log
+.env*
+!.env.example
+# Local browser/MCP artifacts if a tool writes inside this app directory.
+.playwright-mcp/
+*.png
+*snapshot*.md
+*debug*.md
