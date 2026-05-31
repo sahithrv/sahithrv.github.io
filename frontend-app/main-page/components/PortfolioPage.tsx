@@ -1,14 +1,7 @@
 import HeroCommandMap from "@/components/HeroCommandMap";
 import RouteTransition from "@/components/RouteTransition";
-import TravelGallery from "@/components/TravelGallery";
 import type { CSSProperties, ReactNode } from "react";
-import {
-  educationItems,
-  profile,
-  projects,
-  skillGroups,
-  travelPhotos
-} from "@/data/portfolio";
+import { educationItems, profile, projects, skillGroups } from "@/data/portfolio";
 
 function SectionHeader({
   id,
@@ -55,9 +48,30 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
   );
 }
 
+function SocialDock() {
+  const socialLinks = [
+    { label: "LinkedIn", href: profile.linkedinHref, icon: "in" },
+    { label: "GitHub", href: profile.githubHref, icon: "gh" },
+    { label: "Email", href: `mailto:${profile.email}`, icon: "@" },
+    { label: "Resume", href: profile.resumeHref, icon: "cv" }
+  ];
+
+  return (
+    <nav className="social-dock" aria-label="Social links">
+      {socialLinks.map((link) => (
+        <a className="social-dock__link" href={link.href} key={link.label} title={link.label}>
+          <span>{link.icon}</span>
+        </a>
+      ))}
+    </nav>
+  );
+}
+
 export default function PortfolioPage() {
   return (
     <main>
+      <SocialDock />
+
       <section className="hero-shell" id="top" aria-labelledby="hero-title">
         <div className="hero-bg" aria-hidden="true">
           <span className="slash slash-one" />
@@ -110,7 +124,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      <RouteTransition direction="right" />
+      <RouteTransition direction="right" nextKicker="Selected work" nextTitle="Projects" />
 
       <section className="section projects-section" id="projects" aria-labelledby="projects-title">
         <SectionHeader id="projects-title" kicker="Selected work" title="Projects">
@@ -147,7 +161,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      <RouteTransition direction="right" />
+      <RouteTransition direction="right" nextKicker="Loadout" nextTitle="Skills" />
 
       <section className="section skills-section" id="skills" aria-labelledby="skills-title">
         <SectionHeader id="skills-title" kicker="Loadout" title="Skills">
@@ -167,17 +181,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      <RouteTransition direction="down" />
-
-      <section className="section travel-section" id="travel" aria-labelledby="travel-title">
-        <SectionHeader id="travel-title" kicker="Memory wall" title="Travel Photos">
-          A local gallery for cities, food, nature, and people. Drop real images into
-          <code> public/images/travel/</code> and update the metadata when you are ready.
-        </SectionHeader>
-        <TravelGallery photos={travelPhotos} />
-      </section>
-
-      <RouteTransition direction="right" />
+      <RouteTransition direction="right" nextKicker="Final note" nextTitle="Contact" />
 
       <section className="contact-section" id="contact" aria-labelledby="contact-title">
         <div className="contact-panel reveal-up">

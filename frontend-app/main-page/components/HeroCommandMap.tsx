@@ -1,7 +1,9 @@
 "use client";
 
 import type { CSSProperties, MouseEvent } from "react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
 
 type RouteItem = {
   href: string;
@@ -41,9 +43,9 @@ const commandRoutes: RouteItem[] = [
     className: "command-button--down-left"
   },
   {
-    href: "#travel",
-    label: "Travel",
-    prompt: "Memory wall",
+    href: "/interests",
+    label: "Interests",
+    prompt: "Off-duty",
     image: "/images/graphics/landingPageButton1.svg",
     className: "command-button--left"
   },
@@ -59,7 +61,18 @@ const commandRoutes: RouteItem[] = [
 const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 
 export default function HeroCommandMap() {
+  const router = useRouter();
+  const [isLaunchingInterests, setIsLaunchingInterests] = useState(false);
+  const launchTimeoutRef = useRef<number | null>(null);
   const scrollAnimationRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (launchTimeoutRef.current !== null) {
+        window.clearTimeout(launchTimeoutRef.current);
+      }
+    };
+  }, []);
 
   function animateScrollTo(targetTop: number) {
     if (scrollAnimationRef.current !== null) {
@@ -99,6 +112,33 @@ export default function HeroCommandMap() {
       return;
     }
 
+    if (!href.startsWith("#")) {
+      event.preventDefault();
+
+      if (isLaunchingInterests) {
+        return;
+      }
+
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (prefersReducedMotion) {
+        router.push(href);
+        return;
+      }
+
+      if (scrollAnimationRef.current !== null) {
+        window.cancelAnimationFrame(scrollAnimationRef.current);
+        scrollAnimationRef.current = null;
+      }
+
+      setIsLaunchingInterests(true);
+      launchTimeoutRef.current = window.setTimeout(() => {
+        router.push(href);
+      }, 1460);
+
+      return;
+    }
+
     const target = document.querySelector<HTMLElement>(href);
 
     if (!target) {
@@ -120,24 +160,54 @@ export default function HeroCommandMap() {
   }
 
   return (
-    <div className="command-map reveal-pop" aria-label="Portfolio section routes">
-      {commandRoutes.map((route, index) => (
-        <a
-          className={`command-button ${route.className}`}
-          href={route.href}
-          key={route.href}
-          onClick={(event) => handleRouteClick(event, route.href)}
-          style={
-            {
-              "--button-image": `url("${route.image}")`,
-              "--command-index": index
-            } as CSSProperties
-          }
-        >
-          <span className="command-button__prompt">{route.prompt}</span>
-          <strong>{route.label}</strong>
-        </a>
-      ))}
-    </div>
+    <>
+      <div className="command-map reveal-pop" aria-label="Portfolio section routes">
+        {commandRoutes.map((route, index) => (
+          <a
+            aria-disabled={route.href === "/interests" && isLaunchingInterests}
+            className={`command-button ${route.className}`}
+            href={route.href}
+            key={route.href}
+            onClick={(event) => handleRouteClick(event, route.href)}
+            style={
+              {
+                "--button-image": `url("${route.image}")`,
+                "--command-index": index
+              } as CSSProperties
+            }
+          >
+            <span className="command-button__prompt">{route.prompt}</span>
+            <strong>{route.label}</strong>
+          </a>
+        ))}
+      </div>
+
+      {isLaunchingInterests && typeof document !== "undefined" ? createPortal(
+        <div className="interest-launch" role="status" aria-live="assertive">
+          <span className="sr-only">Opening interests page</span>
+          <span className="interest-launch__line interest-launch__line--one" aria-hidden="true" />
+          <span className="interest-launch__line interest-launch__line--two" aria-hidden="true" />
+          <div className="interest-launch__copy" aria-hidden="true">
+            <span>Off-duty route</span>
+            <strong>Interests</strong>
+          </div>
+          <div className="interest-launch__lanes" aria-hidden="true">
+            <span className="interest-launch__lane interest-launch__lane--basketball">
+              <i />
+              <b>Basketball</b>
+            </span>
+            <span className="interest-launch__lane interest-launch__lane--gaming">
+              <i />
+              <b>Gaming</b>
+            </span>
+            <span className="interest-launch__lane interest-launch__lane--travel">
+              <i />
+              <b>Travel</b>
+            </span>
+          </div>
+        </div>,
+        document.body
+      ) : null}
+    </>
   );
 }

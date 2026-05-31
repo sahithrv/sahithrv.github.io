@@ -25,7 +25,7 @@ const config: Config = {
         "slash-red": "10px 10px 0 #e50914"
       },
       fontFamily: {
-        display: ["Impact", "Haettenschweiler", "Arial Black", "sans-serif"],
+        display: ["Bahnschrift", "Aptos Display", "Segoe UI Variable Display", "Arial Narrow", "Inter", "sans-serif"],
         body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]
       }
     }
