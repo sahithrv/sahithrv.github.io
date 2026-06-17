@@ -1,209 +1,453 @@
-import HeroCommandMap from "@/components/HeroCommandMap";
-import RouteTransition from "@/components/RouteTransition";
-import type { CSSProperties, ReactNode } from "react";
-import { educationItems, profile, projects, skillGroups } from "@/data/portfolio";
+import Link from "next/link";
+import {
+  educationItems,
+  productsHeader,
+  projects,
+  profile,
+  skillGroups
+} from "@/data/portfolio";
+
+function isConfiguredLink(value: string) {
+  const normalized = value.trim();
+  return (
+    Boolean(normalized) &&
+    normalized !== "#" &&
+    !normalized.includes("your-") &&
+    !normalized.includes("TODO") &&
+    !normalized.includes("placeholder")
+  );
+}
+
+function isUsefulLink(value: string) {
+  return isConfiguredLink(value);
+}
+
+function AppNav() {
+  const primaryNavItems = [
+    { label: "Home", href: "#top" },
+    { label: "About", href: "#about" },
+    { label: "Products", href: "#products" },
+    { label: "Architecture", href: "#architecture" },
+    { label: "Travel", href: "/travel" },
+    { label: "Blog", href: "/blog" },
+    { label: "Skills", href: "#skills" },
+    { label: "Education", href: "#education" },
+    { label: "Contact", href: "#contact" },
+    { label: "Notes", href: "/interests" }
+  ];
+
+  return (
+    <header className="site-nav">
+      <Link href="/" className="brand">
+        <span className="brand__name">Sahith</span>
+        <p className="brand__role">{profile.role}</p>
+      </Link>
+
+      <nav className="nav-links" aria-label="Primary">
+        {primaryNavItems.map((item) =>
+          item.href.startsWith("#") ? (
+            <a className="nav-link" href={item.href} key={item.label}>
+              {item.label}
+            </a>
+          ) : (
+            <Link className="nav-link" href={item.href} key={item.label}>
+              {item.label}
+            </Link>
+          )
+        )}
+      </nav>
+    </header>
+  );
+}
 
 function SectionHeader({
   id,
   kicker,
   title,
-  children
+  subtitle
 }: {
   id: string;
   kicker: string;
   title: string;
-  children?: ReactNode;
+  subtitle: string;
 }) {
   return (
-    <div className="section-header reveal-up">
-      <span className="sticker-label">{kicker}</span>
-      <h2 id={id}>{title}</h2>
-      {children ? <p>{children}</p> : null}
-    </div>
+    <header className="section-header">
+      <p className="section-kicker" id={id}>
+        {kicker}
+      </p>
+      <h2>{title}</h2>
+      <p>{subtitle}</p>
+    </header>
   );
 }
 
-function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
+function MetricTile({
+  label,
+  value,
+  highlight
+}: {
+  label: string;
+  value: string;
+  highlight: string;
+}) {
   return (
-    <article className="project-card reveal-up" style={{ "--card-index": index } as CSSProperties}>
-      <div className="project-card__top">
-        <span>{project.eyebrow}</span>
-        <strong>{String(index + 1).padStart(2, "0")}</strong>
-      </div>
-      <h3>{project.title}</h3>
-      <p>{project.description}</p>
-      <div className="tag-row" aria-label={`${project.title} technology stack`}>
-        {project.stack.map((item) => (
-          <span key={item}>{item}</span>
-        ))}
-      </div>
-      <div className="project-card__links">
-        {project.links.map((link) => (
-          <a key={link.label} href={link.href} aria-label={`${project.title} ${link.label} link`}>
-            {link.label}
-          </a>
-        ))}
-      </div>
+    <article className="metric-tile">
+      <p>{label}</p>
+      <strong>{value}</strong>
+      <span>{highlight}</span>
     </article>
   );
 }
 
-function SocialDock() {
-  const socialLinks = [
-    { label: "LinkedIn", href: profile.linkedinHref, icon: "in" },
-    { label: "GitHub", href: profile.githubHref, icon: "gh" },
-    { label: "Email", href: `mailto:${profile.email}`, icon: "@" },
-    { label: "Resume", href: profile.resumeHref, icon: "cv" }
-  ];
+function StoryLine({
+  label,
+  value,
+  compact
+}: {
+  label: string;
+  value: string[] | string;
+  compact: boolean;
+}) {
+  const text =
+    typeof value === "string"
+      ? value
+      : compact
+        ? value.slice(0, 2).join(" · ")
+        : value.join(" · ");
 
   return (
-    <nav className="social-dock" aria-label="Social links">
-      {socialLinks.map((link) => (
-        <a className="social-dock__link" href={link.href} key={link.label} title={link.label}>
-          <span>{link.icon}</span>
-        </a>
-      ))}
-    </nav>
+    <p className="story-inline">
+      <span className="story-label-inline">{label}:</span>
+      {text}
+    </p>
   );
 }
 
-export default function PortfolioPage() {
+function renderTagRow(items: string[]) {
   return (
-    <main>
-      <SocialDock />
+    <div className="tag-row" aria-label="Technology stack">
+      {items.map((item) => (
+        <span className="pill" key={item}>
+          {item}
+        </span>
+      ))}
+    </div>
+  );
+}
 
-      <section className="hero-shell" id="top" aria-labelledby="hero-title">
-        <div className="hero-bg" aria-hidden="true">
-          <span className="slash slash-one" />
-          <span className="slash slash-two" />
-          <span className="slash slash-three" />
-          <span className="dot-field dot-field-one" />
-          <span className="dot-field dot-field-two" />
+function ProjectCard({
+  project,
+  compact = false,
+  featured = false
+}: {
+  project: (typeof projects)[number];
+  compact?: boolean;
+  featured?: boolean;
+}) {
+  const links = project.links.filter((link) => isUsefulLink(link.href));
+
+  return (
+    <article className={`project-card ${featured ? "project-card--featured" : ""}`}>
+      <header className="project-card__header">
+        <div className="project-card__meta">
+          {featured ? <span className="project-kicker">Flagship product</span> : null}
+          <span className="project-kicker project-kicker--subtle">{project.timeline}</span>
         </div>
+        <h3>{project.title}</h3>
+        <p className="project-strapline">{project.eyebrow}</p>
+        <p className="project-role">{project.role}</p>
+        <p>{project.description}</p>
+      </header>
 
-        <div className="hero-content hero-content--den reveal-up">
-          <h1 id="hero-title">Sahith&apos;s Den</h1>
-        </div>
-
-        <div className="hero-route-panel">
-          <HeroCommandMap />
-        </div>
-      </section>
-
-      <RouteTransition direction="down" />
-
-      <section className="section about-section" id="about" aria-labelledby="about-title">
-        <SectionHeader id="about-title" kicker="Case file" title="About">
-          Software engineering with a taste for systems that feel sharp, useful, and alive.
-        </SectionHeader>
-        <div className="case-file reveal-up">
-          <div className="case-file__stamp">Open profile</div>
-          <div>
-            <h3>I build products where AI meets practical engineering.</h3>
-            <p>
-              I am focused on software engineering, ML engineering, agentic systems, computer
-              vision, and fullstack products. I like work that crosses boundaries: frontends that
-              make complex tools approachable, backends that stay dependable under pressure, and
-              ML systems that do more than look impressive in a notebook.
-            </p>
+      <div className={`project-story ${compact ? "project-story--compact" : ""}`}>
+        <p className="project-story__summary">
+          {project.problem}
+        </p>
+        <div className="story-block">
+          <StoryLine
+            label="Technical challenges"
+            value={project.technicalChallenges}
+            compact={compact}
+          />
+          <StoryLine label="Architecture" value={project.architecture} compact={compact} />
+          <StoryLine label="Results" value={project.results} compact={compact} />
+          <div className="story-stack-block">
+            <p className="story-label-inline">Technologies used:</p>
+            <div className="story-content">{renderTagRow(project.stack)}</div>
           </div>
-          <dl className="case-file__facts" aria-label="Profile facts">
-            <div>
-              <dt>Mode</dt>
-              <dd>Builder</dd>
-            </div>
-            <div>
-              <dt>Strength</dt>
-              <dd>End-to-end systems</dd>
-            </div>
-            <div>
-              <dt>Signal</dt>
-              <dd>Useful AI</dd>
-            </div>
-          </dl>
         </div>
-      </section>
+      </div>
 
-      <RouteTransition direction="right" nextKicker="Selected work" nextTitle="Projects" />
-
-      <section className="section projects-section" id="projects" aria-labelledby="projects-title">
-        <SectionHeader id="projects-title" kicker="Selected work" title="Projects">
-          Four builds with the kind of sharp edges that make the portfolio feel earned.
-        </SectionHeader>
-        <div className="project-grid">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
+      {links.length > 0 ? (
+        <div className="project-links">
+          {links.map((link) => (
+            <Link
+              className="project-link"
+              href={link.href}
+              key={`${project.title}-${link.label}`}
+              rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+            >
+              {link.label}
+            </Link>
           ))}
         </div>
-      </section>
+      ) : null}
+    </article>
+  );
+}
 
-      <RouteTransition direction="down" />
+function CompactListCard({
+  title,
+  items
+}: {
+  title: string;
+  items: string[];
+}) {
+  return (
+    <article className="compact-card">
+      <h4>{title}</h4>
+      <ul>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </article>
+  );
+}
 
-      <section className="section education-section" id="education" aria-labelledby="education-title">
-        <SectionHeader id="education-title" kicker="Training file" title="Education">
-          The academic lane behind the engineering work: systems, product building, and applied AI.
-        </SectionHeader>
-        <div className="education-grid">
-          {educationItems.map((item) => (
-            <article className="education-card reveal-up" key={item.school}>
-              <div>
-                <span>{item.school}</span>
-                <h3>{item.program}</h3>
-                <p>{item.detail}</p>
-              </div>
-              <div className="tag-row tag-row--skills" aria-label={`${item.school} highlights`}>
-                {item.highlights.map((highlight) => (
-                  <span key={highlight}>{highlight}</span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+const architectureSignals = [
+  "Own the system boundary first, then optimize the components that sit inside it.",
+  "Model-driven design over ad hoc logic to reduce cognitive load across teams.",
+  "Every product decision is validated by observable behavior and failure analysis."
+];
 
-      <RouteTransition direction="right" nextKicker="Loadout" nextTitle="Skills" />
+const processSignals = [
+  "Problem framing with explicit success metrics before implementation.",
+  "Architectural contracts before code: data shape, states, failure modes.",
+  "Production confidence checks: retries, idempotency, and traceability."
+];
 
-      <section className="section skills-section" id="skills" aria-labelledby="skills-title">
-        <SectionHeader id="skills-title" kicker="Loadout" title="Skills">
-          A compact map of the tools I reach for across product, infra, and machine learning.
-        </SectionHeader>
-        <div className="skills-grid">
-          {skillGroups.map((group) => (
-            <article className="skill-panel reveal-up" key={group.title}>
-              <h3>{group.title}</h3>
-              <div className="tag-row tag-row--skills">
-                {group.skills.map((skill) => (
-                  <span key={skill}>{skill}</span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+export default function PortfolioPage() {
+  const flagshipProjects = projects.filter((project) => project.featured);
+  const supportingProjects = projects.filter((project) => !project.featured);
 
-      <RouteTransition direction="right" nextKicker="Final note" nextTitle="Contact" />
+  return (
+    <div className="portfolio-shell">
+      <a href="#top" className="skip-link">
+        Skip to content
+      </a>
+      <AppNav />
 
-      <section className="contact-section" id="contact" aria-labelledby="contact-title">
-        <div className="contact-panel reveal-up">
-          <span className="sticker-label sticker-label--yellow">Final note</span>
-          <h2 id="contact-title">Let&apos;s build something with a pulse.</h2>
-          <p>
-            I am always up for ambitious software, AI systems that earn their keep, and products
-            that make people move faster.
+      <main id="top">
+        <section className="hero section-shell">
+          <p className="hero-kicker">Senior Software Engineer | AI/LLM Systems</p>
+          <h1>Portfolio shaped for hiring managers and founders.</h1>
+          <p className="hero-copy">
+            I build production-minded software and AI products with clear architecture boundaries,
+            measurable outcomes, and practical execution that survives handoff and scale.
           </p>
+          <div className="hero-actions">
+            <a className="btn btn--solid" href="#products">
+              See flagship products
+            </a>
+            <a className="btn btn--soft" href="#architecture">
+              Review system design
+            </a>
+            <a className="btn btn--outline" href="#contact">
+              Reach out
+            </a>
+            <Link className="btn btn--soft" href="/travel">
+              Travel photos
+            </Link>
+            <Link className="btn btn--outline" href="/blog">
+              Read latest notes
+            </Link>
+          </div>
+          <div className="metric-grid">
+            {productsHeader.map((metric) => (
+              <MetricTile
+                key={metric.label}
+                label={metric.label}
+                value={metric.value}
+                highlight={metric.emphasis}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section className="section-shell section-shell--muted" id="about">
+          <SectionHeader
+            id="about-title"
+            kicker="About me"
+            title="From AI experiments to production products"
+            subtitle={profile.tagline}
+          />
+          <p className="section-lead">
+            I focus on end-to-end product value: defining outcome-oriented systems, building reliable
+            execution layers, and leaving behind clear handoff and observability.
+          </p>
+          <div className="architecture-cards">
+            <CompactListCard title="Core engineering signals" items={architectureSignals} />
+            <CompactListCard title="Delivery process" items={processSignals} />
+          </div>
+        </section>
+
+        <section className="section-shell" id="products">
+          <SectionHeader
+            id="products-title"
+            kicker="Flagship products"
+            title="Model-first. Outcome-led. Iteration-safe."
+            subtitle="Each flagship is presented as a product case study with architecture, trade-offs, and results."
+          />
+          <div className="project-grid project-grid--feature">
+            {flagshipProjects.map((project) => (
+              <ProjectCard key={project.title} featured project={project} />
+            ))}
+          </div>
+        </section>
+
+        <section className="section-shell section-shell--muted" id="architecture">
+          <SectionHeader
+            id="architecture-title"
+            kicker="System design"
+            title="How I build reliable AI products"
+            subtitle="Pattern set used across flagship products and production features."
+          />
+          <div className="feature-grid">
+            <div className="feature-tile">
+              <h3>Problem framing</h3>
+              <p>
+                I define user outcomes, failure modes, and rollout constraints before choosing frameworks.
+                This reduces rework and keeps teams focused on measurable change.
+              </p>
+            </div>
+            <div className="feature-tile">
+              <h3>Product architecture</h3>
+              <p>
+                I split systems by responsibility: orchestration, execution, storage, telemetry, and
+                review-facing presentation. Each layer has strict input/output contracts.
+              </p>
+            </div>
+            <div className="feature-tile">
+              <h3>Production reliability</h3>
+              <p>
+                Retries, idempotency, replayability, and operational telemetry are default behaviors,
+                not post-launch add-ons.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-shell" id="projects">
+          <SectionHeader
+            id="all-projects-title"
+            kicker="Supporting portfolio"
+            title="Additional high-signal projects"
+            subtitle="These products reinforce the same disciplined engineering approach."
+          />
+          <div className="project-grid project-grid--compact">
+            {supportingProjects.map((project) => (
+              <ProjectCard key={project.title} compact project={project} />
+            ))}
+          </div>
+        </section>
+
+        <section className="section-shell section-shell--muted" id="skills">
+          <SectionHeader
+            id="skills-title"
+            kicker="Capabilities"
+            title="Engineering stack"
+            subtitle="Tooling and disciplines for shipping complex software systems end to end."
+          />
+          <div className="skill-grid">
+            {skillGroups.map((group) => (
+              <article className="compact-card" key={group.title}>
+                <h4>{group.title}</h4>
+                <div className="tag-row">
+                  {group.skills.map((skill) => (
+                    <span className="pill" key={skill}>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-shell" id="education">
+          <SectionHeader
+            id="education-title"
+            kicker="Education"
+            title="Depth and discipline"
+            subtitle="Foundational training behind hands-on product engineering leadership."
+          />
+          <div className="education-list">
+            {educationItems.map((education) => (
+              <article className="compact-card" key={education.school}>
+                <h4>{education.school}</h4>
+                <p>{education.program}</p>
+                <p>{education.detail}</p>
+                <ul>
+                  {education.highlights.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-shell section-shell--last" id="contact">
+          <SectionHeader
+            id="contact-title"
+            kicker="Get in touch"
+            title="Open to senior engineering and founder-facing collaboration."
+            subtitle="If you're hiring for AI platform, product engineering, or end-to-end execution roles."
+          />
           <div className="contact-actions">
-            <a className="action-button action-button--primary" href={`mailto:${profile.email}`}>
+            <a
+              href={`mailto:${profile.email}`}
+              className="btn btn--solid"
+              aria-label="Email Sahith"
+            >
               {profile.email}
             </a>
-            <a className="action-button" href={profile.linkedinHref}>
-              LinkedIn
-            </a>
-            <a className="action-button" href={profile.githubHref}>
-              GitHub
-            </a>
+            {isConfiguredLink(profile.linkedinHref) ? (
+              <a
+                href={profile.linkedinHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--soft"
+                aria-label="LinkedIn profile"
+              >
+                LinkedIn
+              </a>
+            ) : null}
+            {isConfiguredLink(profile.githubHref) ? (
+              <a
+                href={profile.githubHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--soft"
+                aria-label="GitHub profile"
+              >
+                GitHub
+              </a>
+            ) : null}
+            {isConfiguredLink(profile.resumeHref) ? (
+              <a href={profile.resumeHref} className="btn btn--outline" aria-label="Download resume">
+                Resume
+              </a>
+            ) : null}
+            <Link href="/interests" className="btn btn--outline">
+              Founder notes
+            </Link>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </div>
   );
 }

@@ -1,10 +1,23 @@
+import { Manrope, Space_Grotesk } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
 
+const headingFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  weight: ["500", "600", "700"]
+});
+
+const bodyFont = Manrope({
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["400", "500", "700"]
+});
+
 export const metadata: Metadata = {
-  title: "Sahith | Software Engineer",
+  title: "Sahith | Product-Focused Software Engineer",
   description:
-    "A bold personal portfolio for software engineering, AI/ML, agentic systems, computer vision, and fullstack products."
+    "Portfolio of product-led software engineering work across AI/LLM systems, frontend platforms, and end-to-end product delivery."
 };
 
 export default function RootLayout({
@@ -14,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`${headingFont.variable} ${bodyFont.variable}`}>{children}</body>
     </html>
   );
 }

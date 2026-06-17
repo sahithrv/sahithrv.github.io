@@ -1,216 +1,184 @@
-import Image from "next/image";
 import Link from "next/link";
-import TravelGallery from "@/components/TravelGallery";
-import { travelPhotos } from "@/data/portfolio";
+import { profile } from "@/data/portfolio";
 
-const basketballNotes = [
-  {
-    title: "Pickup Rhythm",
-    body: "Fast reads, clean spacing, and the small adjustments that make a run feel locked in."
-  },
-  {
-    title: "NBA Storylines",
-    body: "Following team identity, player development, late-game decisions, and playoff pressure."
-  },
-  {
-    title: "Hoop IQ",
-    body: "The tactics side: pace, mismatches, defensive coverages, and how one possession changes a game."
-  }
-];
+function AppNav() {
+  const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/#about" },
+    { label: "Products", href: "/#products" },
+    { label: "Architecture", href: "/#architecture" },
+    { label: "Travel", href: "/travel" },
+    { label: "Blog", href: "/blog" },
+    { label: "Skills", href: "/#skills" },
+    { label: "Education", href: "/#education" },
+    { label: "Contact", href: "/#contact" },
+    { label: "Notes", href: "/interests" }
+  ];
 
-const gamingNotes = [
-  {
-    title: "Competitive Edge",
-    body: "Games with mechanics to master, strategy to refine, and enough pressure to make every round matter."
-  },
-  {
-    title: "Co-op Nights",
-    body: "The best sessions are still the ones where the squad is laughing while somehow making the plan work."
-  },
-  {
-    title: "Clip Review",
-    body: "I like the feedback loop: review the moment, find the habit, adjust the next match."
-  }
-];
-
-const travelStats = [
-  { label: "Cities", value: "Night walks" },
-  { label: "Food", value: "Local first" },
-  { label: "Camera roll", value: "Always full" }
-];
-
-export const metadata = {
-  title: "Sahith | Interests",
-  description: "Basketball, gaming, and travel interests from Sahith's portfolio."
-};
-
-export default function InterestsPage() {
   return (
-    <main className="interests-page">
-      <header className="interests-nav" aria-label="Interests navigation">
-        <Link className="interests-nav__brand" href="/">
-          Sahith&apos;s Den
-        </Link>
-        <nav className="interests-nav__links" aria-label="Interest sections">
-          <a href="#basketball">Basketball</a>
-          <a href="#gaming">Gaming</a>
-          <a href="#travel">Travel</a>
-        </nav>
-      </header>
+    <header className="site-nav">
+      <Link href="/" className="brand">
+        <span className="brand__name">Sahith</span>
+        <p className="brand__role">{profile.role}</p>
+      </Link>
 
-      <section className="interests-hero" aria-labelledby="interests-title">
-        <div className="interests-hero__backdrop" aria-hidden="true">
-          <div className="interests-hero__image interests-hero__image--one">
-            <Image
-              src="/images/travel/neon-crossing.svg"
-              alt=""
-              fill
-              priority
-              sizes="(max-width: 800px) 65vw, 34vw"
-              unoptimized
-            />
-          </div>
-          <div className="interests-hero__image interests-hero__image--two">
-            <Image
-              src="/images/travel/ridge-line.svg"
-              alt=""
-              fill
-              priority
-              sizes="(max-width: 800px) 62vw, 30vw"
-              unoptimized
-            />
-          </div>
-          <div className="interests-hero__image interests-hero__image--three">
-            <Image
-              src="/images/travel/market-bite.svg"
-              alt=""
-              fill
-              priority
-              sizes="(max-width: 800px) 55vw, 24vw"
-              unoptimized
-            />
-          </div>
-        </div>
+      <nav className="nav-links" aria-label="Primary">
+        {navLinks.map((item) =>
+          item.href.startsWith("#") ? (
+            <a className="nav-link" href={item.href} key={item.label}>
+              {item.label}
+            </a>
+          ) : (
+            <Link className="nav-link" href={item.href} key={item.label}>
+              {item.label}
+            </Link>
+          )
+        )}
+      </nav>
+    </header>
+  );
+}
 
-        <div className="interests-hero__content">
-          <span className="interest-kicker">Off the build log</span>
-          <h1 id="interests-title">Interests</h1>
-          <p>
-            Basketball rhythm, competitive games, and the travel memories that deserve their own
-            corner of the site.
+const designNotes = [
+  {
+    title: "Problem framing before implementation",
+    summary:
+      "Most failed AI work starts with unclear success criteria. I define measurable outcomes first, then choose tooling.",
+    labels: ["Decision quality", "Reliability", "Iteration safety"],
+    takeaways: [
+      "If a project cannot define what success and failure look like, it is not testable.",
+      "Architecture decisions become unambiguous once the failure boundary is explicit.",
+      "Autonomous paths need a rollback contract, not just a fallback."
+    ]
+  },
+  {
+    title: "Product thinking for teams",
+    summary:
+      "I design features as owned product units, not isolated demos, so other engineers can continue the work with confidence.",
+    labels: ["API clarity", "State contracts", "Team handoff"],
+    takeaways: [
+      "Readable interfaces matter more than clever implementation.",
+      "Observability should answer what changed, why it changed, and what failed.",
+      "Teams scale better with explicit boundaries and defaults that protect reliability."
+    ]
+  },
+  {
+    title: "AI/LLM systems in production",
+    summary:
+      "LLM products are production-ready only when deterministic operations exist around inference.",
+    labels: ["Agent safety", "Reproducibility", "Evidence trails"],
+    takeaways: [
+      "Prompting is one layer; data integrity and replayability are the contract layer.",
+      "Trace stores with state versioning make model behavior debuggable.",
+      "Human review loops must be quick, structured, and auditable."
+    ]
+  }
+];
+
+const portfolioSignals = [
+  "Prioritize measurable outcomes over feature counts.",
+  "Treat architecture as the default artifact, not documentation afterthought.",
+  "Make recovery paths first-class so experiments stay cheap and safe.",
+  "Design for explainability when AI behavior affects decisions."
+];
+
+function NoteCard({
+  title,
+  summary,
+  labels,
+  takeaways
+}: {
+  title: string;
+  summary: string;
+  labels: string[];
+  takeaways: string[];
+}) {
+  return (
+    <article className="note-card">
+      <h3>{title}</h3>
+      <p>{summary}</p>
+      <div className="note-metadata">
+        {labels.map((label) => (
+          <span className="note-label" key={label}>
+            {label}
+          </span>
+        ))}
+      </div>
+      <ul className="note-highlights">
+        {takeaways.map((takeaway) => (
+          <li key={takeaway}>{takeaway}</li>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+function SignalCard({ signal }: { signal: string }) {
+  return (
+    <article className="compact-card">
+      <p>{signal}</p>
+    </article>
+  );
+}
+
+export default function NotesPage() {
+  return (
+    <div className="portfolio-shell">
+      <a href="#notes" className="skip-link">
+        Skip to content
+      </a>
+      <AppNav />
+      <main id="notes-page">
+        <section className="section-shell notes-hero" id="notes">
+          <p className="section-kicker">Founder notes</p>
+          <h1>Engineering principles from real products</h1>
+          <p className="hero-copy">
+            This page is a practical extension of the portfolio: how I frame problems, design
+            production-safe AI systems, and protect teams from avoidable technical drift.
           </p>
-          <div className="interest-tabs" aria-label="Jump to interest">
-            <a className="interest-tab interest-tab--basketball" href="#basketball">
-              Basketball
-            </a>
-            <a className="interest-tab interest-tab--gaming" href="#gaming">
-              Gaming
-            </a>
-            <a className="interest-tab interest-tab--travel" href="#travel">
-              Travel
+          <div className="hero-actions">
+            <Link href="/" className="btn btn--solid">
+              Back to portfolio
+            </Link>
+            <a href={`mailto:${profile.email}`} className="btn btn--soft">
+              Reach out
             </a>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section
-        className="interest-section interest-section--basketball"
-        id="basketball"
-        aria-labelledby="basketball-title"
-      >
-        <div className="interest-section__header">
-          <span className="interest-kicker">Section 01</span>
-          <h2 id="basketball-title">Basketball</h2>
-          <p>
-            The sport I come back to for pace, creativity, and that perfect blend of instinct and
-            structure.
-          </p>
-        </div>
-
-        <div className="basketball-layout">
-          <div className="basketball-court" aria-hidden="true">
-            <span className="basketball-court__rim" />
-            <span className="basketball-court__paint" />
-            <span className="basketball-court__arc" />
-            <span className="basketball-court__ball" />
+        <section className="section-shell section-shell--muted">
+          <div className="section-header">
+            <p className="section-kicker">Signals I optimize for</p>
+            <h2>How I keep engineering work reliable and shippable</h2>
           </div>
-
-          <div className="interest-card-grid">
-            {basketballNotes.map((note) => (
-              <article className="interest-card" key={note.title}>
-                <h3>{note.title}</h3>
-                <p>{note.body}</p>
-              </article>
+          <div className="notes-grid">
+            {portfolioSignals.map((signal) => (
+              <SignalCard key={signal} signal={signal} />
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section
-        className="interest-section interest-section--gaming"
-        id="gaming"
-        aria-labelledby="gaming-title"
-      >
-        <div className="interest-section__header">
-          <span className="interest-kicker">Section 02</span>
-          <h2 id="gaming-title">Gaming</h2>
-          <p>
-            A mix of competitive focus, squad chaos, and the kind of systems thinking that sneaks
-            into every good game.
-          </p>
-        </div>
-
-        <div className="gaming-layout">
-          <div className="gaming-panel" aria-hidden="true">
-            <div className="gaming-panel__screen">
-              <span>GG</span>
-              <strong>Ready</strong>
-            </div>
-            <div className="gaming-panel__keys">
-              <span>W</span>
-              <span>A</span>
-              <span>S</span>
-              <span>D</span>
-            </div>
-          </div>
-
-          <div className="interest-card-grid">
-            {gamingNotes.map((note) => (
-              <article className="interest-card interest-card--glass" key={note.title}>
-                <h3>{note.title}</h3>
-                <p>{note.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        className="interest-section interest-section--travel"
-        id="travel"
-        aria-labelledby="travel-title"
-      >
-        <div className="interest-section__header interest-section__header--split">
-          <div>
-            <span className="interest-kicker">Section 03</span>
-            <h2 id="travel-title">Travel</h2>
-            <p>
-              The photo wall lives here now: cities, food, nature, and friends collected away from
-              the main portfolio flow.
+        <section className="section-shell">
+          <div className="section-header">
+            <p className="section-kicker">Case-study mindset</p>
+            <h2>Practices used in flagship product launches</h2>
+            <p className="section-lead">
+              Notes derived from ModelExpress, Minecraft AI Agent Studio, and Roasty development.
             </p>
           </div>
-          <dl className="travel-stat-grid" aria-label="Travel notes">
-            {travelStats.map((stat) => (
-              <div key={stat.label}>
-                <dt>{stat.label}</dt>
-                <dd>{stat.value}</dd>
-              </div>
+          <div className="notes-grid">
+            {designNotes.map((note) => (
+              <NoteCard
+                key={note.title}
+                title={note.title}
+                summary={note.summary}
+                labels={note.labels}
+                takeaways={note.takeaways}
+              />
             ))}
-          </dl>
-        </div>
-
-        <TravelGallery photos={travelPhotos} />
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
