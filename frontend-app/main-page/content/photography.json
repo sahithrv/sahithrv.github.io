@@ -1,0 +1,65 @@
+[
+  {
+    "src": "/public/images/backwaters.JPG",
+    "title": "Backwater Sunset",
+    "location": "Alleppey, India",
+    "date": "2026",
+    "caption": "Sunset over the backwaters."
+  },
+  {
+    "src": "/public/images/beachdog.jpg",
+    "title": "Beach Dog",
+    "location": "Kerala, India",
+    "date": "2026",
+    "caption": "Found a dog chilling by the beach on a hot day."
+  },
+  {
+    "src": "/public/images/kovalam.jpg",
+    "title": "Kovalam Beach",
+    "location": "Thiruvananthapuram, India",
+    "date": "2026",
+    "caption": "Beautiful night view at Kovalam beach."
+  },
+  {
+    "src": "/public/images/sunset.jpg",
+    "title": "California Susnset",
+    "location": "Los Angeles, California, USA",
+    "date": "2026",
+    "caption": "Sunset over the rolling hills of Southern California."
+  },
+  {
+    "src": "/public/images/teafarm.jpg",
+    "title": "Tea Farm",
+    "location": "Munnar, India",
+    "date": "2026",
+    "caption": "An amazing view of the terraced tea gardens."
+  },
+  {
+    "src": "/public/images/canoebackwater.jpg",
+    "title": "Canoeing the Backwaters",
+    "location": "Alleppey, India",
+    "date": "2026",
+    "caption": "Me on a canoe in the Kerala backwaters."
+  },
+  {
+    "src": "/public/images/penghu.jpg",
+    "title": "Penghu Islands - Village View",
+    "location": "Penghu, Taiwan",
+    "date": "2024",
+    "caption": "Hilltop view of a village in the Penghu Islands."
+  },
+  {
+    "src": "/public/images/sunmoon.jpg",
+    "title": "Sun Moon Lake",
+    "location": "Sun Moon Lake, Taiwan",
+    "date": "2024",
+    "caption": "Beautiful view of Sun Moon Lake."
+  },
+  {
+    "src": "/public/images/craterlake.jpg",
+    "title": "Crater Lake",
+    "location": "Crater Lake, Oregon, USA",
+    "date": "2024",
+    "caption": "Over the top view of Crater Lake."
+  }
+]

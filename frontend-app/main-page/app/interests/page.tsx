@@ -1,43 +1,7 @@
-import Link from "next/link";
+import SiteTopBar from "@/components/SiteTopBar";
 import { profile } from "@/data/portfolio";
 
-function AppNav() {
-  const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/#about" },
-    { label: "Products", href: "/#products" },
-    { label: "Architecture", href: "/#architecture" },
-    { label: "Travel", href: "/travel" },
-    { label: "Blog", href: "/blog" },
-    { label: "Skills", href: "/#skills" },
-    { label: "Education", href: "/#education" },
-    { label: "Contact", href: "/#contact" },
-    { label: "Notes", href: "/interests" }
-  ];
-
-  return (
-    <header className="site-nav">
-      <Link href="/" className="brand">
-        <span className="brand__name">Sahith</span>
-        <p className="brand__role">{profile.role}</p>
-      </Link>
-
-      <nav className="nav-links" aria-label="Primary">
-        {navLinks.map((item) =>
-          item.href.startsWith("#") ? (
-            <a className="nav-link" href={item.href} key={item.label}>
-              {item.label}
-            </a>
-          ) : (
-            <Link className="nav-link" href={item.href} key={item.label}>
-              {item.label}
-            </Link>
-          )
-        )}
-      </nav>
-    </header>
-  );
-}
+const navItems = [{ label: "Photography", href: "/travel" }, { label: "Blog", href: "/blog" }];
 
 const designNotes = [
   {
@@ -127,7 +91,7 @@ export default function NotesPage() {
       <a href="#notes" className="skip-link">
         Skip to content
       </a>
-      <AppNav />
+      <SiteTopBar navItems={navItems} />
       <main id="notes-page">
         <section className="section-shell notes-hero" id="notes">
           <p className="section-kicker">Founder notes</p>
@@ -136,14 +100,6 @@ export default function NotesPage() {
             This page is a practical extension of the portfolio: how I frame problems, design
             production-safe AI systems, and protect teams from avoidable technical drift.
           </p>
-          <div className="hero-actions">
-            <Link href="/" className="btn btn--solid">
-              Back to portfolio
-            </Link>
-            <a href={`mailto:${profile.email}`} className="btn btn--soft">
-              Reach out
-            </a>
-          </div>
         </section>
 
         <section className="section-shell section-shell--muted">

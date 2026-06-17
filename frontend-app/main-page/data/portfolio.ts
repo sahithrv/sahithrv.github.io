@@ -37,23 +37,36 @@ export type TravelPhoto = {
 };
 
 export type BlogPost = {
+  slug: string;
   title: string;
   date: string;
   excerpt: string;
   topic: string;
   tags: string[];
   href: string;
+  coverImage?: string;
+  readTime?: string;
+  content: string[];
+  media?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  }[];
+  links?: {
+    label: string;
+    href: string;
+  }[];
 };
 
 export const profile = {
   name: "Sahith",
-  role: "Senior Software Engineer",
+  role: "Software Engineer",
   tagline:
     "I build production-grade software systems, AI/LLM products, and tools that turn complex ideas into reliable outcomes.",
-  email: "hello@sahith.dev",
+  email: "sahithv24@gmail.com",
   resumeHref: "",
-  githubHref: "",
-  linkedinHref: ""
+  githubHref: "https://github.com/sahithrv/",
+  linkedinHref: "https://www.linkedin.com/in/sahithrv/"
 };
 
 export const productsHeader = [
@@ -282,30 +295,79 @@ export const travelPhotos: TravelPhoto[] = [
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "designing-product-reliability",
     title: "How I design product reliability before shipping features",
     date: "May 20, 2025",
     excerpt:
       "A practical framework for deciding what gets built first: failure modes, handoff points, and observability goals.",
     topic: "Product Engineering",
     tags: ["Reliability", "Architecture", "Execution"],
-    href: ""
+    href: "",
+    readTime: "3 min read",
+    coverImage:
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+    content: [
+      "The most important engineering decision is deciding what does *not* need to be built yet. If you can define failure modes, users and stakeholders know what to expect when things go right and when things break.",
+      "In this workflow, every feature starts as an instrumented hypothesis. I define expected behavior, explicit failure handling, and traceability targets before touching implementation details.",
+      "A small design review at start-up saves expensive rework later, especially in AI systems where behavior can vary across inputs, environments, and model versions."
+    ],
+    media: [
+      {
+        src: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+        alt: "Reliable deployment dashboard visual",
+        caption: "Reliable systems start with explicit boundaries around failures and outcomes."
+      }
+    ],
+    links: [{ label: "Notes from this approach", href: "" }]
   },
   {
+    slug: "notebook-to-production-ai-workflows",
     title: "From notebook experiments to production AI workflows",
     date: "Jan 10, 2025",
     excerpt:
       "The difference between a useful demo and a shipped AI product is mostly in data contracts and retry logic.",
     topic: "AI/LLM",
     tags: ["MLOps", "LLM", "Operational design"],
-    href: ""
+    href: "",
+    readTime: "4 min read",
+    coverImage:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    content: [
+      "Most experimental AI work fails in production because input expectations are never enforced and model responses are treated as final rather than bounded outputs.",
+      "A practical path is to create a narrow contract between prompt, structured response schema, retry strategy, and human review points.",
+      "Once that contract is in place, you can iterate faster and keep model behavior within a predictable operating envelope."
+    ],
+    media: [
+      {
+        src: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+        alt: "Notebook to production AI workflow",
+        caption: "A reproducible pipeline is the bridge from prototype to reliable feature."
+      }
+    ]
   },
   {
+    slug: "shipping-multiplayer-software-features",
     title: "What I am learning from shipping multiplayer software features",
     date: "Nov 03, 2024",
     excerpt:
       "I wrote down patterns that kept distributed systems stable under traffic while maintaining developer speed.",
     topic: "Product Strategy",
     tags: ["State management", "Collaboration", "Delivery"],
-    href: ""
+    href: "",
+    readTime: "5 min read",
+    coverImage:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+    content: [
+      "Multiplayer software is where small consistency bugs become visible to users quickly. You need an architecture that tolerates retries and still keeps product flow intuitive.",
+      "I found progress by creating consistent state transition boundaries, clear rollback states, and minimal client assumptions.",
+      "Teams ship faster when ownership is distributed across frontend and backend contracts, not centralized in one owner."
+    ],
+    media: [
+      {
+        src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+        alt: "Collaborative software planning session",
+        caption: "Clear state transitions reduce uncertainty during concurrent interactions."
+      }
+    ]
   }
 ];
