@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { profile } from "@/data/portfolio";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { motion, useScroll } from "motion/react";
+import { profile, type NavItem, type SectionAnchor } from "@/data/portfolio";
 
-type NavItem = {
-  label: string;
-  href: string;
+type SiteTopBarProps = {
+  navItems: NavItem[];
+  sectionAnchors?: SectionAnchor[];
+  variant?: "default" | "pixel";
 };
 
 function isConfiguredLink(value: string) {
@@ -20,15 +23,23 @@ function isConfiguredLink(value: string) {
   );
 }
 
-export default function SiteTopBar({
-  navItems
-}: {
-  navItems: NavItem[];
-}) {
+function PixelAvatarMark() {
+  return (
+    <span className="brand__mark" aria-hidden="true">
+      <span className="brand__pixel-face" />
+    </span>
+  );
+}
+
+export default function SiteTopBar({ navItems, sectionAnchors = [], variant = "default" }: SiteTopBarProps) {
   const [isHidden, setIsHidden] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const pathname = usePathname();
   const lastScrollY = useRef(0);
+  const { scrollYProgress } = useScroll();
   const hideActivationOffset = 320;
   const directionThreshold = 18;
+  const sectionAnchorsMemo = useMemo(() => (pathname === "/" ? sectionAnchors : []), [pathname, sectionAnchors]);
 
   const getScrollY = () => window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
@@ -63,9 +74,53 @@ export default function SiteTopBar({
     };
   }, []);
 
+  useEffect(() => {
+    if (pathname !== "/" || sectionAnchorsMemo.length === 0) {
+      return;
+    }
+
+    const updateActiveSection = () => {
+      const currentScrollY = getScrollY();
+
+      if (currentScrollY < 240) {
+        setActiveSection(sectionAnchorsMemo[0]?.id ?? "");
+        return;
+      }
+
+      const viewportAnchor = currentScrollY + 190;
+      let closestSection = sectionAnchorsMemo[0]?.id ?? "";
+      let bestDistance = Number.POSITIVE_INFINITY;
+
+      for (const section of sectionAnchorsMemo) {
+        const target = document.getElementById(section.id);
+        if (!target) {
+          continue;
+        }
+        const distance = Math.abs(target.offsetTop - viewportAnchor);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          closestSection = section.id;
+        }
+      }
+
+      setActiveSection(closestSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, [pathname, sectionAnchorsMemo]);
+
+  const isActiveRoute = (href: string) => pathname === href;
+
   const socialLinks = [
     {
-      label: "Email",
+      label: "Email Sahith",
       href: `mailto:${profile.email}`,
       icon: (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -77,7 +132,7 @@ export default function SiteTopBar({
       )
     },
     {
-      label: "GitHub",
+      label: "GitHub profile",
       href: profile.githubHref,
       icon: (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -89,7 +144,7 @@ export default function SiteTopBar({
       )
     },
     {
-      label: "LinkedIn",
+      label: "LinkedIn profile",
       href: profile.linkedinHref,
       icon: (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -103,36 +158,68 @@ export default function SiteTopBar({
   ];
 
   return (
-    <header className={`site-nav ${isHidden ? "site-nav--hidden" : ""}`}>
-      <Link href="/" className="brand">
-        <span className="brand__name">Sahith</span>
-        <p className="brand__role">{profile.role}</p>
-      </Link>
+    <header className={`site-nav site-nav--${variant} ${isHidden ? "site-nav--hidden" : ""}`}>
+      <motion.div className="site-nav__progress" style={{ scaleX: scrollYProgress }} />
 
-      <nav className="nav-links" aria-label="Primary">
-        {navItems.map((item) => (
-          <Link className="nav-link" href={item.href} key={item.label}>
-            {item.label}
-          </Link>
-        ))}
+      <div className="site-nav__row">
+        <Link href="/" className="brand" aria-label="Sahith home">
+          <PixelAvatarMark />
+          <span className="brand__text">
+            <span className="brand__name">{profile.name}</span>
+            <span className="brand__role">
+              {profile.role}
+              <span className="brand__status-dot" aria-hidden="true" />
+            </span>
+          </span>
+        </Link>
 
-        <div className="social-links" aria-label="External links">
-          {socialLinks.map((link) =>
-            isConfiguredLink(link.href) ? (
-              <a
-                className="nav-link nav-link--icon"
-                href={link.href}
-                target={link.href.startsWith("mailto:") ? "_self" : "_blank"}
-                rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                aria-label={link.label}
-                key={link.label}
-              >
-                {link.icon}
-              </a>
-            ) : null
-          )}
+        <nav className="nav-links" aria-label="Primary">
+          {navItems.map((item) => (
+            <Link
+              className={`nav-link ${isActiveRoute(item.href) ? "nav-link--active" : ""}`}
+              href={item.href}
+              key={item.label}
+              aria-current={isActiveRoute(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="site-nav__actions">
+          <div className="social-links" aria-label="External links">
+            {socialLinks.map((link) =>
+              isConfiguredLink(link.href) ? (
+                <a
+                  className="nav-link nav-link--icon"
+                  href={link.href}
+                  target={link.href.startsWith("mailto:") ? "_self" : "_blank"}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  aria-label={link.label}
+                  key={link.label}
+                >
+                  {link.icon}
+                </a>
+              ) : null
+            )}
+          </div>
         </div>
-      </nav>
+      </div>
+
+      {pathname === "/" && sectionAnchorsMemo.length > 0 ? (
+        <nav className="site-nav__section-nav" aria-label="Section shortcuts">
+          {sectionAnchorsMemo.map((section) => (
+            <a
+              className={`nav-link site-nav__section-link ${activeSection === section.id ? "is-active" : ""}`}
+              href={section.href}
+              key={section.id}
+              aria-current={activeSection === section.id ? "page" : undefined}
+            >
+              {section.label}
+            </a>
+          ))}
+        </nav>
+      ) : null}
     </header>
   );
 }

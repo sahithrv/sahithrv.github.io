@@ -1,10 +1,11 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { type TravelPhoto, travelPhotos } from "@/data/portfolio";
+import { type TravelPhoto, homepageContent, travelPhotos } from "@/data/portfolio";
+import FooterCTA from "@/components/FooterCTA";
 import PhotographyGallery from "@/components/PhotographyGallery";
 import SiteTopBar from "@/components/SiteTopBar";
+import SubpageHero from "@/components/SubpageHero";
 
-const navItems = [{ label: "Photography", href: "/travel" }, { label: "Blog", href: "/blog" }];
 const supportedImageExts = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
 
 function normalizePath(value: string) {
@@ -120,21 +121,26 @@ export default async function TravelPage() {
   const allPhotos: TravelPhoto[] = localPhotographs.length > 0 ? localPhotographs : travelPhotos;
 
   return (
-    <div className="portfolio-shell">
+    <div className="portfolio-shell portfolio-shell--pixel pixel-polished-theme pixel-page-bg subpage-shell subpage-shell--travel">
       <a href="#top" className="skip-link">
         Skip to content
       </a>
-      <SiteTopBar navItems={navItems} />
+      <SiteTopBar navItems={homepageContent.navItems} variant="pixel" />
 
       <main id="top">
-        <section className="section-shell">
-          <p className="section-kicker">Photography</p>
-          <h1>Photography</h1>
-          <p className="section-lead">
-            A small visual archive of places, details, and moments from my travels.
-          </p>
+        <SubpageHero
+          kicker="Photography"
+          title="Photography"
+          description="A small visual archive of places, details, and moments from my travels."
+          variant="travel"
+          meta={[`${allPhotos.length} photos`, "Travel archive", "Lightbox gallery"]}
+        />
+
+        <section className="section-shell section-frame section-stack subpage-panel travel-archive-section" aria-label="Travel photo archive">
           <PhotographyGallery photos={allPhotos} />
         </section>
+
+        <FooterCTA />
       </main>
     </div>
   );

@@ -17,7 +17,10 @@ const bodyFont = Manrope({
 export const metadata: Metadata = {
   title: "Sahith | Product-Focused Software Engineer",
   description:
-    "Portfolio of product-led software engineering work across AI/LLM systems, frontend platforms, and end-to-end product delivery."
+    "Portfolio of product-led software engineering work across AI/LLM systems, frontend platforms, and end-to-end product delivery.",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }]
+  }
 };
 
 export default function RootLayout({

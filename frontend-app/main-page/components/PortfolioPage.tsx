@@ -1,29 +1,16 @@
-import Link from "next/link";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { profile, projects } from "@/data/portfolio";
-import ProjectCarousel from "@/components/ProjectCarousel";
+import ExperienceTimeline from "@/components/ExperienceTimeline";
+import FooterCTA from "@/components/FooterCTA";
+import HeroWorkbench from "@/components/HeroWorkbench";
+import ProjectShowcase from "@/components/ProjectShowcase";
 import SiteTopBar from "@/components/SiteTopBar";
+import { homepageContent, projects } from "@/data/portfolio";
+import { type Project } from "@/data/portfolio";
 
-type ProjectWithImages = (typeof projects)[number] & {
+type ProjectWithImages = Project & {
   images: string[];
 };
-
-type ProjectImageCandidate = {
-  slug: string;
-  src: string;
-};
-
-function isConfiguredLink(value: string) {
-  const normalized = value.trim();
-  return (
-    Boolean(normalized) &&
-    normalized !== "#" &&
-    !normalized.includes("your-") &&
-    !normalized.includes("TODO") &&
-    !normalized.includes("placeholder")
-  );
-}
 
 function normalizeSlug(value: string) {
   return value
@@ -33,12 +20,9 @@ function normalizeSlug(value: string) {
     .replace(/-+/g, "-");
 }
 
-function resolveProjectImages(
-  title: string,
-  candidates: ProjectImageCandidate[]
-) {
+function resolveProjectImages(title: string, candidates: { slug: string; src: string }[]) {
   const slug = normalizeSlug(title);
-const exactMatches = candidates.filter(
+  const exactMatches = candidates.filter(
     (item) => item.slug === slug || item.slug.startsWith(`${slug}-`) || item.slug.startsWith(`${slug}_`)
   );
 
@@ -47,12 +31,12 @@ const exactMatches = candidates.filter(
   }
 
   const titleTokens = slug.split("-");
-  return candidates.filter((item) =>
-    titleTokens.every((token) => item.slug.includes(token))
-  ).map((item) => item.src);
+  return candidates
+    .filter((item) => titleTokens.every((token) => item.slug.includes(token)))
+    .map((item) => item.src);
 }
 
-async function loadProjectImages(): Promise<ProjectImageCandidate[]> {
+async function loadProjectImages(): Promise<{ slug: string; src: string }[]> {
   const imagesRoot = path.join(process.cwd(), "public", "images", "projects");
 
   try {
@@ -71,7 +55,9 @@ async function loadProjectImages(): Promise<ProjectImageCandidate[]> {
   }
 }
 
-const primaryNavItems = [{ label: "Photography", href: "/travel" }, { label: "Blog", href: "/blog" }];
+function isProjectWithImages(project: ProjectWithImages | undefined): project is ProjectWithImages {
+  return Boolean(project);
+}
 
 function SectionHeader({
   id,
@@ -86,7 +72,7 @@ function SectionHeader({
 }) {
   return (
     <header className="section-header">
-      <p className="section-kicker" id={id}>
+      <p className="section-kicker eyebrow" id={id}>
         {kicker}
       </p>
       <h2>{title}</h2>
@@ -102,104 +88,48 @@ export default async function PortfolioPage() {
     images: resolveProjectImages(project.title, projectImages)
   })) as ProjectWithImages[];
 
-  const portfolioProjects = projectsWithImages.filter(
-    (project) => project.title !== "Arthrex DevOps Validator"
-  );
-  const experienceProjects = projectsWithImages.filter(
-    (project) => project.title === "Arthrex DevOps Validator"
-  );
+  const projectsByTitle = new Map(projectsWithImages.map((project) => [project.title, project]));
+  const portfolioProjects = homepageContent.projectCardTitles
+    .map((title) => projectsByTitle.get(title))
+    .filter(isProjectWithImages);
+  const experienceProject = projectsByTitle.get(homepageContent.experienceTimelineTitle);
+  const experienceProjects: Project[] = experienceProject ? [experienceProject] : [homepageContent.experienceFallback];
 
   return (
-    <div className="portfolio-shell">
+    <div className="portfolio-shell portfolio-shell--pixel pixel-polished-theme pixel-page-bg">
       <a href="#top" className="skip-link">
         Skip to content
       </a>
-      <SiteTopBar navItems={primaryNavItems} />
+      <SiteTopBar navItems={homepageContent.navItems} sectionAnchors={homepageContent.sectionAnchors} variant="pixel" />
 
       <main id="top">
-        <section className="hero section-shell">
-          <p className="hero-kicker">Senior Software Engineer | AI/LLM Systems</p>
-          <h1>Building reliable software and practical AI products.</h1>
+        <section className="hero hero--pixel section-shell section-stack" id="about">
+          <HeroWorkbench hero={homepageContent.hero} workbenchItems={homepageContent.workbenchItems} />
         </section>
 
-        <section className="section-shell section-shell--muted" id="about">
-          <SectionHeader
-            id="about-title"
-            kicker="About me"
-            title="MSCS and Computer Engineering from UC Irvine"
-            subtitle="I have an MSCS and a Computer Engineering degree from UC Irvine. I like building applications."
-          />
-          <p className="section-lead">
-            I focus on shipping end-to-end product experiences and reliable systems, from architecture to
-            implementation.
-          </p>
-        </section>
-
-        <section className="section-shell" id="projects">
+        <section className="section-shell section-frame section-stack project-deck-section" id="projects">
           <SectionHeader
             id="projects-title"
-            kicker="Projects"
-            title="Selected project work"
-            subtitle="I keep these experiences concise and focused, with practical outcomes."
+            kicker={homepageContent.projectsSection.kicker}
+            title={homepageContent.projectsSection.title}
+            subtitle={homepageContent.projectsSection.subtitle}
           />
-          <ProjectCarousel projects={portfolioProjects} />
+          <ProjectShowcase projects={portfolioProjects} />
         </section>
 
-        <section className="section-shell section-shell--muted" id="experience">
-          <SectionHeader
-            id="experience-title"
-            kicker="Experience"
-            title="Arthrex"
-            subtitle="Professional work focused on platform reliability and deployment safety."
-          />
-          <div className="project-grid project-grid--compact">
-            {experienceProjects.map((project) => (
-              <article key={project.title} className="project-card project-card--compact">
-                <header className="project-card__header">
-                  <div className="project-card__meta">
-                    <span className="project-kicker project-kicker--subtle">{project.timeline}</span>
-                  </div>
-                  <h3>{project.title}</h3>
-                  <p className="project-strapline">{project.eyebrow}</p>
-                  <p>{project.description}</p>
-                </header>
-                <div className="project-story project-story--compact">
-                  <p className="story-inline">
-                    <span className="story-label-inline">Result:</span>
-                    {project.results[0]}
-                  </p>
-                  <div className="story-stack-block">
-                    <p className="story-label-inline">Technologies:</p>
-                    <div className="story-content">
-                      {project.stack.map((item) => (
-                        <span className="pill" key={item}>
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                {project.links.filter((link) => isConfiguredLink(link.href)).length > 0 ? (
-                  <div className="project-links">
-                    {project.links
-                      .filter((link) => isConfiguredLink(link.href))
-                      .map((link) => (
-                        <Link
-                          className="project-link"
-                          href={link.href}
-                          key={`${project.title}-${link.label}`}
-                          rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                          target={link.href.startsWith("http") ? "_blank" : undefined}
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
-                  </div>
-                ) : null}
-              </article>
-            ))}
+        <section className="section-shell section-frame section-stack experience-section" id="experience">
+          <div className="experience-section__layout">
+            <SectionHeader
+              id="experience-title"
+              kicker={homepageContent.experienceSection.kicker}
+              title={homepageContent.experienceSection.title}
+              subtitle={homepageContent.experienceSection.subtitle}
+            />
+            <ExperienceTimeline badge={homepageContent.experienceBadge} items={experienceProjects} />
           </div>
         </section>
+
+        <FooterCTA content={homepageContent.footerCta} />
       </main>
     </div>
   );

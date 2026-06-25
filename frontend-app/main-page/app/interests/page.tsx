@@ -1,7 +1,7 @@
+import FooterCTA from "@/components/FooterCTA";
 import SiteTopBar from "@/components/SiteTopBar";
-import { profile } from "@/data/portfolio";
-
-const navItems = [{ label: "Photography", href: "/travel" }, { label: "Blog", href: "/blog" }];
+import SubpageHero from "@/components/SubpageHero";
+import { homepageContent } from "@/data/portfolio";
 
 const designNotes = [
   {
@@ -46,6 +46,16 @@ const portfolioSignals = [
   "Design for explainability when AI behavior affects decisions."
 ];
 
+function InterestPixelIcon() {
+  return (
+    <span className="interest-card__pixel-icon" aria-hidden="true">
+      <span />
+      <span />
+      <span />
+    </span>
+  );
+}
+
 function NoteCard({
   title,
   summary,
@@ -58,12 +68,13 @@ function NoteCard({
   takeaways: string[];
 }) {
   return (
-    <article className="note-card">
+    <article className="note-card interest-note-card glass-card interactive-card">
+      <InterestPixelIcon />
       <h3>{title}</h3>
       <p>{summary}</p>
       <div className="note-metadata">
         {labels.map((label) => (
-          <span className="note-label" key={label}>
+          <span className="note-label chip" key={label}>
             {label}
           </span>
         ))}
@@ -79,42 +90,42 @@ function NoteCard({
 
 function SignalCard({ signal }: { signal: string }) {
   return (
-    <article className="compact-card">
+    <article className="compact-card interest-signal-card glass-card interactive-card">
+      <InterestPixelIcon />
       <p>{signal}</p>
     </article>
   );
 }
 
-export default function NotesPage() {
+export default function InterestsPage() {
   return (
-    <div className="portfolio-shell">
-      <a href="#notes" className="skip-link">
+    <div className="portfolio-shell portfolio-shell--pixel pixel-polished-theme pixel-page-bg subpage-shell subpage-shell--interests">
+      <a href="#top" className="skip-link">
         Skip to content
       </a>
-      <SiteTopBar navItems={navItems} />
-      <main id="notes-page">
-        <section className="section-shell notes-hero" id="notes">
-          <p className="section-kicker">Founder notes</p>
-          <h1>Engineering principles from real products</h1>
-          <p className="hero-copy">
-            This page is a practical extension of the portfolio: how I frame problems, design
-            production-safe AI systems, and protect teams from avoidable technical drift.
-          </p>
-        </section>
+      <SiteTopBar navItems={homepageContent.navItems} variant="pixel" />
+      <main id="top">
+        <SubpageHero
+          kicker="Interests"
+          title="Engineering principles from real products"
+          description="This page is a practical extension of the portfolio: how I frame problems, design production-safe AI systems, and protect teams from avoidable technical drift."
+          variant="interests"
+          meta={["Founder notes", "SRE", "AI Safety"]}
+        />
 
-        <section className="section-shell section-shell--muted">
+        <section className="section-shell section-frame section-shell--muted section-stack subpage-panel interests-signal-section">
           <div className="section-header">
             <p className="section-kicker">Signals I optimize for</p>
             <h2>How I keep engineering work reliable and shippable</h2>
           </div>
-          <div className="notes-grid">
+          <div className="notes-grid interests-signal-grid">
             {portfolioSignals.map((signal) => (
               <SignalCard key={signal} signal={signal} />
             ))}
           </div>
         </section>
 
-        <section className="section-shell">
+        <section className="section-shell section-frame section-stack subpage-panel interests-notes-section">
           <div className="section-header">
             <p className="section-kicker">Case-study mindset</p>
             <h2>Practices used in flagship product launches</h2>
@@ -122,7 +133,7 @@ export default function NotesPage() {
               Notes derived from ModelExpress, Minecraft AI Agent Studio, and Roasty development.
             </p>
           </div>
-          <div className="notes-grid">
+          <div className="notes-grid interests-notes-grid">
             {designNotes.map((note) => (
               <NoteCard
                 key={note.title}
@@ -134,6 +145,8 @@ export default function NotesPage() {
             ))}
           </div>
         </section>
+
+        <FooterCTA />
       </main>
     </div>
   );

@@ -9,6 +9,7 @@ export type Project = {
   architecture: string[];
   results: string[];
   featured?: boolean;
+  icon?: "monitor" | "robot" | "mug" | "globe" | "shield";
   stack: string[];
   links: {
     label: string;
@@ -58,6 +59,71 @@ export type BlogPost = {
   }[];
 };
 
+export type NavItem = {
+  label: string;
+  href: string;
+};
+
+export type SectionAnchor = NavItem & {
+  id: string;
+};
+
+export type HomepageLink = NavItem & {
+  variant: "solid" | "outline" | "soft";
+};
+
+export type WorkbenchItem = {
+  title: string;
+  status: string;
+  detail: string;
+  icon: "pipeline" | "observability" | "delivery";
+};
+
+export type CapabilityCard = {
+  label: string;
+  value: string;
+  emphasis: string;
+};
+
+export type SectionCopy = {
+  kicker: string;
+  title: string;
+  subtitle: string;
+};
+
+export type HomepageContent = {
+  navItems: NavItem[];
+  sectionAnchors: SectionAnchor[];
+  hero: {
+    kicker: string;
+    headlinePrefix: string;
+    headlineReliable: string;
+    headlineProduct: string;
+    headlineSuffix: string;
+    tagline: string;
+    ctas: HomepageLink[];
+  };
+  workbenchItems: WorkbenchItem[];
+  capabilityCards: CapabilityCard[];
+  about: SectionCopy & {
+    paragraphs: string[];
+    operatingPrinciples: string[];
+  };
+  projectsSection: SectionCopy;
+  projectCardTitles: string[];
+  experienceSection: SectionCopy;
+  experienceTimelineTitle: string;
+  experienceBadge: string;
+  experienceFallback: Project;
+  footerCta: {
+    kicker: string;
+    headline: string;
+    description: string;
+    note: string;
+    links: HomepageLink[];
+  };
+};
+
 export const profile = {
   name: "Sahith",
   role: "Software Engineer",
@@ -69,11 +135,100 @@ export const profile = {
   linkedinHref: "https://www.linkedin.com/in/sahithrv/"
 };
 
-export const productsHeader = [
-  { label: "Products as systems", value: "Flagship portfolio projects", emphasis: "End-to-end ownership" },
-  { label: "Core strengths", value: "AI + LLM", emphasis: "RAG, agents, multimodal workflows" },
-  { label: "Delivery model", value: "Senior engineer mindset", emphasis: "Reliability first, then velocity" }
-];
+export const homepageContent: HomepageContent = {
+  navItems: [
+    { label: "Home", href: "/" },
+    { label: "Travel", href: "/travel" },
+    { label: "Blog", href: "/blog" },
+    { label: "Interests", href: "/interests" }
+  ],
+  sectionAnchors: [],
+  hero: {
+    kicker: "Software Engineer | AI/LLM Systems",
+    headlinePrefix: "Building",
+    headlineReliable: "reliable AI",
+    headlineProduct: "product systems",
+    headlineSuffix: "from prototype to production.",
+    tagline: profile.tagline,
+    ctas: []
+  },
+  workbenchItems: [
+    {
+      title: "AI Pipeline",
+      status: "Signal intake",
+      detail: "Ingestion, policy checks, and structured tracing for every run.",
+      icon: "pipeline"
+    },
+    {
+      title: "Observability",
+      status: "Feedback loop",
+      detail: "Health signals and failure boundaries become first-class product inputs.",
+      icon: "observability"
+    },
+    {
+      title: "Delivery",
+      status: "Release safety",
+      detail: "Reproducible outcomes with explicit rollback, review, and handoff patterns.",
+      icon: "delivery"
+    }
+  ],
+  capabilityCards: [
+    { label: "Products as systems", value: "Flagship portfolio projects", emphasis: "End-to-end ownership" },
+    { label: "Core strengths", value: "AI + LLM", emphasis: "RAG, agents, multimodal workflows" },
+    { label: "Delivery model", value: "Software engineer mindset", emphasis: "Reliability first, then velocity" }
+  ],
+  about: {
+    kicker: "About",
+    title: "Engineering identity",
+    subtitle: "I work at the intersection of product engineering, reliable systems, and AI/LLM workflows.",
+    paragraphs: [
+      "I focus on turning ambiguous ideas into products with real user outcomes, while preserving reliability, observability, and operational safety. My work is strongest when architecture, product decisions, and release execution move together.",
+      "The most repeatable systems I build are those where failures are visible early, recovery is predictable, and teams can scale confidently without guessing what changed."
+    ],
+    operatingPrinciples: ["Reliability before scale", "Observable systems", "Product outcomes over demos"]
+  },
+  projectsSection: {
+    kicker: "Projects",
+    title: "Featured project deck",
+    subtitle: "A practical index of work with clear outcomes and practical tradeoffs."
+  },
+  projectCardTitles: ["ModelExpress", "Minecraft AI Agent Studio", "Roasty", "Guessr"],
+  experienceSection: {
+    kicker: "Experience",
+    title: "Professional timeline",
+    subtitle: "Deployment-safe engineering in production-focused environments."
+  },
+  experienceTimelineTitle: "Arthrex DevOps Validator",
+  experienceBadge: "DEPLOYMENT SAFETY + RELIABILITY",
+  experienceFallback: {
+    title: "Arthrex DevOps Validator",
+    role: "Implementation engineer",
+    timeline: "2023",
+    eyebrow: "Migration safety toolkit",
+    description:
+      "An enterprise-grade validation platform reducing migration-checking risk with automated diagnostics and audit-ready evidence.",
+    problem: "",
+    technicalChallenges: [],
+    architecture: [],
+    results: ["Details are currently being expanded for production visibility."],
+    stack: ["Angular", "TypeScript", "Couchbase", "MySQL", "S3"],
+    links: []
+  },
+  footerCta: {
+    kicker: "LET'S BUILD RELIABLE SYSTEMS",
+    headline: "Let\u2019s build reliable AI product systems.",
+    description:
+      "I design and ship production-oriented systems where product outcomes, observability, and recovery paths are intentional from day one.",
+    note: "\u00a9 2026 Sahith \u2022 Built with Next.js",
+    links: [
+      { label: "Email me", href: `mailto:${profile.email}`, variant: "solid" },
+      { label: "GitHub", href: profile.githubHref, variant: "outline" },
+      { label: "LinkedIn", href: profile.linkedinHref, variant: "soft" }
+    ]
+  }
+};
+
+export const productsHeader = homepageContent.capabilityCards;
 
 export const projects: Project[] = [
   {
@@ -103,6 +258,7 @@ export const projects: Project[] = [
       "Enabled clear decisioning from experiment output to model selection through standardized artifacts."
     ],
     featured: true,
+    icon: "monitor",
     stack: ["Go", "Python", "PyTorch", "Modal", "Cloud GPU", "MLflow"],
     links: [
       { label: "System architecture", href: "" },
@@ -136,6 +292,7 @@ export const projects: Project[] = [
       "Introduced a fast workflow for scenario templates that accelerated creator iteration."
     ],
     featured: true,
+    icon: "robot",
     stack: ["Python", "TypeScript", "FastAPI", "Redis", "WebSockets", "React"],
     links: [
       { label: "Product brief", href: "" },
@@ -169,6 +326,7 @@ export const projects: Project[] = [
       "Created a repeatable review loop where players could test recommendations across sessions."
     ],
     featured: true,
+    icon: "mug",
     stack: ["Python", "OpenCV", "Multimodal LLMs", "Vision", "TypeScript", "FastAPI"],
     links: [
       { label: "Notes", href: "" },
@@ -201,6 +359,7 @@ export const projects: Project[] = [
       "Improved retention through clear replay paths and actionable end-state insights.",
       "Established a consistent release pattern for puzzle updates and moderation rules."
     ],
+    icon: "globe",
     stack: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Redis"],
     links: [{ label: "Visit app", href: "https://app.guessrgame.com" }]
   },
@@ -240,7 +399,7 @@ export const projects: Project[] = [
 
 export const educationItems: EducationItem[] = [
   {
-    school: "Computer Science",
+    school: "University of California, Irvine",
     program: "Software Engineering, AI/ML, and Systems-focused coursework",
     detail:
       "Foundation centered on software systems, algorithmic rigor, and practical ML deployment.",
@@ -288,7 +447,7 @@ export const travelPhotos: TravelPhoto[] = [
     title: "Mountain train station platform",
     location: "Interlaken, Switzerland",
     date: "2023",
-    caption: "A quiet pause before the mountain segment — best part of every trip is usually the in-between minutes.",
+    caption: "A quiet pause before the mountain segment - best part of every trip is usually the in-between minutes.",
     src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80"
   }
 ];

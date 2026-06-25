@@ -10,3 +10,8 @@ dist/
 *.png
 *snapshot*.md
 *debug*.md
+# Portfolio raster assets used by the site.
+!public/images/pixel-scenes/
+!public/images/pixel-scenes/*.png
+!public/images/pixel-icons/
+!public/images/pixel-icons/*.png
