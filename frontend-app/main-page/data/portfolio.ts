@@ -138,8 +138,8 @@ export const profile = {
 export const homepageContent: HomepageContent = {
   navItems: [
     { label: "Home", href: "/" },
-    { label: "Travel", href: "/travel" },
-    { label: "Blog", href: "/blog" },
+    { label: "Photography", href: "/photography" },
+    { label: "Projects", href: "/projects" },
     { label: "Interests", href: "/interests" }
   ],
   sectionAnchors: [],

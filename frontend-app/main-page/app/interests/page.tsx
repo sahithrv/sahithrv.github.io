@@ -1,50 +1,19 @@
-import FooterCTA from "@/components/FooterCTA";
+﻿import FooterCTA from "@/components/FooterCTA";
 import SiteTopBar from "@/components/SiteTopBar";
 import SubpageHero from "@/components/SubpageHero";
 import { homepageContent } from "@/data/portfolio";
 
-const designNotes = [
-  {
-    title: "Problem framing before implementation",
-    summary:
-      "Most failed AI work starts with unclear success criteria. I define measurable outcomes first, then choose tooling.",
-    labels: ["Decision quality", "Reliability", "Iteration safety"],
-    takeaways: [
-      "If a project cannot define what success and failure look like, it is not testable.",
-      "Architecture decisions become unambiguous once the failure boundary is explicit.",
-      "Autonomous paths need a rollback contract, not just a fallback."
-    ]
-  },
-  {
-    title: "Product thinking for teams",
-    summary:
-      "I design features as owned product units, not isolated demos, so other engineers can continue the work with confidence.",
-    labels: ["API clarity", "State contracts", "Team handoff"],
-    takeaways: [
-      "Readable interfaces matter more than clever implementation.",
-      "Observability should answer what changed, why it changed, and what failed.",
-      "Teams scale better with explicit boundaries and defaults that protect reliability."
-    ]
-  },
-  {
-    title: "AI/LLM systems in production",
-    summary:
-      "LLM products are production-ready only when deterministic operations exist around inference.",
-    labels: ["Agent safety", "Reproducibility", "Evidence trails"],
-    takeaways: [
-      "Prompting is one layer; data integrity and replayability are the contract layer.",
-      "Trace stores with state versioning make model behavior debuggable.",
-      "Human review loops must be quick, structured, and auditable."
-    ]
-  }
-];
+const basketballPlayerSlots = Array.from({ length: 10 }, (_, index) => ({
+  rank: String(index + 1).padStart(2, "0"),
+  name: `Player ${String(index + 1).padStart(2, "0")}`,
+  note: "Add why this player belongs in your current best-player list."
+}));
 
-const portfolioSignals = [
-  "Prioritize measurable outcomes over feature counts.",
-  "Treat architecture as the default artifact, not documentation afterthought.",
-  "Make recovery paths first-class so experiments stay cheap and safe.",
-  "Design for explainability when AI behavior affects decisions."
-];
+const mustPlayGames = Array.from({ length: 10 }, (_, index) => ({
+  rank: String(index + 1).padStart(2, "0"),
+  title: `Must-play game ${String(index + 1).padStart(2, "0")}`,
+  description: "Add the game title and your reason for recommending it."
+}));
 
 function InterestPixelIcon() {
   return (
@@ -56,44 +25,40 @@ function InterestPixelIcon() {
   );
 }
 
-function NoteCard({
-  title,
-  summary,
-  labels,
-  takeaways
-}: {
-  title: string;
-  summary: string;
-  labels: string[];
-  takeaways: string[];
-}) {
+function RankedPlayerList() {
   return (
-    <article className="note-card interest-note-card glass-card interactive-card">
-      <InterestPixelIcon />
-      <h3>{title}</h3>
-      <p>{summary}</p>
-      <div className="note-metadata">
-        {labels.map((label) => (
-          <span className="note-label chip" key={label}>
-            {label}
-          </span>
-        ))}
+    <article className="interest-list-panel glass-card">
+      <div className="interest-panel-header">
+        <p className="section-kicker">Current ranking</p>
+        <h3>Best players right now</h3>
+        <p>This is the list area for your current player rankings and short reasoning.</p>
       </div>
-      <ul className="note-highlights">
-        {takeaways.map((takeaway) => (
-          <li key={takeaway}>{takeaway}</li>
+      <ol className="rank-list">
+        {basketballPlayerSlots.map((player) => (
+          <li key={player.rank}>
+            <span className="rank-list__number">{player.rank}</span>
+            <div>
+              <h4>{player.name}</h4>
+              <p>{player.note}</p>
+            </div>
+          </li>
         ))}
-      </ul>
+      </ol>
     </article>
   );
 }
 
-function SignalCard({ signal }: { signal: string }) {
+function GameRecommendationList() {
   return (
-    <article className="compact-card interest-signal-card glass-card interactive-card">
-      <InterestPixelIcon />
-      <p>{signal}</p>
-    </article>
+    <ol className="game-list" aria-label="Must-play game recommendations">
+      {mustPlayGames.map((game) => (
+        <li className="game-card glass-card interactive-card" key={game.rank}>
+          <span className="game-card__rank">{game.rank}</span>
+          <h3>{game.title}</h3>
+          <p>{game.description}</p>
+        </li>
+      ))}
+    </ol>
   );
 }
 
@@ -107,43 +72,57 @@ export default function InterestsPage() {
       <main id="top">
         <SubpageHero
           kicker="Interests"
-          title="Engineering principles from real products"
-          description="This page is a practical extension of the portfolio: how I frame problems, design production-safe AI systems, and protect teams from avoidable technical drift."
+          title="Basketball and gaming notes"
+          description="A personal index for the teams, players, and games I want to keep track of and expand with longer notes over time."
           variant="interests"
-          meta={["Founder notes", "SRE", "AI Safety"]}
+          meta={["Basketball", "Gaming", "Ranked lists"]}
         />
 
-        <section className="section-shell section-frame section-shell--muted section-stack subpage-panel interests-signal-section">
+        <section
+          className="section-shell section-frame section-stack subpage-panel interests-basketball-section interest-section"
+          aria-labelledby="basketball-title"
+        >
           <div className="section-header">
-            <p className="section-kicker">Signals I optimize for</p>
-            <h2>How I keep engineering work reliable and shippable</h2>
+            <p className="section-kicker">Basketball</p>
+            <h2 id="basketball-title">Team notes and current player rankings</h2>
+            <p className="section-lead">
+              This section is ready for your favorite team notes, favorite players, and current best-player list.
+            </p>
           </div>
-          <div className="notes-grid interests-signal-grid">
-            {portfolioSignals.map((signal) => (
-              <SignalCard key={signal} signal={signal} />
-            ))}
+
+          <div className="interest-layout interest-layout--basketball">
+            <article className="interest-feature-card glass-card interactive-card">
+              <InterestPixelIcon />
+              <p className="section-kicker">Favorite team</p>
+              <h3>Favorite team to add</h3>
+              <p>
+                Use this space to explain the team you follow, what drew you to them, and the players or moments that
+                made the team matter to you.
+              </p>
+              <div className="interest-prompt-row" aria-label="Favorite team note prompts">
+                <span className="chip">Team identity</span>
+                <span className="chip">Favorite era</span>
+                <span className="chip">Key players</span>
+              </div>
+            </article>
+
+            <RankedPlayerList />
           </div>
         </section>
 
-        <section className="section-shell section-frame section-stack subpage-panel interests-notes-section">
+        <section
+          className="section-shell section-frame section-stack subpage-panel interests-gaming-section interest-section"
+          aria-labelledby="gaming-title"
+        >
           <div className="section-header">
-            <p className="section-kicker">Case-study mindset</p>
-            <h2>Practices used in flagship product launches</h2>
+            <p className="section-kicker">Gaming</p>
+            <h2 id="gaming-title">Must-play game recommendations</h2>
             <p className="section-lead">
-              Notes derived from ModelExpress, Minecraft AI Agent Studio, and Roasty development.
+              Ten recommendation slots for games you consider essential, with room for the descriptions you plan to add.
             </p>
           </div>
-          <div className="notes-grid interests-notes-grid">
-            {designNotes.map((note) => (
-              <NoteCard
-                key={note.title}
-                title={note.title}
-                summary={note.summary}
-                labels={note.labels}
-                takeaways={note.takeaways}
-              />
-            ))}
-          </div>
+
+          <GameRecommendationList />
         </section>
 
         <FooterCTA />

@@ -104,7 +104,7 @@ export default async function PortfolioPage() {
 
       <main id="top">
         <section className="hero hero--pixel section-shell section-stack" id="about">
-          <HeroWorkbench hero={homepageContent.hero} workbenchItems={homepageContent.workbenchItems} />
+          <HeroWorkbench hero={homepageContent.hero} />
         </section>
 
         <section className="section-shell section-frame section-stack project-deck-section" id="projects">

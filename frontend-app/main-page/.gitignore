@@ -15,3 +15,7 @@ dist/
 !public/images/pixel-scenes/*.png
 !public/images/pixel-icons/
 !public/images/pixel-icons/*.png
+
+# Photography page background artwork.
+!public/images/backgrounds/
+!public/images/backgrounds/*.png

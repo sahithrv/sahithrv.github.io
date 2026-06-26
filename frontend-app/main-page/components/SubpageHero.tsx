@@ -1,4 +1,4 @@
-type SubpageHeroVariant = "travel" | "blog" | "interests";
+type SubpageHeroVariant = "photography" | "projects" | "interests";
 
 type SubpageHeroProps = {
   kicker: string;

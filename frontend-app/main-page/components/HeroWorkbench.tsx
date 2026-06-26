@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { type HomepageContent, type HomepageLink, type WorkbenchItem } from "@/data/portfolio";
+import { type HomepageContent, type HomepageLink } from "@/data/portfolio";
 
 type HeroWorkbenchProps = {
   hero: HomepageContent["hero"];
-  workbenchItems: WorkbenchItem[];
 };
 
 function isConfiguredLink(value: string) {
@@ -84,17 +83,7 @@ function PixelWorkbenchDiorama() {
   );
 }
 
-function WorkbenchRowIcon({ icon }: { icon: WorkbenchItem["icon"] }) {
-  return (
-    <span className="workbench-row__icon" data-icon={icon} aria-hidden="true">
-      <span />
-      <span />
-      <span />
-    </span>
-  );
-}
-
-export default function HeroWorkbench({ hero, workbenchItems }: HeroWorkbenchProps) {
+export default function HeroWorkbench({ hero }: HeroWorkbenchProps) {
   const heroActions = hero.ctas.filter((action) => isConfiguredLink(action.href));
 
   return (
@@ -121,44 +110,6 @@ export default function HeroWorkbench({ hero, workbenchItems }: HeroWorkbenchPro
 
       <div className="hero-workbench__station">
         <PixelWorkbenchDiorama />
-      </div>
-
-      <div className="hero-workbench__visual">
-        <section className="workbench-console" aria-labelledby="workbench-title">
-          <div className="workbench-console__header">
-            <p className="eyebrow workbench-console__title" id="workbench-title">
-              Product system workbench
-            </p>
-            <span className="workbench-console__signal" aria-hidden="true" />
-          </div>
-
-          <div className="workbench-console__panel">
-            {workbenchItems.map((system) => (
-              <article className="workbench-row" data-icon={system.icon} key={system.title}>
-                <div className="workbench-row__copy">
-                  <div className="workbench-row__head">
-                    <span className="status-dot" aria-hidden="true" />
-                    <p className="workbench-row__title">{system.title}</p>
-                  </div>
-                  <p className="workbench-row__status">{system.status}</p>
-                  <p className="workbench-row__detail">{system.detail}</p>
-                </div>
-                <WorkbenchRowIcon icon={system.icon} />
-              </article>
-            ))}
-          </div>
-
-          <div className="workbench-console__progress" aria-hidden="true">
-            <div className="workbench-console__rail">
-              <span className="workbench-progress" />
-              <span className="workbench-progress-shimmer" />
-              <span className="workbench-progress-marker" />
-              <span className="workbench-progress-node workbench-progress-node--start" />
-              <span className="workbench-progress-node workbench-progress-node--mid" />
-              <span className="workbench-progress-node workbench-progress-node--end" />
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   );
