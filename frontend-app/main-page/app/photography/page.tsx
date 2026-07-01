@@ -2,11 +2,12 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { type TravelPhoto, homepageContent, travelPhotos } from "@/data/portfolio";
 import FooterCTA from "@/components/FooterCTA";
+import PhotographyBackdrop from "@/components/PhotographyBackdrop";
 import PhotographyGallery from "@/components/PhotographyGallery";
 import SiteTopBar from "@/components/SiteTopBar";
-import SubpageHero from "@/components/SubpageHero";
 
 const supportedImageExts = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
+const originalOnlyPhotoSlugs = new Set(["craterlake", "penghu"]);
 
 function normalizePath(value: string) {
   let next = value.trim().replace(/\\/g, "/");
@@ -31,6 +32,10 @@ type PhotographyCatalogPhoto = TravelPhoto & {
   src: string;
 };
 
+type OptimizedPhotographyPhoto = TravelPhoto & {
+  thumbnailSrc?: string;
+};
+
 function isPhotoLike(value: unknown): value is PhotographyCatalogPhoto {
   if (!value || typeof value !== "object") return false;
   const item = value as Record<string, unknown>;
@@ -51,6 +56,27 @@ function getFallbackPhotoFromFileName(fileName: string): TravelPhoto {
     date: "Untitled",
     caption: "Photograph from my collection.",
     src: `/images/${fileName}`
+  };
+}
+
+function getOptimizedLocalPhoto(photo: TravelPhoto): OptimizedPhotographyPhoto {
+  const normalizedSource = normalizePath(photo.src);
+
+  if (isRemoteSource(normalizedSource) || !normalizedSource.startsWith("/images/")) {
+    return { ...photo, src: normalizedSource };
+  }
+
+  const fileName = path.posix.basename(normalizedSource);
+  const baseName = fileName.replace(path.posix.extname(fileName), "").toLowerCase();
+
+  if (originalOnlyPhotoSlugs.has(baseName)) {
+    return { ...photo, src: normalizedSource };
+  }
+
+  return {
+    ...photo,
+    src: `/images/photography-display/${baseName}.jpg`,
+    thumbnailSrc: `/images/photography-thumbs/${baseName}.jpg`
   };
 }
 
@@ -116,7 +142,9 @@ async function loadLocalPhotographsWithMetadata(): Promise<TravelPhoto[]> {
 
 export default async function PhotographyPage() {
   const localPhotographs = await loadLocalPhotographsWithMetadata();
-  const allPhotos: TravelPhoto[] = localPhotographs.length > 0 ? localPhotographs : travelPhotos;
+  const allPhotos: OptimizedPhotographyPhoto[] = (localPhotographs.length > 0 ? localPhotographs : travelPhotos).map(
+    getOptimizedLocalPhoto
+  );
 
   return (
     <div className="portfolio-shell portfolio-shell--pixel pixel-polished-theme pixel-page-bg subpage-shell subpage-shell--photography">
@@ -126,22 +154,14 @@ export default async function PhotographyPage() {
       <SiteTopBar navItems={homepageContent.navItems} variant="pixel" />
 
       <main id="top">
-        <div className="photography-page-backdrop">
-          <SubpageHero
-            kicker="Photography"
-            title="Photography"
-            description="A focused visual archive of places, details, and moments I want to keep easy to browse."
-            variant="photography"
-            meta={[`${allPhotos.length} photos`, "Single-view gallery", "Keyboard friendly"]}
-          />
-
+        <PhotographyBackdrop>
           <section
             className="section-shell section-frame section-stack subpage-panel travel-archive-section"
             aria-label="Photography archive"
           >
             <PhotographyGallery photos={allPhotos} />
           </section>
-        </div>
+        </PhotographyBackdrop>
 
         <FooterCTA />
       </main>

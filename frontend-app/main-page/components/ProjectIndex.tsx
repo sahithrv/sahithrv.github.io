@@ -269,28 +269,12 @@ function ProjectModal({
 export default function ProjectIndex({ projects }: ProjectIndexProps) {
   const reducedMotion = useReducedMotion();
   const reducedMotionBoolean = reducedMotion === true;
-  const [activeFilter, setActiveFilter] = useState("All");
   const [activeTitle, setActiveTitle] = useState<string | null>(null);
   const cardRefs = useRef<Map<string, HTMLButtonElement | null>>(new Map());
   const lastFocusedTitle = useRef<string | null>(null);
 
   const safeProjects = useMemo(() => projects.filter((project) => Boolean(project && project.title)), [projects]);
   const activeProject = safeProjects.find((project) => project.title === activeTitle) ?? null;
-
-  const filterOptions = useMemo(() => {
-    const values = new Set<string>(["All"]);
-    for (const project of safeProjects) {
-      values.add(project.role);
-    }
-    return ["All", ...Array.from(values).filter((value) => value !== "All").sort()];
-  }, [safeProjects]);
-
-  const filteredProjects = useMemo(() => {
-    if (activeFilter === "All") {
-      return safeProjects;
-    }
-    return safeProjects.filter((project) => project.role === activeFilter);
-  }, [activeFilter, safeProjects]);
 
   useEffect(() => {
     if (!activeProject) {
@@ -328,24 +312,8 @@ export default function ProjectIndex({ projects }: ProjectIndexProps) {
 
   return (
     <>
-      <div className="project-index__filters" role="tablist" aria-label="Project filters">
-        {filterOptions.map((filter) => (
-          <button
-            type="button"
-            className={`project-index__filter ${activeFilter === filter ? "is-active" : ""}`}
-            role="tab"
-            aria-selected={activeFilter === filter}
-            aria-controls="project-index-grid"
-            onClick={() => setActiveFilter(filter)}
-            key={filter}
-          >
-            {filter}
-          </button>
-        ))}
-      </div>
-
       <div className="project-index__grid" id="project-index-grid" role="region" aria-label="Projects">
-        {filteredProjects.map((project, index) => (
+        {safeProjects.map((project, index) => (
           <ProjectCard
             key={project.title}
             project={project}
@@ -365,10 +333,6 @@ export default function ProjectIndex({ projects }: ProjectIndexProps) {
         ))}
       </div>
 
-      {filteredProjects.length === 0 ? (
-        <p className="photo-list-empty">No projects match this filter yet.</p>
-      ) : null}
-
       <AnimatePresence>
         {activeProject ? (
           <ProjectModal
@@ -382,4 +346,3 @@ export default function ProjectIndex({ projects }: ProjectIndexProps) {
     </>
   );
 }
-

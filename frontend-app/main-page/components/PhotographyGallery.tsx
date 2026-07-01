@@ -1,12 +1,15 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type TravelPhoto } from "@/data/portfolio";
 
 type PhotographyGalleryProps = {
-  photos: TravelPhoto[];
+  photos: GalleryPhoto[];
+};
+
+type GalleryPhoto = TravelPhoto & {
+  thumbnailSrc?: string;
 };
 
 function safeText(value: string) {
@@ -18,6 +21,15 @@ function isUnoptimizedImage(value: string) {
   return cleanValue.endsWith(".gif");
 }
 
+function shouldUseDirectImage(value: string) {
+  return (
+    isUnoptimizedImage(value) ||
+    value.startsWith("/images/") ||
+    value.includes("/images/photography-display/") ||
+    value.includes("/images/photography-thumbs/")
+  );
+}
+
 function formatCounter(index: number, total: number) {
   return `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
 }
@@ -27,7 +39,6 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
   const total = safePhotos.length;
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const reduceMotion = useReducedMotion();
   const mediaButtonRef = useRef<HTMLButtonElement | null>(null);
   const lightboxCloseButtonRef = useRef<HTMLButtonElement | null>(null);
   const didOpenLightbox = useRef(false);
@@ -65,6 +76,10 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
 
   const closeLightbox = () => {
     setLightboxIndex(null);
+  };
+
+  const selectPhoto = (index: number) => {
+    setFeaturedIndex(index);
   };
 
   useEffect(() => {
@@ -123,7 +138,7 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
   const activePhoto = safePhotos[lightboxIndex ?? featuredIndex];
 
   return (
-    <div className="photography-gallery photography-viewer photography-viewer--post">
+    <div className="photography-gallery photography-viewer photography-viewer--gallery">
       <header className="photography-viewer__toolbar">
         <div className="photography-viewer__identity">
           <span className="photography-viewer__mark" aria-hidden="true" />
@@ -173,10 +188,10 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
               alt={featuredTitle}
               className="photography-viewer__image"
               fill
-              priority
-              sizes="(min-width: 1200px) 860px, (min-width: 768px) 82vw, 94vw"
+              priority={featuredIndex === 0}
+              sizes="(min-width: 1180px) 720px, (min-width: 768px) 72vw, 92vw"
               src={featuredPhoto.src}
-              unoptimized={isUnoptimizedImage(featuredPhoto.src)}
+              unoptimized={shouldUseDirectImage(featuredPhoto.src)}
             />
             <span className="photography-viewer__open-label">Open full screen</span>
           </button>
@@ -194,88 +209,103 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
         </footer>
       </article>
 
-      <AnimatePresence>
-        {lightboxIndex !== null ? (
-          <motion.div
-            key={`photography-lightbox-${lightboxIndex}`}
-            className="travel-lightbox-backdrop"
-            role="presentation"
-            initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
-            onClick={closeLightbox}
+      <ol className="photography-viewer__thumb-grid" aria-label="Photography thumbnails">
+        {safePhotos.map((photo, index) => {
+          const title = safeText(photo.title);
+
+          return (
+            <li key={`${photo.src}-${index}`}>
+              <button
+                type="button"
+                className={`photography-viewer__thumb-card ${index === featuredIndex ? "is-active" : ""}`}
+                onClick={() => selectPhoto(index)}
+                aria-label={`Show ${title}`}
+                aria-pressed={index === featuredIndex}
+              >
+                <span className="photography-viewer__thumb-media">
+                  <Image
+                    alt=""
+                    className="photography-viewer__thumb-image"
+                    fill
+                    sizes="(min-width: 760px) 130px, 28vw"
+                    src={photo.thumbnailSrc ?? photo.src}
+                    unoptimized={shouldUseDirectImage(photo.thumbnailSrc ?? photo.src)}
+                  />
+                </span>
+                <span className="photography-viewer__thumb-title">{title}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+
+      {lightboxIndex !== null ? (
+        <div className="travel-lightbox-backdrop" role="presentation" onClick={closeLightbox}>
+          <article
+            className="travel-lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${activePhoto.title} photo details`}
+            onClick={(event) => event.stopPropagation()}
           >
-            <motion.article
-              className="travel-lightbox"
-              role="dialog"
-              aria-modal="true"
-              aria-label={`${activePhoto.title} photo details`}
-              initial={reduceMotion ? { opacity: 1, transform: "none" } : { opacity: 0, scale: 0.97, y: 12 }}
-              animate={reduceMotion ? { opacity: 1, transform: "none" } : { opacity: 1, scale: 1, y: 0 }}
-              exit={reduceMotion ? { opacity: 1, transform: "none" } : { opacity: 0, scale: 0.97, y: 10 }}
-              transition={reduceMotion ? { duration: 0 } : { duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className="travel-lightbox__nav">
-                <button
-                  type="button"
-                  className="travel-lightbox__arrow"
-                  onClick={goToPrevious}
-                  aria-label="Previous photo"
-                  disabled={total <= 1}
-                >
-                  {"<"}
-                </button>
+            <div className="travel-lightbox__nav">
+              <button
+                type="button"
+                className="travel-lightbox__arrow"
+                onClick={goToPrevious}
+                aria-label="Previous photo"
+                disabled={total <= 1}
+              >
+                {"<"}
+              </button>
 
-                <p className="travel-lightbox__counter" aria-live="polite">
-                  {formatCounter(lightboxIndex, total)}
-                </p>
+              <p className="travel-lightbox__counter" aria-live="polite">
+                {formatCounter(lightboxIndex, total)}
+              </p>
 
-                <button
-                  type="button"
-                  className="travel-lightbox__arrow"
-                  onClick={goToNext}
-                  aria-label="Next photo"
-                  disabled={total <= 1}
-                >
-                  {">"}
-                </button>
+              <button
+                type="button"
+                className="travel-lightbox__arrow"
+                onClick={goToNext}
+                aria-label="Next photo"
+                disabled={total <= 1}
+              >
+                {">"}
+              </button>
 
-                <button
-                  type="button"
-                  className="travel-lightbox__close"
-                  onClick={closeLightbox}
-                  aria-label="Close photo lightbox"
-                  ref={lightboxCloseButtonRef}
-                >
-                  Close
-                </button>
+              <button
+                type="button"
+                className="travel-lightbox__close"
+                onClick={closeLightbox}
+                aria-label="Close photo lightbox"
+                ref={lightboxCloseButtonRef}
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="travel-lightbox__media">
+              <Image
+                alt={safeText(activePhoto.title)}
+                className="travel-lightbox__image"
+                fill
+                sizes="100vw"
+                src={activePhoto.src}
+                unoptimized={shouldUseDirectImage(activePhoto.src)}
+              />
+            </div>
+
+            <div className="travel-lightbox__details">
+              <h3>{safeText(activePhoto.title)}</h3>
+              <p className="photo-caption">{safeText(activePhoto.caption)}</p>
+              <div className="photo-meta">
+                <span>{safeText(activePhoto.location)}</span>
+                <span>{safeText(activePhoto.date)}</span>
               </div>
-
-              <div className="travel-lightbox__media">
-                <Image
-                  alt={safeText(activePhoto.title)}
-                  className="travel-lightbox__image"
-                  fill
-                  priority
-                  sizes="100vw"
-                  src={activePhoto.src}
-                  unoptimized={isUnoptimizedImage(activePhoto.src)}
-                />
-              </div>
-
-              <div className="travel-lightbox__details">
-                <h3>{safeText(activePhoto.title)}</h3>
-                <p className="photo-caption">{safeText(activePhoto.caption)}</p>
-                <div className="photo-meta">
-                  <span>{safeText(activePhoto.location)}</span>
-                  <span>{safeText(activePhoto.date)}</span>
-                </div>
-              </div>
-            </motion.article>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+            </div>
+          </article>
+        </div>
+      ) : null}
     </div>
   );
 }

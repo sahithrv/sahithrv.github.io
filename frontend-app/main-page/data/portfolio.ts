@@ -4,6 +4,7 @@ export type Project = {
   role: string;
   timeline: string;
   description: string;
+  homepageDescription?: string;
   problem: string;
   technicalChallenges: string[];
   architecture: string[];
@@ -202,11 +203,11 @@ export const homepageContent: HomepageContent = {
   experienceBadge: "DEPLOYMENT SAFETY + RELIABILITY",
   experienceFallback: {
     title: "Arthrex DevOps Validator",
-    role: "Implementation engineer",
-    timeline: "2023",
+    role: "Software engineering intern",
+    timeline: "June 2025 - Sept. 2025",
     eyebrow: "Migration safety toolkit",
     description:
-      "An enterprise-grade validation platform reducing migration-checking risk with automated diagnostics and audit-ready evidence.",
+      "Validated MySQL, Couchbase, and S3 migration data with automated integrity checks.",
     problem: "",
     technicalChallenges: [],
     architecture: [],
@@ -238,6 +239,8 @@ export const projects: Project[] = [
     timeline: "2026 - Present",
     description:
       "A distributed training and experimentation platform designed for rapid vision product iteration with strong observability and reliable lifecycle control.",
+    homepageDescription:
+      "Computer-vision experiment platform with Go orchestration, Python workers, and cloud GPU jobs.",
     problem:
       "Researchers and product teams were rerunning fragmented scripts, hardening every experiment manually, and lacking a unified trail from idea to deployed model.",
     technicalChallenges: [
@@ -272,6 +275,7 @@ export const projects: Project[] = [
     timeline: "2025 - 2026",
     description:
       "A planning-and-execution product for LLM-driven agents with bounded autonomy, safety checks, and end-to-end run traces.",
+    homepageDescription: "LLM agent sandbox with bounded planning, safety gates, and replayable run traces.",
     problem:
       "The product needed convincing autonomous behavior while keeping every agent action explainable and recoverable.",
     technicalChallenges: [
@@ -306,6 +310,8 @@ export const projects: Project[] = [
     timeline: "2025 - Present",
     description:
       "A computer vision and multimodal AI layer that turns raw gameplay clips into focused coaching recommendations.",
+    homepageDescription:
+      "Local-first gaming AI co-host using computer vision, replay context, and live commentary.",
     problem:
       "Users needed practical feedback without spending extra hours reviewing raw gameplay and manually identifying key moments.",
     technicalChallenges: [
@@ -340,6 +346,7 @@ export const projects: Project[] = [
     timeline: "2024 - Present",
     description:
       "A social daily game that combines short interaction loops with stable backend operations and reliable replayability.",
+    homepageDescription: "Production daily social game with race-safe sessions, scoring, streaks, and leaderboards.",
     problem:
       "Game rounds needed to remain simple and fast while preserving score integrity, replays, and social sharing workflows.",
     technicalChallenges: [
@@ -366,10 +373,10 @@ export const projects: Project[] = [
   {
     title: "Arthrex DevOps Validator",
     eyebrow: "Migration safety toolkit",
-    role: "Implementation engineer",
-    timeline: "2023",
+    role: "Software engineering intern",
+    timeline: "June 2025 - Sept. 2025",
     description:
-      "An enterprise-grade validation platform reducing migration-checking risk with automated diagnostics and audit-ready evidence.",
+      "Validated 300K+ MySQL, Couchbase, and S3 migration records with automated integrity checks.",
     problem:
       "Migration quality checks were inconsistent and manual, slowing release confidence and post-change troubleshooting.",
     technicalChallenges: [
@@ -385,9 +392,9 @@ export const projects: Project[] = [
       "UI dashboards for exception triage and operational handoff."
     ],
     results: [
-      "Reduced manual audit burden with standardized validation outputs.",
-      "Improved repeatability of checks through versioned rule definitions.",
-      "Increased incident response speed by linking diagnostics directly to execution context."
+      "Reconciled 300K+ records across MySQL, Couchbase, and linked S3 media.",
+      "Cut worst-case validation time from 120 seconds to 20 seconds.",
+      "Built synchronization APIs that improved migration reliability and diagnostics."
     ],
     stack: ["Angular", "TypeScript", "Couchbase", "MySQL", "S3"],
     links: [

@@ -1,9 +1,9 @@
 type SubpageHeroVariant = "photography" | "projects" | "interests";
 
 type SubpageHeroProps = {
-  kicker: string;
+  kicker?: string;
   title: string;
-  description: string;
+  description?: string;
   meta?: string[];
   variant: SubpageHeroVariant;
 };
@@ -29,6 +29,9 @@ function SubpagePixelScene({ variant }: { variant: SubpageHeroVariant }) {
 
 export default function SubpageHero({ kicker, title, description, meta = [], variant }: SubpageHeroProps) {
   const titleId = `${variant}-page-title`;
+  const hasKicker = Boolean(kicker?.trim());
+  const hasDescription = Boolean(description?.trim());
+  const summaryLabel = `${kicker?.trim() || title} summary`;
 
   return (
     <section
@@ -37,11 +40,11 @@ export default function SubpageHero({ kicker, title, description, meta = [], var
     >
       <SubpagePixelScene variant={variant} />
       <div className="subpage-hero__content">
-        <p className="section-kicker eyebrow">{kicker}</p>
+        {hasKicker ? <p className="section-kicker eyebrow">{kicker}</p> : null}
         <h1 id={titleId}>{title}</h1>
-        <p className="section-lead">{description}</p>
+        {hasDescription ? <p className="section-lead">{description}</p> : null}
         {meta.length > 0 ? (
-          <div className="subpage-hero__meta" aria-label={`${kicker} summary`}>
+          <div className="subpage-hero__meta" aria-label={summaryLabel}>
             {meta.map((item) => (
               <span className="chip" key={item}>
                 {item}

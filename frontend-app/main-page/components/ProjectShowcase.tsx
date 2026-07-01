@@ -20,14 +20,6 @@ function isConfiguredLink(value: string) {
   );
 }
 
-function shortenText(value: string, max = 116) {
-  const trimmed = value.trim();
-  if (trimmed.length <= max) {
-    return trimmed;
-  }
-  return `${trimmed.slice(0, max).trimEnd()}...`;
-}
-
 function formatIndex(index: number) {
   return String(index + 1).padStart(2, "0");
 }
@@ -73,15 +65,6 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
 
   return (
     <div className="project-showcase project-showcase--deck">
-      <div className="project-deck__toolbar" aria-hidden="true">
-        <button className="project-deck__control project-deck__control--prev" type="button" tabIndex={-1} disabled>
-          <span className="project-deck__control-glyph" />
-        </button>
-        <button className="project-deck__control project-deck__control--next" type="button" tabIndex={-1} disabled>
-          <span className="project-deck__control-glyph" />
-        </button>
-      </div>
-
       <div className="project-deck__grid" role="list" aria-label="Featured projects">
         {safeProjects.map((project, index) => {
           const activeLinks = project.links.filter((link) => isConfiguredLink(link.href));
@@ -101,7 +84,7 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
               <div className="project-deck-card__copy">
                 <h3>{project.title}</h3>
                 <p className="project-deck-card__meta">{project.timeline}</p>
-                <p className="project-deck-card__description">{shortenText(project.description)}</p>
+                <p className="project-deck-card__description">{project.homepageDescription ?? project.description}</p>
               </div>
 
               <div className="project-deck-card__footer">

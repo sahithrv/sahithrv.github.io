@@ -55,11 +55,12 @@ async function loadProjectImages(): Promise<{ slug: string; src: string }[]> {
 
 export default async function ProjectsPage() {
   const projectImages = await loadProjectImages();
-  const projectsWithImages = projects.map((project) => ({
-    ...project,
-    images: resolveProjectImages(project.title, projectImages)
-  })) as ProjectWithImages[];
-  const stackCount = new Set(projects.flatMap((project) => project.stack)).size;
+  const projectsWithImages = projects
+    .filter((project) => project.title !== "Arthrex DevOps Validator")
+    .map((project) => ({
+      ...project,
+      images: resolveProjectImages(project.title, projectImages)
+    })) as ProjectWithImages[];
 
   return (
     <div className="portfolio-shell portfolio-shell--pixel pixel-polished-theme pixel-page-bg subpage-shell subpage-shell--projects">
@@ -74,7 +75,6 @@ export default async function ProjectsPage() {
           title="Project deep dives"
           description="A project-focused index for longer writeups about what I built, what was hard, and how each system was designed."
           variant="projects"
-          meta={[`${projectsWithImages.length} projects`, `${stackCount} tools`, "Deep-dive writeups"]}
         />
 
         <section

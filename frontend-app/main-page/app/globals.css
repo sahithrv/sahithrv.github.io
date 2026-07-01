@@ -8811,6 +8811,239 @@ html {
   background: rgba(37, 99, 235, 0.42);
 }
 
+.subpage-shell--projects.pixel-page-bg {
+  background:
+    radial-gradient(circle at 18% 9%, rgba(34, 211, 238, 0.18), transparent 27rem),
+    radial-gradient(circle at 84% 16%, rgba(96, 165, 250, 0.18), transparent 30rem),
+    linear-gradient(180deg, #071421 0%, #0a1d32 43%, #edf6ff 94%);
+}
+
+.subpage-shell--projects::before,
+.subpage-shell--projects::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.subpage-shell--projects::before {
+  inset: 0;
+  z-index: 0;
+  opacity: 0.34;
+  background-image:
+    linear-gradient(rgba(191, 219, 254, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(191, 219, 254, 0.06) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: linear-gradient(180deg, black 0 56%, transparent 88%);
+  mask-image: linear-gradient(180deg, black 0 56%, transparent 88%);
+}
+
+.subpage-shell--projects::after {
+  left: 50%;
+  top: clamp(5.8rem, 10vw, 8.7rem);
+  z-index: 0;
+  width: min(1420px, 100vw);
+  height: clamp(230px, 25vw, 380px);
+  transform: translateX(-50%);
+  opacity: 0.42;
+  background:
+    url("/images/pixel-scenes/night-city-left.png") left bottom / contain no-repeat,
+    url("/images/pixel-scenes/night-city-right.png") right bottom / contain no-repeat;
+  filter: drop-shadow(0 26px 36px rgba(0, 0, 0, 0.34));
+  image-rendering: pixelated;
+}
+
+.subpage-shell--projects main {
+  padding-bottom: 0;
+}
+
+.subpage-shell--projects .subpage-hero {
+  min-height: 0;
+  align-items: center;
+  padding: clamp(0.9rem, 2vw, 1.35rem) clamp(1rem, 2.4vw, 1.7rem);
+  border-color: rgba(147, 197, 253, 0.22);
+  background:
+    linear-gradient(180deg, rgba(12, 29, 50, 0.88), rgba(8, 24, 46, 0.78)),
+    rgba(8, 24, 46, 0.82);
+  box-shadow: 0 24px 70px rgba(2, 8, 23, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: #f8fbff;
+}
+
+.subpage-shell--projects .subpage-hero::after {
+  left: clamp(1rem, 2.4vw, 1.7rem);
+  right: clamp(1rem, 2.4vw, 1.7rem);
+  bottom: clamp(0.55rem, 1vw, 0.75rem);
+}
+
+.subpage-shell--projects .subpage-hero__content {
+  gap: clamp(0.45rem, 1vw, 0.7rem);
+  max-width: min(780px, 100%);
+  padding-right: clamp(4.8rem, 10vw, 7.5rem);
+}
+
+.subpage-shell--projects .subpage-hero h1 {
+  color: #ffffff;
+  max-width: 18ch;
+  font-size: clamp(2.05rem, 4vw, 3.6rem);
+  text-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+.subpage-shell--projects .subpage-hero .section-lead {
+  color: #b8c8dd;
+  max-width: 64ch;
+  line-height: 1.5;
+}
+
+.subpage-shell--projects .subpage-hero .section-kicker {
+  color: #9cc7ff;
+}
+
+.subpage-shell--projects .subpage-hero__meta {
+  gap: 0.42rem;
+  margin-top: 0;
+}
+
+.subpage-shell--projects .subpage-hero .chip {
+  border-color: rgba(147, 197, 253, 0.28);
+  background: rgba(12, 29, 50, 0.72);
+  color: #d9f8ff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.subpage-shell--projects .subpage-pixel-scene__grid {
+  opacity: 0.2;
+  -webkit-mask-image: radial-gradient(circle at 24% 42%, black 0 12rem, transparent 30rem);
+  mask-image: radial-gradient(circle at 24% 42%, black 0 12rem, transparent 30rem);
+}
+
+.subpage-shell--projects .subpage-pixel-scene::before {
+  content: "";
+  position: absolute;
+  left: clamp(-1rem, -1vw, -0.25rem);
+  right: clamp(-1rem, -1vw, -0.25rem);
+  bottom: clamp(-6.4rem, -7vw, -4.7rem);
+  z-index: 0;
+  height: clamp(180px, 18vw, 280px);
+  opacity: 0.36;
+  pointer-events: none;
+  background:
+    url("/images/pixel-scenes/night-city-left.png") left bottom / contain no-repeat,
+    url("/images/pixel-scenes/night-city-right.png") right bottom / contain no-repeat;
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.3));
+  image-rendering: pixelated;
+}
+
+.subpage-shell--projects .subpage-cloud--two,
+.subpage-shell--projects .subpage-city {
+  display: none;
+}
+
+.subpage-shell--projects .subpage-cloud--one {
+  right: clamp(3rem, 11vw, 10rem);
+  top: clamp(0.7rem, 2vw, 1.4rem);
+  opacity: 0.24;
+  filter: drop-shadow(0 16px 28px rgba(147, 197, 253, 0.16));
+}
+
+.subpage-shell--projects .subpage-pixel-icon {
+  right: clamp(1rem, 4vw, 3rem);
+  top: 50%;
+  width: clamp(62px, 7vw, 82px);
+  height: clamp(58px, 6vw, 72px);
+  border-color: rgba(147, 197, 253, 0.26);
+  background:
+    linear-gradient(180deg, rgba(15, 42, 72, 0.88), rgba(8, 24, 46, 0.86)),
+    #0b1d31;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28), inset 0 0 0 1px rgba(147, 197, 253, 0.08);
+  transform: translateY(-50%);
+}
+
+.subpage-shell--projects .subpage-pixel-icon--projects span:nth-child(1) {
+  border-color: #6ea8ff;
+  background: rgba(8, 24, 46, 0.72);
+}
+
+.subpage-shell--projects .subpage-pixel-icon--projects span:nth-child(2) {
+  background: var(--pixel-cyan-400);
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.36);
+}
+
+.subpage-shell--projects .subpage-pixel-icon--projects span:nth-child(3),
+.subpage-shell--projects .subpage-pixel-icon--projects span:nth-child(4) {
+  background: rgba(147, 197, 253, 0.72);
+}
+
+.subpage-shell--projects .projects-index-section {
+  border-color: rgba(147, 197, 253, 0.18);
+  background:
+    linear-gradient(180deg, rgba(8, 24, 46, 0.76), rgba(11, 30, 51, 0.66)),
+    rgba(8, 24, 46, 0.72);
+  box-shadow: 0 26px 72px rgba(2, 8, 23, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.subpage-shell--projects .projects-index-section::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(191, 219, 254, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(191, 219, 254, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+.subpage-shell--projects .projects-index-section::after {
+  opacity: 0.26;
+}
+
+.subpage-shell--projects .project-index-card {
+  border-color: rgba(147, 197, 253, 0.24);
+  background:
+    linear-gradient(180deg, rgba(248, 252, 255, 0.98), rgba(232, 244, 255, 0.94)),
+    #f8fcff;
+  box-shadow: 0 18px 42px rgba(2, 8, 23, 0.2);
+}
+
+.subpage-shell--projects .project-index-card:hover,
+.subpage-shell--projects .project-index-card:focus-visible {
+  border-color: rgba(34, 211, 238, 0.42);
+  box-shadow: 0 24px 58px rgba(2, 8, 23, 0.28);
+}
+
+.subpage-shell--projects .project-index-card__visual {
+  border-bottom-color: rgba(147, 197, 253, 0.24);
+  background:
+    linear-gradient(180deg, rgba(14, 44, 76, 0.88), rgba(11, 30, 51, 0.78)),
+    #0b1d31;
+}
+
+.subpage-shell--projects .project-index-card__visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.24;
+  background-image:
+    linear-gradient(rgba(191, 219, 254, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(191, 219, 254, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.subpage-shell--projects .project-index-card__visual .project-card__pixel-icon {
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.34));
+}
+
+.subpage-shell--projects .project-index-card__eyebrow {
+  color: var(--pixel-blue-600);
+}
+
+.subpage-shell--projects .footer-cta--pixel {
+  margin-top: clamp(2.2rem, 4vw, 3.4rem);
+  border-top-color: rgba(34, 211, 238, 0.34);
+  box-shadow: 0 -18px 44px rgba(7, 20, 33, 0.28);
+}
+
 .subpage-shell--photography .travel-archive-section::after,
 .subpage-shell--projects .projects-index-section::after,
 .subpage-shell--interests .interest-section::after {
@@ -8830,6 +9063,10 @@ html {
     linear-gradient(rgba(37, 99, 235, 0.5) 0 0) 23px 25px / 62px 4px no-repeat,
     linear-gradient(rgba(37, 99, 235, 0.32) 0 0) 53px 39px / 34px 4px no-repeat;
   image-rendering: pixelated;
+}
+
+.subpage-shell--projects .projects-index-section::after {
+  opacity: 0.26;
 }
 
 .subpage-shell .photography-viewer {
@@ -9493,6 +9730,39 @@ html {
 }
 
 @media (max-width: 760px) {
+  .subpage-shell--projects::after {
+    top: 5.1rem;
+    height: 210px;
+    opacity: 0.26;
+    background-size: 68% auto, 68% auto;
+  }
+
+  .subpage-shell--projects .subpage-hero {
+    align-items: center;
+    padding: 0.9rem 0.95rem 1.05rem;
+  }
+
+  .subpage-shell--projects .subpage-hero__content {
+    padding-right: 0;
+  }
+
+  .subpage-shell--projects .subpage-hero h1 {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .subpage-shell--projects .subpage-pixel-scene::before {
+    left: -2.5rem;
+    right: -2.5rem;
+    bottom: -3.8rem;
+    height: 168px;
+    opacity: 0.28;
+  }
+
+  .subpage-shell--projects .subpage-pixel-icon,
+  .subpage-shell--projects .subpage-cloud--one {
+    display: none;
+  }
+
   .subpage-shell .photography-viewer__toolbar {
     align-items: stretch;
     flex-direction: column;
@@ -9600,11 +9870,19 @@ html {
 }
 
 .subpage-shell--photography .travel-archive-section {
-  background: var(--photography-panel-bg);
+  width: min(900px, var(--container));
+  padding-block: clamp(1rem, 2vw, 1.45rem);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 252, 255, 0.88) 54%, rgba(255, 247, 242, 0.82) 100%),
+    var(--pixel-surface);
 }
 
 .subpage-shell--photography .travel-archive-section::after {
   content: none;
+}
+
+.subpage-shell--photography main {
+  padding-top: 0;
 }
 
 .subpage-shell .photography-gallery.photography-viewer--post {
@@ -9833,61 +10111,789 @@ html {
 
 /* Photography page background artwork */
 .subpage-shell--photography .photography-page-backdrop {
+  --photography-backdrop-aspect: 1672 / 941;
+
   position: relative;
   z-index: 0;
   isolation: isolate;
   display: grid;
-  gap: var(--space-shell-gap);
-  padding-bottom: clamp(1.25rem, 2.8vw, 2rem);
+  gap: clamp(0.45rem, 1vw, 0.7rem);
+  align-content: start;
+  min-height: 0;
+  aspect-ratio: var(--photography-backdrop-aspect);
+  padding-top: clamp(0.6rem, 1.4vw, 1rem);
+  padding-bottom: clamp(0.75rem, 1.6vw, 1.15rem);
   overflow: hidden;
+  background-color: #f6c0cd;
 }
 
 .subpage-shell--photography .photography-page-backdrop > .section-shell + .section-shell {
   margin-top: 0;
 }
 
-.subpage-shell--photography .photography-page-backdrop::before,
-.subpage-shell--photography .photography-page-backdrop::after {
-  content: "";
+.subpage-shell--photography .photography-page-backdrop::before {
+  content: none;
+}
+
+.animated-pixel-background {
   position: absolute;
-  left: 0;
-  right: 0;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-repeat: no-repeat;
-  background-size: cover;
+  overflow: hidden;
+  background-color: #f6c0cd;
 }
 
-.subpage-shell--photography .photography-page-backdrop::before {
-  top: 0;
-  height: min(58rem, 54%);
-  background-image:
-    linear-gradient(180deg, rgba(247, 251, 255, 0.38), rgba(247, 251, 255, 0.68)),
-    url("/images/backgrounds/background1.png");
-  background-position: center top;
+.animated-pixel-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(247, 251, 255, 0.16), rgba(239, 248, 255, 0.24) 42%, rgba(247, 251, 255, 0.18));
+}
+
+.animated-pixel-background__layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  user-select: none;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.animated-pixel-background__layer--base {
+  z-index: 0;
+}
+
+.animated-pixel-background__layer--water {
+  z-index: 1;
+  opacity: 0.86;
+  animation: pixel-water-drift 9.5s ease-in-out infinite alternate;
+}
+
+.animated-pixel-background__layer--left-trees {
+  z-index: 2;
+  opacity: 0.9;
+  transform-origin: 9% 70%;
+  animation: pixel-left-palm-sway 11.5s ease-in-out infinite alternate;
+}
+
+.animated-pixel-background__layer--right-trees {
+  z-index: 2;
+  opacity: 0.9;
+  transform-origin: 84% 72%;
+  animation: pixel-right-palm-sway 12.5s ease-in-out infinite alternate-reverse;
+}
+
+.animated-pixel-background__layer--big-tree {
+  z-index: 3;
+  opacity: 0.92;
+  transform-origin: 96% 76%;
+  animation: pixel-big-palm-sway 12s ease-in-out infinite alternate;
+}
+
+.animated-pixel-background__layer--bush {
+  z-index: 4;
+  opacity: 0.88;
+  transform-origin: 98% 82%;
+  animation: pixel-foreground-leaf-shift 10.5s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes pixel-water-drift {
+  0% {
+    filter: brightness(0.985);
+    transform: translate3d(-4px, 1px, 0);
+  }
+
+  48% {
+    filter: brightness(1.03);
+    transform: translate3d(2.5px, -1px, 0);
+  }
+
+  100% {
+    filter: brightness(1.005);
+    transform: translate3d(4.5px, 0.5px, 0);
+  }
+}
+
+@keyframes pixel-left-palm-sway {
+  0% {
+    transform: translate3d(-2.5px, 0.25px, 0) rotate(-1.3deg) skewX(-0.4deg);
+  }
+
+  52% {
+    transform: translate3d(1.5px, -1.5px, 0) rotate(0.85deg) skewX(0.25deg);
+  }
+
+  100% {
+    transform: translate3d(3px, 0.25px, 0) rotate(1.45deg) skewX(0.45deg);
+  }
+}
+
+@keyframes pixel-right-palm-sway {
+  0% {
+    transform: translate3d(3px, 0.25px, 0) rotate(1.2deg) skewX(0.35deg);
+  }
+
+  45% {
+    transform: translate3d(-2px, -1.75px, 0) rotate(-0.8deg) skewX(-0.225deg);
+  }
+
+  100% {
+    transform: translate3d(-3.5px, 0.25px, 0) rotate(-1.4deg) skewX(-0.425deg);
+  }
+}
+
+@keyframes pixel-big-palm-sway {
+  0% {
+    transform: translate3d(-3px, 0.25px, 0) rotate(-1.2deg) skewX(-0.3deg);
+  }
+
+  50% {
+    transform: translate3d(2px, -1.75px, 0) rotate(0.775deg) skewX(0.2deg);
+  }
+
+  100% {
+    transform: translate3d(3.5px, 0.25px, 0) rotate(1.35deg) skewX(0.35deg);
+  }
+}
+
+@keyframes pixel-foreground-leaf-shift {
+  0% {
+    transform: translate3d(-3.5px, 0.5px, 0) rotate(-0.85deg);
+  }
+
+  46% {
+    transform: translate3d(2px, -2px, 0) rotate(0.45deg);
+  }
+
+  100% {
+    transform: translate3d(4px, 0.5px, 0) rotate(0.95deg);
+  }
 }
 
 .subpage-shell--photography .photography-page-backdrop::after {
-  bottom: 0;
-  height: 64%;
-  background-image:
-    linear-gradient(180deg, rgba(247, 251, 255, 0.62), rgba(239, 248, 255, 0.46) 36%, rgba(247, 251, 255, 0.72)),
-    url("/images/backgrounds/background2.png");
-  background-position: center bottom;
+  content: none;
+}
+
+.subpage-shell--photography .subpage-hero {
+  width: fit-content;
+  max-width: var(--container);
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+  align-items: center;
+  padding: clamp(0.45rem, 1.1vw, 0.75rem) clamp(0.75rem, 1.8vw, 1.15rem);
+  border-color: rgba(255, 255, 255, 0.52);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 12px 32px rgba(8, 24, 46, 0.08);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.subpage-shell--photography .subpage-hero::after {
+  content: none;
+}
+
+.subpage-shell--photography .subpage-hero__content {
+  display: block;
+  max-width: none;
+  padding-right: 0;
+}
+
+.subpage-shell--photography .subpage-hero h1 {
+  max-width: none;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 0.98;
+}
+
+.subpage-shell--photography .subpage-pixel-scene {
+  display: none;
 }
 
 @media (max-width: 760px) {
   .subpage-shell--photography .photography-page-backdrop {
+    min-height: calc(100svh - 74px);
+    aspect-ratio: auto;
+    padding-top: 0.6rem;
     padding-bottom: 1.1rem;
   }
 
   .subpage-shell--photography .photography-page-backdrop::before {
-    height: 46%;
     background-position: center top;
   }
 
-  .subpage-shell--photography .photography-page-backdrop::after {
-    height: 68%;
-    background-position: center bottom;
+  .subpage-shell--photography .subpage-hero {
+    width: fit-content;
+    max-width: calc(100vw - 32px);
+    padding: 0.48rem 0.72rem;
+    border-radius: 16px;
+  }
+
+  .subpage-shell--photography .subpage-hero h1 {
+    font-size: clamp(1.85rem, 9vw, 2.6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-pixel-background__layer {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Photography transparent hero and lighter gallery presentation */
+.subpage-shell--photography .subpage-hero {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.subpage-shell--photography .subpage-hero h1 {
+  text-shadow: 0 8px 26px rgba(255, 255, 255, 0.46);
+}
+
+.subpage-shell--photography .travel-archive-section {
+  width: min(1080px, var(--container));
+  padding: clamp(0.55rem, 1.2vw, 0.9rem);
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.subpage-shell .photography-gallery.photography-viewer--gallery {
+  width: min(1010px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 230px);
+  grid-template-areas:
+    "toolbar toolbar"
+    "feature thumbs";
+  gap: clamp(0.55rem, 1.1vw, 0.75rem);
+  align-items: start;
+}
+
+.subpage-shell .photography-viewer--gallery .photography-viewer__toolbar {
+  grid-area: toolbar;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(0.75rem, 2vw, 1.1rem);
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 18px;
+  padding: clamp(0.55rem, 1vw, 0.72rem);
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: 0 12px 30px rgba(8, 24, 46, 0.08);
+}
+
+.subpage-shell .photography-viewer--gallery .photography-viewer__toolbar h2 {
+  margin-top: 0.08rem;
+  overflow-wrap: anywhere;
+  font-size: clamp(1.2rem, 2.1vw, 1.72rem);
+}
+
+.subpage-shell .photography-viewer--gallery .photography-viewer__controls {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+.subpage-shell .photography-viewer--gallery .photography-viewer__post {
+  grid-area: feature;
+  border-radius: 18px;
+  border-color: rgba(255, 255, 255, 0.44);
+  background: rgba(255, 255, 255, 0.56);
+  box-shadow: 0 16px 36px rgba(8, 24, 46, 0.1);
+}
+
+.subpage-shell .photography-viewer--gallery .photography-viewer__stage {
+  display: block;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.subpage-shell .photography-viewer--gallery .photography-viewer__media-button {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  min-height: 0;
+  border-radius: 17px 17px 0 0;
+  background: rgba(246, 248, 252, 0.72);
+}
+
+.subpage-shell .photography-viewer--gallery .photography-viewer__image {
+  object-fit: contain;
+  padding: 0;
+}
+
+.subpage-shell .photography-viewer--gallery .photography-viewer__post-footer {
+  border-top-color: rgba(15, 35, 65, 0.08);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.photography-viewer__thumb-grid {
+  grid-area: thumbs;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+  max-height: min(620px, 64vh);
+  margin: 0;
+  padding: 0.18rem;
+  overflow-y: auto;
+  list-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.photography-viewer__thumb-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 0.58rem;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  padding: 0.42rem;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--pixel-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(8, 24, 46, 0.06);
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.photography-viewer__thumb-card:hover,
+.photography-viewer__thumb-card:focus-visible,
+.photography-viewer__thumb-card.is-active {
+  border-color: rgba(37, 99, 235, 0.34);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.photography-viewer__thumb-card:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.18);
+  outline-offset: 2px;
+}
+
+.photography-viewer__thumb-card.is-active {
+  box-shadow: inset 0 0 0 2px rgba(37, 99, 235, 0.12), 0 10px 22px rgba(8, 24, 46, 0.08);
+}
+
+.photography-viewer__thumb-card:hover {
+  transform: translateY(-1px);
+}
+
+.photography-viewer__thumb-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  background: rgba(239, 248, 255, 0.86);
+  overflow: hidden;
+}
+
+.photography-viewer__thumb-image {
+  object-fit: cover;
+}
+
+.photography-viewer__thumb-title {
+  min-width: 0;
+  color: var(--pixel-ink);
+  font-size: 0.78rem;
+  font-weight: 820;
+  line-height: 1.2;
+}
+
+.travel-lightbox-backdrop {
+  animation: none;
+}
+
+@media (max-width: 900px) {
+  .subpage-shell .photography-gallery.photography-viewer--gallery {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "toolbar"
+      "feature"
+      "thumbs";
+  }
+
+  .photography-viewer__thumb-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: none;
+    overflow: visible;
+  }
+
+  .photography-viewer__thumb-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .subpage-shell--photography .travel-archive-section {
+    width: min(100%, calc(100vw - 1rem));
+    padding: 0.7rem;
+  }
+
+  .subpage-shell .photography-viewer--gallery .photography-viewer__toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.72rem;
+  }
+
+  .subpage-shell .photography-viewer--gallery .photography-viewer__identity {
+    align-items: flex-start;
+  }
+
+  .subpage-shell .photography-viewer--gallery .photography-viewer__toolbar h2 {
+    max-width: 100%;
+    font-size: clamp(1.2rem, 8vw, 1.75rem);
+    line-height: 1.08;
+  }
+
+  .subpage-shell .photography-viewer--gallery .photography-viewer__controls {
+    justify-content: space-between;
+  }
+
+  .subpage-shell .photography-viewer--gallery .photography-viewer__media-button {
+    aspect-ratio: 3 / 2;
+  }
+
+  .photography-viewer__thumb-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photography-viewer__thumb-card {
+    transition: none !important;
+  }
+
+  .photography-viewer__thumb-card:hover {
+    transform: none !important;
+  }
+}
+
+/* Main page project deck content fit */
+.portfolio-shell--pixel .project-showcase--deck {
+  grid-template-columns: 1fr;
+  grid-template-areas: "deck";
+}
+
+.portfolio-shell--pixel .project-deck__grid {
+  grid-area: deck;
+}
+
+.portfolio-shell--pixel .project-deck-card__description {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: initial;
+}
+
+/* Compact interests page */
+.subpage-shell--interests main {
+  padding-top: clamp(0.65rem, 1.5vw, 1rem);
+}
+
+.subpage-shell--interests .subpage-hero {
+  min-height: clamp(230px, 28vw, 340px);
+}
+
+.subpage-shell--interests .subpage-hero h1 {
+  max-width: 14ch;
+}
+
+.subpage-shell--interests .interests-compact-section {
+  padding: clamp(0.9rem, 2vw, 1.35rem);
+  overflow: visible;
+}
+
+.subpage-shell--interests .interests-compact-section::after {
+  content: none;
+}
+
+.interests-compact-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+  gap: clamp(0.85rem, 1.8vw, 1.15rem);
+  align-items: stretch;
+}
+
+.basketball-guess-card,
+.interest-games-card {
+  position: relative;
+  display: grid;
+  gap: clamp(0.8rem, 1.6vw, 1rem);
+  border-radius: 18px;
+  padding: clamp(0.9rem, 1.8vw, 1.15rem);
+  overflow: hidden;
+}
+
+.basketball-guess-card::before,
+.interest-games-card::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.75rem;
+  height: 3px;
+  border-radius: 999px;
+  opacity: 0.56;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--pixel-blue-500) 0 10px,
+    transparent 10px 15px,
+    var(--pixel-cyan-400) 15px 22px,
+    transparent 22px 28px
+  );
+}
+
+.basketball-guess-card > *,
+.interest-games-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.guess-game__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.guess-game__header h2,
+.interest-games-card h2 {
+  margin: 0.12rem 0 0;
+  color: var(--pixel-ink);
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  line-height: 1.12;
+}
+
+.guess-game__score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.2rem;
+  min-height: 2.2rem;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  border-radius: 12px;
+  background: rgba(239, 248, 255, 0.86);
+  color: var(--pixel-blue-700);
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
+.guess-game__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  gap: 0.45rem;
+}
+
+.guess-game__input,
+.guess-game__button {
+  min-height: 42px;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  border-radius: 10px;
+  font: inherit;
+}
+
+.guess-game__input {
+  min-width: 0;
+  padding: 0.45rem 0.72rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--pixel-ink);
+  outline: none;
+}
+
+.guess-game__input:focus {
+  border-color: rgba(37, 99, 235, 0.42);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.guess-game__button {
+  padding: 0.42rem 0.7rem;
+  background: var(--pixel-blue-600);
+  color: #ffffff;
+  font-weight: 850;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.guess-game__button:hover,
+.guess-game__button:focus-visible {
+  background: var(--pixel-blue-700);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.18);
+  transform: translateY(-1px);
+}
+
+.guess-game__button--soft {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--pixel-blue-700);
+}
+
+.guess-game__button--soft:hover,
+.guess-game__button--soft:focus-visible {
+  background: rgba(239, 248, 255, 0.96);
+}
+
+.guess-game__status {
+  min-height: 1.35rem;
+  color: var(--pixel-ink-muted);
+  font-size: 0.84rem;
+  font-weight: 760;
+}
+
+.guess-game__board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 0 0 0.55rem;
+  list-style: none;
+}
+
+.guess-game__slot {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: center;
+  min-height: 2.55rem;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 12px;
+  padding: 0.36rem 0.5rem;
+  background: rgba(248, 252, 255, 0.82);
+}
+
+.guess-game__slot.is-guessed {
+  border-color: rgba(34, 197, 94, 0.28);
+  background: rgba(240, 253, 244, 0.82);
+}
+
+.guess-game__rank,
+.game-card__rank {
+  border-radius: 10px;
+}
+
+.guess-game__rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.65rem;
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  background: rgba(239, 248, 255, 0.84);
+  color: var(--pixel-blue-700);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.guess-game__name {
+  min-width: 0;
+  color: var(--pixel-ink);
+  font-size: 0.9rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.guess-game__slot:not(.is-guessed) .guess-game__name {
+  color: var(--pixel-ink-soft);
+}
+
+.interest-games-card {
+  align-content: start;
+}
+
+@media (max-width: 980px) {
+  .interests-compact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .subpage-shell--interests .subpage-hero {
+    min-height: 260px;
+  }
+
+  .guess-game__header,
+  .guess-game__form {
+    grid-template-columns: 1fr;
+  }
+
+  .guess-game__header {
+    display: grid;
+  }
+
+  .guess-game__score {
+    justify-self: start;
+  }
+
+  .guess-game__button {
+    width: 100%;
+  }
+
+  .guess-game__board {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guess-game__button {
+    transition: none !important;
+  }
+
+  .guess-game__button:hover,
+  .guess-game__button:focus-visible {
+    transform: none !important;
+  }
+}
+
+.subpage-shell--interests .game-list.game-list--compact {
+  grid-template-columns: 1fr;
+  gap: 0.48rem;
+}
+
+.subpage-shell--interests .game-card.game-card--compact {
+  min-height: 0;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: center;
+  border-radius: 12px;
+  padding: 0.5rem 0.55rem;
+}
+
+.subpage-shell--interests .game-card.game-card--compact::before {
+  content: none;
+}
+
+.subpage-shell--interests .game-card.game-card--compact h3 {
+  margin: 0;
+  max-width: 100%;
+  font-size: clamp(0.92rem, 1.35vw, 1.02rem);
+  line-height: 1.2;
+}
+
+@media (max-width: 980px) {
+  .subpage-shell--interests .game-list.game-list--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .subpage-shell--interests .game-list.game-list--compact {
+    grid-template-columns: 1fr;
   }
 }
