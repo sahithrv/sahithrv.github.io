@@ -10606,20 +10606,81 @@ html {
 
 /* Compact interests page */
 .subpage-shell--interests main {
-  padding-top: clamp(0.65rem, 1.5vw, 1rem);
+  padding-top: 0;
+}
+
+.subpage-shell--interests .interests-page-backdrop {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  display: grid;
+  gap: clamp(0.5rem, 1vw, 0.75rem);
+  align-content: start;
+  min-height: calc(100svh - 72px);
+  padding-top: clamp(0.65rem, 1.4vw, 1rem);
+  padding-bottom: clamp(0.9rem, 1.8vw, 1.3rem);
+  overflow: hidden;
+  background-color: #d9eafb;
+}
+
+.subpage-shell--interests .interests-page-backdrop > .section-shell + .section-shell {
+  margin-top: 0;
+}
+
+.subpage-shell--interests .interests-page-backdrop .animated-pixel-background {
+  background-color: #d9eafb;
+}
+
+.subpage-shell--interests .interests-page-backdrop .animated-pixel-background::after {
+  background: linear-gradient(
+    180deg,
+    rgba(247, 251, 255, 0.04),
+    rgba(239, 248, 255, 0.2) 48%,
+    rgba(247, 251, 255, 0.34)
+  );
 }
 
 .subpage-shell--interests .subpage-hero {
-  min-height: clamp(230px, 28vw, 340px);
+  width: fit-content;
+  max-width: var(--container);
+  min-height: 0;
+  align-items: center;
+  padding: clamp(0.35rem, 0.9vw, 0.58rem) clamp(0.55rem, 1.5vw, 0.9rem);
+  border-color: transparent;
+  border-radius: 16px;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.subpage-shell--interests .subpage-hero::after,
+.subpage-shell--interests .subpage-pixel-scene {
+  content: none;
+  display: none;
+}
+
+.subpage-shell--interests .subpage-hero__content {
+  display: block;
+  max-width: none;
 }
 
 .subpage-shell--interests .subpage-hero h1 {
-  max-width: 14ch;
+  max-width: none;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 0.98;
+  text-shadow: 0 8px 26px rgba(255, 255, 255, 0.5);
 }
 
 .subpage-shell--interests .interests-compact-section {
+  width: min(1180px, var(--container));
   padding: clamp(0.9rem, 2vw, 1.35rem);
   overflow: visible;
+  border-color: rgba(255, 255, 255, 0.56);
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 18px 42px rgba(8, 24, 46, 0.08);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 
 .subpage-shell--interests .interests-compact-section::after {
@@ -10630,12 +10691,12 @@ html {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
   gap: clamp(0.85rem, 1.8vw, 1.15rem);
-  align-items: stretch;
+  align-items: start;
 }
 
-.basketball-guess-card,
+.hooper-board-card,
 .interest-games-card {
   position: relative;
   display: grid;
@@ -10645,7 +10706,7 @@ html {
   overflow: hidden;
 }
 
-.basketball-guess-card::before,
+.hooper-board-card::before,
 .interest-games-card::before {
   content: "";
   position: absolute;
@@ -10664,20 +10725,24 @@ html {
   );
 }
 
-.basketball-guess-card > *,
+.hooper-board-card > *,
 .interest-games-card > * {
   position: relative;
   z-index: 1;
 }
 
-.guess-game__header {
+.hooper-board-card {
+  align-content: start;
+}
+
+.hooper-board__header {
   display: flex;
   align-items: start;
   justify-content: space-between;
   gap: 0.85rem;
 }
 
-.guess-game__header h2,
+.hooper-board__header h2,
 .interest-games-card h2 {
   margin: 0.12rem 0 0;
   color: var(--pixel-ink);
@@ -10685,137 +10750,403 @@ html {
   line-height: 1.12;
 }
 
-.guess-game__score {
+.hooper-board__header p:not(.section-kicker) {
+  margin-top: 0.36rem;
+  color: var(--pixel-ink-muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.hooper-board__progress {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 4.2rem;
-  min-height: 2.2rem;
+  min-width: 8.1rem;
+  min-height: 2.35rem;
   border: 1px solid rgba(37, 99, 235, 0.18);
   border-radius: 12px;
   background: rgba(239, 248, 255, 0.86);
   color: var(--pixel-blue-700);
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   font-weight: 850;
+  white-space: nowrap;
 }
 
-.guess-game__form {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto auto;
+.hooper-board__progress span {
+  font-size: 1rem;
+}
+
+.hooper-board__controls {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.45rem;
 }
 
-.guess-game__input,
-.guess-game__button {
+.hooper-board__button {
   min-height: 42px;
   border: 1px solid rgba(37, 99, 235, 0.18);
   border-radius: 10px;
+  padding: 0.42rem 0.74rem;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--pixel-blue-700);
   font: inherit;
-}
-
-.guess-game__input {
-  min-width: 0;
-  padding: 0.45rem 0.72rem;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--pixel-ink);
-  outline: none;
-}
-
-.guess-game__input:focus {
-  border-color: rgba(37, 99, 235, 0.42);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.guess-game__button {
-  padding: 0.42rem 0.7rem;
-  background: var(--pixel-blue-600);
-  color: #ffffff;
   font-weight: 850;
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
-.guess-game__button:hover,
-.guess-game__button:focus-visible {
-  background: var(--pixel-blue-700);
-  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.18);
+.hooper-board__button--accent {
+  background: var(--pixel-blue-600);
+  color: #ffffff;
+}
+
+.hooper-board__button:hover,
+.hooper-board__button:focus-visible {
+  border-color: rgba(37, 99, 235, 0.38);
+  background: rgba(239, 248, 255, 0.96);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.16);
   transform: translateY(-1px);
 }
 
-.guess-game__button--soft {
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--pixel-blue-700);
+.hooper-board__button--accent:hover,
+.hooper-board__button--accent:focus-visible {
+  background: var(--pixel-blue-700);
 }
 
-.guess-game__button--soft:hover,
-.guess-game__button--soft:focus-visible {
-  background: rgba(239, 248, 255, 0.96);
-}
-
-.guess-game__status {
-  min-height: 1.35rem;
-  color: var(--pixel-ink-muted);
-  font-size: 0.84rem;
-  font-weight: 760;
-}
-
-.guess-game__board {
+.hooper-board__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem;
-  padding: 0 0 0.55rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 172px), 1fr));
+  gap: 0.58rem;
+  padding: 0;
   list-style: none;
 }
 
-.guess-game__slot {
+.hooper-board__item {
   display: grid;
-  grid-template-columns: 2.6rem minmax(0, 1fr);
-  gap: 0.55rem;
+  min-width: 0;
+}
+
+.hooper-card {
+  position: relative;
+  min-height: 236px;
+  width: 100%;
+  display: grid;
+  align-content: space-between;
+  gap: 0.65rem;
+  overflow: hidden;
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  border-radius: 14px;
+  padding: 0.72rem;
+  background:
+    radial-gradient(circle at 96% 4%, rgba(251, 191, 36, 0.28), transparent 6rem),
+    linear-gradient(150deg, rgba(255, 255, 255, 0.96), rgba(239, 248, 255, 0.84));
+  color: var(--pixel-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(8, 24, 46, 0.06);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.hooper-card::before,
+.hooper-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -24% -34% auto;
+  width: 10rem;
+  height: 10rem;
+  border: 2px solid rgba(217, 119, 6, 0.14);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.hooper-card::after {
+  inset: -18% auto auto -30%;
+  border-color: rgba(37, 99, 235, 0.13);
+}
+
+.hooper-card:hover,
+.hooper-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.34);
+  box-shadow: 0 18px 36px rgba(8, 24, 46, 0.12);
+}
+
+.hooper-card.is-revealed {
+  border-color: rgba(217, 119, 6, 0.26);
+  background:
+    radial-gradient(circle at 86% 12%, rgba(251, 191, 36, 0.24), transparent 6rem),
+    linear-gradient(150deg, rgba(255, 252, 245, 0.98), rgba(239, 248, 255, 0.9));
+}
+
+.hooper-card__glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.36;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.hooper-card > *:not(.hooper-card__glow) {
+  position: relative;
+  z-index: 1;
+}
+
+.hooper-card__topline,
+.hooper-card__tags,
+.hooper-card__meta {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  min-height: 2.55rem;
-  border: 1px solid rgba(37, 99, 235, 0.12);
-  border-radius: 12px;
-  padding: 0.36rem 0.5rem;
-  background: rgba(248, 252, 255, 0.82);
+  gap: 0.35rem;
 }
 
-.guess-game__slot.is-guessed {
-  border-color: rgba(34, 197, 94, 0.28);
-  background: rgba(240, 253, 244, 0.82);
+.hooper-card__topline {
+  justify-content: space-between;
 }
 
-.guess-game__rank,
+.hooper-card__rank,
 .game-card__rank {
   border-radius: 10px;
 }
 
-.guess-game__rank {
+.hooper-card__rank,
+.hooper-card__state,
+.hooper-card__tag,
+.basketball-dna__chip {
   display: inline-flex;
+  min-height: 1.55rem;
   align-items: center;
   justify-content: center;
-  min-height: 1.65rem;
   border: 1px solid rgba(37, 99, 235, 0.15);
+  border-radius: 999px;
+  padding: 0.15rem 0.48rem;
   background: rgba(239, 248, 255, 0.84);
   color: var(--pixel-blue-700);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 850;
-  letter-spacing: 0.08em;
 }
 
-.guess-game__name {
-  min-width: 0;
+.hooper-card__state {
+  color: #9a5a05;
+  background: rgba(255, 247, 237, 0.88);
+  border-color: rgba(217, 119, 6, 0.16);
+}
+
+.hooper-card__jersey {
+  width: 3.7rem;
+  height: 3.15rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  border-radius: 12px 12px 16px 16px;
+  background:
+    linear-gradient(90deg, transparent 0 18%, rgba(255, 255, 255, 0.7) 18% 82%, transparent 82%),
+    linear-gradient(180deg, rgba(254, 243, 199, 0.94), rgba(255, 255, 255, 0.84));
+  color: #92400e;
+  font-family: var(--font-heading, "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif);
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  box-shadow: inset 0 -5px 0 rgba(251, 191, 36, 0.14);
+}
+
+.hooper-card__locked,
+.hooper-card__revealed {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.hooper-card__hint,
+.hooper-card__name {
   color: var(--pixel-ink);
-  font-size: 0.9rem;
-  font-weight: 800;
-  overflow-wrap: anywhere;
+  font-family: var(--font-heading, "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif);
+  font-size: clamp(1.02rem, 1.7vw, 1.2rem);
+  font-weight: 850;
+  line-height: 1.08;
 }
 
-.guess-game__slot:not(.is-guessed) .guess-game__name {
+.hooper-card__prompt,
+.hooper-card__archetype,
+.hooper-card__note,
+.hooper-card__meta {
+  color: var(--pixel-ink-muted);
+  line-height: 1.38;
+}
+
+.hooper-card__prompt,
+.hooper-card__archetype {
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.hooper-card__note {
+  font-size: 0.8rem;
+}
+
+.hooper-card__meta {
+  min-height: 1.1rem;
+  font-size: 0.72rem;
+  font-weight: 780;
+}
+
+.starting-five-board,
+.basketball-dna {
+  display: grid;
+  gap: 0.75rem;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 16px;
+  padding: clamp(0.8rem, 1.6vw, 1rem);
+  background: rgba(248, 252, 255, 0.78);
+}
+
+.starting-five-board__header {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.starting-five-board__header h3,
+.basketball-dna h3 {
+  color: var(--pixel-ink);
+  font-size: clamp(1.02rem, 1.7vw, 1.25rem);
+}
+
+.starting-five-board__header p:not(.section-kicker) {
+  color: var(--pixel-ink-muted);
+  font-size: 0.86rem;
+}
+
+.starting-five-court {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-areas:
+    ". pg . sg ."
+    "sf . c . pf"
+    ". sixth sixth sixth .";
+  gap: 0.55rem;
+  min-height: 285px;
+  overflow: hidden;
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  border-radius: 18px;
+  padding: 0.8rem;
+  background:
+    radial-gradient(ellipse at center 15%, transparent 0 30%, rgba(37, 99, 235, 0.08) 31% 32%, transparent 33%),
+    linear-gradient(180deg, rgba(239, 248, 255, 0.92), rgba(255, 247, 237, 0.82));
+}
+
+.starting-five-court::before,
+.starting-five-court::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.starting-five-court::before {
+  left: 50%;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  width: 1px;
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.starting-five-court::after {
+  left: 50%;
+  top: 50%;
+  width: 8rem;
+  height: 8rem;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+}
+
+.starting-five-slot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: center;
+  gap: 0.2rem;
+  min-height: 5.1rem;
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  border-radius: 14px;
+  padding: 0.62rem;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 10px 20px rgba(8, 24, 46, 0.06);
+}
+
+.starting-five-slot[data-role="PG"] {
+  grid-area: pg;
+}
+
+.starting-five-slot[data-role="SG"] {
+  grid-area: sg;
+}
+
+.starting-five-slot[data-role="SF"] {
+  grid-area: sf;
+}
+
+.starting-five-slot[data-role="PF"] {
+  grid-area: pf;
+}
+
+.starting-five-slot[data-role="C"] {
+  grid-area: c;
+}
+
+.starting-five-slot[data-role="6th Man"] {
+  grid-area: sixth;
+}
+
+.starting-five-slot__role {
+  color: var(--pixel-blue-700);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.starting-five-slot__player {
+  color: var(--pixel-ink);
+  font-weight: 880;
+  line-height: 1.1;
+}
+
+.starting-five-slot__type {
+  color: var(--pixel-ink-muted);
+  font-size: 0.73rem;
+  line-height: 1.25;
+}
+
+.starting-five-board.is-locked .starting-five-slot {
+  border-style: dashed;
   color: var(--pixel-ink-soft);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.basketball-dna {
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  align-items: center;
+}
+
+.basketball-dna__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.42rem;
+}
+
+.basketball-dna__chip {
+  color: #9a5a05;
+  border-color: rgba(217, 119, 6, 0.16);
+  background: rgba(255, 247, 237, 0.9);
 }
 
 .interest-games-card {
   align-content: start;
+  align-self: start;
 }
 
 @media (max-width: 980px) {
@@ -10825,39 +11156,53 @@ html {
 }
 
 @media (max-width: 640px) {
-  .subpage-shell--interests .subpage-hero {
-    min-height: 260px;
-  }
-
-  .guess-game__header,
-  .guess-game__form {
+  .hooper-board__header,
+  .basketball-dna {
     grid-template-columns: 1fr;
-  }
-
-  .guess-game__header {
     display: grid;
   }
 
-  .guess-game__score {
+  .hooper-board__progress {
     justify-self: start;
   }
 
-  .guess-game__button {
+  .hooper-board__button {
     width: 100%;
   }
 
-  .guess-game__board {
+  .basketball-dna__chips {
+    justify-content: flex-start;
+  }
+
+  .starting-five-court {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "pg"
+      "sg"
+      "sf"
+      "pf"
+      "c"
+      "sixth";
+    min-height: 0;
+  }
+
+  .starting-five-court::before,
+  .starting-five-court::after {
+    content: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .guess-game__button {
+  .hooper-card,
+  .hooper-board__button,
+  .starting-five-slot {
     transition: none !important;
   }
 
-  .guess-game__button:hover,
-  .guess-game__button:focus-visible {
+  .hooper-card:hover,
+  .hooper-card:focus-visible,
+  .hooper-board__button:hover,
+  .hooper-board__button:focus-visible {
     transform: none !important;
   }
 }
@@ -10867,12 +11212,33 @@ html {
   gap: 0.48rem;
 }
 
+.subpage-shell--interests .game-list__item {
+  display: grid;
+  min-width: 0;
+}
+
 .subpage-shell--interests .game-card.game-card--compact {
+  width: 100%;
   min-height: 0;
   grid-template-columns: 3rem minmax(0, 1fr);
   align-items: center;
+  border: 1px solid rgba(37, 99, 235, 0.12);
   border-radius: 12px;
   padding: 0.5rem 0.55rem;
+  background: rgba(248, 252, 255, 0.82);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.subpage-shell--interests .game-card.game-card--compact:hover,
+.subpage-shell--interests .game-card.game-card--compact:focus-visible {
+  border-color: rgba(37, 99, 235, 0.34);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 10px 24px rgba(8, 24, 46, 0.09);
+  transform: translateY(-1px);
 }
 
 .subpage-shell--interests .game-card.game-card--compact::before {
@@ -10886,6 +11252,78 @@ html {
   line-height: 1.2;
 }
 
+.game-detail-modal-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(6, 18, 37, 0.48);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.game-detail-modal {
+  position: relative;
+  width: min(520px, calc(100vw - 2rem));
+  border: 1px solid rgba(191, 219, 254, 0.48);
+  border-radius: 20px;
+  padding: clamp(1.15rem, 3vw, 1.6rem);
+  padding-top: clamp(3.25rem, 6vw, 3.65rem);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(242, 248, 255, 0.96)),
+    var(--pixel-surface);
+  box-shadow: 0 26px 78px rgba(2, 8, 23, 0.32);
+  color: var(--pixel-ink);
+}
+
+.game-detail-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  min-height: 40px;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  border-radius: 12px;
+  padding: 0.4rem 0.75rem;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--pixel-blue-700);
+  font: inherit;
+  font-weight: 850;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.game-detail-modal__close:hover,
+.game-detail-modal__close:focus-visible {
+  border-color: rgba(37, 99, 235, 0.38);
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(8, 24, 46, 0.09);
+  transform: translateY(-1px);
+}
+
+.game-detail-modal__rank {
+  margin: 0 0 0.45rem;
+  color: var(--pixel-blue-700);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.game-detail-modal h2 {
+  margin: 0;
+  color: var(--pixel-ink);
+  font-size: clamp(1.55rem, 4vw, 2.25rem);
+  line-height: 1.05;
+}
+
+.game-detail-modal p:not(.game-detail-modal__rank) {
+  margin-top: 0.8rem;
+  color: var(--pixel-ink-muted);
+  line-height: 1.58;
+}
+
 @media (max-width: 980px) {
   .subpage-shell--interests .game-list.game-list--compact {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -10895,5 +11333,21 @@ html {
 @media (max-width: 640px) {
   .subpage-shell--interests .game-list.game-list--compact {
     grid-template-columns: 1fr;
+  }
+
+  .subpage-shell--interests .interests-page-backdrop {
+    min-height: calc(100svh - 74px);
+    padding-top: 0.6rem;
+    padding-bottom: 1.05rem;
+  }
+
+  .subpage-shell--interests .subpage-hero {
+    max-width: calc(100vw - 32px);
+    min-height: 0;
+    padding: 0.42rem 0.62rem;
+  }
+
+  .subpage-shell--interests .subpage-hero h1 {
+    font-size: clamp(1.85rem, 9vw, 2.6rem);
   }
 }

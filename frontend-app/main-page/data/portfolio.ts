@@ -234,172 +234,105 @@ export const productsHeader = homepageContent.capabilityCards;
 export const projects: Project[] = [
   {
     title: "ModelExpress",
-    eyebrow: "Agentic vision training platform",
-    role: "Founding engineer",
-    timeline: "2026 - Present",
+    eyebrow: "Agentic computer-vision platform",
+    role: "Full-stack AI systems engineer",
+    timeline: "2026",
     description:
-      "A distributed training and experimentation platform designed for rapid vision product iteration with strong observability and reliable lifecycle control.",
-    homepageDescription:
-      "Computer-vision experiment platform with Go orchestration, Python workers, and cloud GPU jobs.",
+      "A desktop workbench for running computer-vision experiments from dataset upload to trained model export.",
     problem:
-      "Researchers and product teams were rerunning fragmented scripts, hardening every experiment manually, and lacking a unified trail from idea to deployed model.",
+      "Vision experiments often live across scripts, notebooks, cloud jobs, and scattered metrics with little lifecycle control.",
     technicalChallenges: [
-      "Designing deterministic training lifecycle control across preemption, retries, and failure recovery.",
-      "Standardizing experiment metadata so teams can compare results and reproduce runs.",
-      "Keeping the orchestration layer stable while supporting heterogeneous dataset and model pipelines.",
-      "Reducing operational ambiguity through transparent logging and explicit run-state transitions."
+      "Built reliable cloud job orchestration with worker leases, heartbeats, retries, and expired-run recovery.",
+      "Kept agent-generated experiment plans safe with structured outputs, budget controls, and deterministic validation."
     ],
     architecture: [
-      "Go orchestrator emits job manifests and manages queueing, retries, and worker assignment policy.",
-      "Python worker layer executes train/evaluate stages with plugin-oriented dataset adapters.",
-      "Centralized run registry tracks checkpoints, metrics, and artifact lineage per experiment.",
-      "Dashboard and reporting layer expose run health, regression signals, and review-ready summaries."
+      "Electron/React Mission Control talks to a Go/Gin orchestrator backed by PostgreSQL.",
+      "Python workers dispatch Modal GPU jobs and store datasets, metrics, and artifacts in S3-compatible storage."
     ],
     results: [
-      "Improved reusability of training workflows across teams by replacing ad hoc scripts with configurable pipelines.",
-      "Reduced non-deterministic failure recovery cost by introducing idempotent run contracts and checkpoint guarantees.",
-      "Enabled clear decisioning from experiment output to model selection through standardized artifacts."
+      "Users can monitor live training, compare metrics, select a champion model, and test or export predictions.",
+      "The system makes experiment state explicit so failed, retried, or recovered runs stay auditable."
     ],
-    featured: true,
     icon: "monitor",
-    stack: ["Go", "Python", "PyTorch", "Modal", "Cloud GPU", "MLflow"],
-    links: [
-      { label: "System architecture", href: "" },
-      { label: "Repository", href: "" }
-    ]
+    stack: ["Go", "Python", "React", "Electron", "PostgreSQL", "Modal", "S3"],
+    links: [{ label: "Repository", href: "https://github.com/sahithrv/model-express" }]
   },
   {
     title: "Minecraft AI Agent Studio",
-    eyebrow: "Autonomous planning sandbox",
+    eyebrow: "Minecraft multi-agent control studio",
     role: "AI systems engineer",
-    timeline: "2025 - 2026",
+    timeline: "2026",
     description:
-      "A planning-and-execution product for LLM-driven agents with bounded autonomy, safety checks, and end-to-end run traces.",
-    homepageDescription: "LLM agent sandbox with bounded planning, safety gates, and replayable run traces.",
+      "A control studio for configuring, launching, and directing Minecraft AI agents in a shared world.",
     problem:
-      "The product needed convincing autonomous behavior while keeping every agent action explainable and recoverable.",
+      "Multi-agent Minecraft experiments need live control, clear observability, and safer ways to adjust behavior mid-run.",
     technicalChallenges: [
-      "Balancing autonomy with hard constraints to prevent unsafe behavior.",
-      "Converting high-level intents into executable tasks with bounded retries and timeouts.",
-      "Maintaining reproducibility for world-state transitions and user-visible actions.",
-      "Creating developer-friendly instrumentation for plan inspection and debugging."
+      "Connected a React/Mantine dashboard to a Fastify API for agents, runtime status, chat, and director commands.",
+      "Modeled agent state, permissions, game events, plugin messages, and action results with shared TypeScript contracts."
     ],
     architecture: [
-      "Goal planner with policy routing, tool contracts, and action validation gates.",
-      "Event-driven world-state ingestion from simulation updates.",
-      "Command adapter layer for action dispatch with failure classification and rollback hooks.",
-      "Trace store with replay metadata to debug, benchmark, and improve behavior."
+      "The API uses Fastify, SQLite persistence, WebSocket dashboard updates, and Mineflayer-based Minecraft agents.",
+      "Director routes support pause/resume, role and task injection, team commands, AI chat, events, and clip markers."
     ],
     results: [
-      "Reduced invalid command loops through strict action contracts and recovery policy.",
-      "Decreased scenario debugging time via replayable state and decision tracing.",
-      "Introduced a fast workflow for scenario templates that accelerated creator iteration."
+      "The studio turns Minecraft agent experiments into a visual workflow with run control and debugging hooks.",
+      "Agents can be adjusted live without restarting the entire scenario."
     ],
-    featured: true,
     icon: "robot",
-    stack: ["Python", "TypeScript", "FastAPI", "Redis", "WebSockets", "React"],
-    links: [
-      { label: "Product brief", href: "" },
-      { label: "Demo", href: "" }
-    ]
+    stack: ["TypeScript", "React", "Vite", "Fastify", "SQLite", "Mineflayer", "WebSockets"],
+    links: [{ label: "Repository", href: "https://github.com/sahithrv/mc_agent_connector" }]
   },
   {
     title: "Roasty",
-    eyebrow: "AI coaching platform",
+    eyebrow: "Realtime gaming AI co-host",
     role: "AI/ML product engineer",
-    timeline: "2025 - Present",
+    timeline: "2026",
     description:
-      "A computer vision and multimodal AI layer that turns raw gameplay clips into focused coaching recommendations.",
-    homepageDescription:
-      "Local-first gaming AI co-host using computer vision, replay context, and live commentary.",
+      "A local-first gaming AI co-host that watches gameplay and generates grounded commentary for live moments.",
     problem:
-      "Users needed practical feedback without spending extra hours reviewing raw gameplay and manually identifying key moments.",
+      "Gameplay commentary should react to what actually happened on-screen, not generic chat context or manual clip review.",
     technicalChallenges: [
-      "Automating high-signal clip segmentation from noisy raw sessions.",
-      "Aligning vision outputs and LLM recommendations with confidence and uncertainty boundaries.",
-      "Providing review interfaces that are precise without overwhelming users.",
-      "Ensuring privacy and artifact hygiene for user-provided media."
+      "Built realtime screen capture and OpenCV/OCR detectors for game events like deaths, HUD changes, and key moments.",
+      "Designed an asyncio event bus so capture, detectors, fusion, memory, commentary, and speech cues run concurrently."
     ],
     architecture: [
-      "Frame extraction and temporal segmentation for event-driven evidence detection.",
-      "Multimodal model pipeline with prompt contracts and structured evaluation schema.",
-      "Evidence graph stores clip-to-recommendation links for replay and iteration.",
-      "Web interface with compact review mode and action-linked feedback cards."
+      "Detection signals are fused into canonical game events, saved into session memory, and packaged with replay frames.",
+      "A multimodal LLM path receives event history, memory summaries, and selected context frames for short commentary."
     ],
     results: [
-      "Improved feedback cycle time by surfacing likely improvement moments automatically.",
-      "Increased output usefulness through structured recommendations grouped by decision type.",
-      "Created a repeatable review loop where players could test recommendations across sessions."
+      "The system identifies high-signal moments and produces context-aware, creator-friendly responses.",
+      "Replay buffering and audit logs make AI outputs easier to inspect instead of feeling like a black box."
     ],
-    featured: true,
     icon: "mug",
-    stack: ["Python", "OpenCV", "Multimodal LLMs", "Vision", "TypeScript", "FastAPI"],
-    links: [
-      { label: "Notes", href: "" },
-      { label: "Demo", href: "" }
-    ]
+    stack: ["Python", "OpenCV", "asyncio", "OCR", "Grok/xAI APIs", "Multimodal LLMs"],
+    links: [{ label: "Repository", href: "https://github.com/sahithrv/roasty" }]
   },
   {
     title: "Guessr",
     eyebrow: "Daily social game platform",
-    role: "Product + platform owner",
-    timeline: "2024 - Present",
+    role: "Full-stack product engineer",
+    timeline: "2026",
     description:
-      "A social daily game that combines short interaction loops with stable backend operations and reliable replayability.",
-    homepageDescription: "Production daily social game with race-safe sessions, scoring, streaks, and leaderboards.",
+      "A daily social game where today's community answers become tomorrow's Top-5 guessing challenge.",
     problem:
-      "Game rounds needed to remain simple and fast while preserving score integrity, replays, and social sharing workflows.",
+      "The game needed to feel simple for players while protecting daily submissions, guesses, streaks, and rankings.",
     technicalChallenges: [
-      "Preserving deterministic board behavior during reconnects and delayed submissions.",
-      "Ensuring idempotent scoring across concurrent sessions.",
-      "Reducing latency for feed and historical replay views.",
-      "Making social feedback loops clear without exposing internal ranking mechanics."
+      "Built a Next.js frontend and async FastAPI APIs for daily prompts, Top-5 guessing, friends, stats, and achievements.",
+      "Prevented duplicate sessions and guesses with row-level locks, unique constraints, frozen aggregates, and safe finalization."
     ],
     architecture: [
-      "Frontend-first product surface with query-aware loading states and stable interaction patterns.",
-      "Service-backed state transitions for guesses, scoring, and streak evaluation.",
-      "PostgreSQL for durable user data plus Redis for high-frequency read paths.",
-      "Analytics instrumentation for trend tracking and puzzle quality tuning."
+      "PostgreSQL stores users, submissions, guess sessions, guesses, aggregates, aliases, stats, and achievements.",
+      "Redis caches daily questions, Top-5 aggregates, alias maps, and shared hot paths."
     ],
     results: [
-      "Stabilized gameplay state under high concurrent usage.",
-      "Improved retention through clear replay paths and actionable end-state insights.",
-      "Established a consistent release pattern for puzzle updates and moderation rules."
+      "Players get 10 attempts to find the community's top answers, with hints, streaks, leaderboards, and guest play.",
+      "Normalization, lemmatization, and configurable aliases make close guesses feel fair without weakening score integrity."
     ],
     icon: "globe",
-    stack: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Redis"],
-    links: [{ label: "Visit app", href: "https://app.guessrgame.com" }]
-  },
-  {
-    title: "Arthrex DevOps Validator",
-    eyebrow: "Migration safety toolkit",
-    role: "Software engineering intern",
-    timeline: "June 2025 - Sept. 2025",
-    description:
-      "Validated 300K+ MySQL, Couchbase, and S3 migration records with automated integrity checks.",
-    problem:
-      "Migration quality checks were inconsistent and manual, slowing release confidence and post-change troubleshooting.",
-    technicalChallenges: [
-      "Enforcing check correctness while keeping results understandable for operators.",
-      "Creating evidence trails without operational overhead.",
-      "Handling partial results and surfacing clear next actions.",
-      "Avoiding noisy false positives in normal data drift scenarios."
-    ],
-    architecture: [
-      "Validation module with rule-driven workflows and deterministic check IDs.",
-      "Couchbase-driven metadata and queue state for migration snapshots.",
-      "S3-backed evidence storage with immutable context per run.",
-      "UI dashboards for exception triage and operational handoff."
-    ],
-    results: [
-      "Reconciled 300K+ records across MySQL, Couchbase, and linked S3 media.",
-      "Cut worst-case validation time from 120 seconds to 20 seconds.",
-      "Built synchronization APIs that improved migration reliability and diagnostics."
-    ],
-    stack: ["Angular", "TypeScript", "Couchbase", "MySQL", "S3"],
+    stack: ["Next.js", "TypeScript", "FastAPI", "SQLAlchemy", "PostgreSQL", "Redis", "Docker"],
     links: [
-      { label: "Case file", href: "" },
-      { label: "Internal write-up", href: "" }
+      { label: "Visit app", href: "https://app.guessrgame.com" },
+      { label: "Repository", href: "https://github.com/project-reckon/guessr" }
     ]
   }
 ];
