@@ -8632,13 +8632,13 @@ html {
 }
 
 .hero--pixel .hero-city--left {
-  left: clamp(-108px, -4.6vw, -68px);
-  bottom: -92px;
+  left: clamp(-42px, -2vw, -28px);
+  bottom: -22px;
 }
 
 .hero--pixel .hero-city--right {
-  right: clamp(-104px, -4.5vw, -64px);
-  bottom: -88px;
+  right: clamp(-42px, -2vw, -28px);
+  bottom: -20px;
 }
 
 .hero--pixel .hero-cloud {
@@ -8707,13 +8707,13 @@ html {
   }
 
   .hero--pixel .hero-city--left {
-    left: -136px;
-    bottom: -72px;
+    left: -78px;
+    bottom: -28px;
   }
 
   .hero--pixel .hero-city--right {
-    right: -136px;
-    bottom: -72px;
+    right: -78px;
+    bottom: -28px;
   }
 }
 
@@ -8725,13 +8725,13 @@ html {
   }
 
   .hero--pixel .hero-city--left {
-    left: -132px;
-    bottom: -56px;
+    left: -92px;
+    bottom: -18px;
   }
 
   .hero--pixel .hero-city--right {
-    right: -132px;
-    bottom: -56px;
+    right: -92px;
+    bottom: -18px;
   }
 
   .hero--pixel .hero-cloud--one {

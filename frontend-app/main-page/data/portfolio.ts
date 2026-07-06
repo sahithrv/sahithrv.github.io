@@ -211,7 +211,11 @@ export const homepageContent: HomepageContent = {
     problem: "",
     technicalChallenges: [],
     architecture: [],
-    results: ["Details are currently being expanded for production visibility."],
+    results: [
+      "Reconciled 300K+ records across MySQL and Couchbase while verifying linked S3 media for migration safety.",
+      "Optimized worst-case validation queries from 120 seconds to 20 seconds, delivering a 6x speedup.",
+      "Built integrity checks and synchronization APIs that accelerated surgeon-case support diagnostics."
+    ],
     stack: ["Angular", "TypeScript", "Couchbase", "MySQL", "S3"],
     links: []
   },
