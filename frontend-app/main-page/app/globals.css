@@ -8818,15 +8818,12 @@ html {
 }
 
 .subpage-shell--projects.pixel-page-bg {
-  background:
-    radial-gradient(circle at 18% 9%, rgba(34, 211, 238, 0.18), transparent 27rem),
-    radial-gradient(circle at 84% 16%, rgba(96, 165, 250, 0.18), transparent 30rem),
-    linear-gradient(180deg, #071421 0%, #0a1d32 43%, #edf6ff 94%);
+  background: #2f2830;
 }
 
 .subpage-shell--projects::before,
 .subpage-shell--projects::after {
-  content: "";
+  content: none;
   position: absolute;
   pointer-events: none;
 }
@@ -8859,48 +8856,88 @@ html {
 }
 
 .subpage-shell--projects main {
+  padding-top: 0;
   padding-bottom: 0;
 }
 
+.subpage-shell--projects .projects-page-backdrop {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: clamp(0.42rem, 0.8vw, 0.6rem);
+  min-height: calc(100svh - 72px);
+  padding-top: clamp(0.7rem, 1.6vw, 1.15rem);
+  padding-bottom: clamp(0.8rem, 1.5vw, 1.1rem);
+  overflow: hidden;
+  background-color: #2f2830;
+}
+
+.subpage-shell--projects .projects-page-backdrop .animated-pixel-background {
+  z-index: 0;
+  background-color: #2f2830;
+}
+
+.subpage-shell--projects .projects-page-backdrop .animated-pixel-background::after {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 13, 22, 0.02),
+    rgba(18, 13, 22, 0.12) 52%,
+    rgba(18, 13, 22, 0.22)
+  );
+}
+
+.subpage-shell--projects .projects-page-backdrop .animated-pixel-background--projects .animated-pixel-background__layer--base {
+  object-position: center top;
+}
+
 .subpage-shell--projects .subpage-hero {
+  position: relative;
+  z-index: 1;
+  width: min(700px, var(--container));
   min-height: 0;
   align-items: center;
-  padding: clamp(0.9rem, 2vw, 1.35rem) clamp(1rem, 2.4vw, 1.7rem);
-  border-color: rgba(147, 197, 253, 0.22);
-  background:
-    linear-gradient(180deg, rgba(12, 29, 50, 0.88), rgba(8, 24, 46, 0.78)),
-    rgba(8, 24, 46, 0.82);
-  box-shadow: 0 24px 70px rgba(2, 8, 23, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  color: #f8fbff;
+  padding: clamp(0.5rem, 0.95vw, 0.68rem) clamp(0.78rem, 1.4vw, 1rem);
+  border-color: rgba(255, 244, 220, 0.34);
+  border-radius: 16px;
+  background: rgba(24, 18, 24, 0.34);
+  box-shadow: 0 20px 58px rgba(18, 13, 22, 0.22), inset 0 1px 0 rgba(255, 244, 220, 0.1);
+  color: #fff7ed;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 
 .subpage-shell--projects .subpage-hero::after {
+  content: none;
   left: clamp(1rem, 2.4vw, 1.7rem);
   right: clamp(1rem, 2.4vw, 1.7rem);
   bottom: clamp(0.55rem, 1vw, 0.75rem);
 }
 
 .subpage-shell--projects .subpage-hero__content {
-  gap: clamp(0.45rem, 1vw, 0.7rem);
-  max-width: min(780px, 100%);
-  padding-right: clamp(4.8rem, 10vw, 7.5rem);
+  gap: clamp(0.28rem, 0.65vw, 0.44rem);
+  max-width: min(660px, 100%);
+  padding-right: 0;
 }
 
 .subpage-shell--projects .subpage-hero h1 {
-  color: #ffffff;
-  max-width: 18ch;
-  font-size: clamp(2.05rem, 4vw, 3.6rem);
-  text-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+  color: #fff7ed;
+  max-width: none;
+  font-size: clamp(1.58rem, 2.55vw, 2.18rem);
+  text-shadow: 0 10px 30px rgba(18, 13, 22, 0.4);
 }
 
 .subpage-shell--projects .subpage-hero .section-lead {
-  color: #b8c8dd;
-  max-width: 64ch;
-  line-height: 1.5;
+  color: rgba(255, 247, 237, 0.84);
+  max-width: 68ch;
+  font-size: 0.82rem;
+  line-height: 1.38;
 }
 
 .subpage-shell--projects .subpage-hero .section-kicker {
-  color: #9cc7ff;
+  color: #f7c56d;
 }
 
 .subpage-shell--projects .subpage-hero__meta {
@@ -8916,9 +8953,7 @@ html {
 }
 
 .subpage-shell--projects .subpage-pixel-scene__grid {
-  opacity: 0.2;
-  -webkit-mask-image: radial-gradient(circle at 24% 42%, black 0 12rem, transparent 30rem);
-  mask-image: radial-gradient(circle at 24% 42%, black 0 12rem, transparent 30rem);
+  display: none;
 }
 
 .subpage-shell--projects .subpage-pixel-scene::before {
@@ -8939,7 +8974,9 @@ html {
 }
 
 .subpage-shell--projects .subpage-cloud--two,
-.subpage-shell--projects .subpage-city {
+.subpage-shell--projects .subpage-city,
+.subpage-shell--projects .subpage-pixel-scene,
+.subpage-shell--projects .subpage-pixel-icon {
   display: none;
 }
 
@@ -8979,15 +9016,19 @@ html {
 }
 
 .subpage-shell--projects .projects-index-section {
-  border-color: rgba(147, 197, 253, 0.18);
-  background:
-    linear-gradient(180deg, rgba(8, 24, 46, 0.76), rgba(11, 30, 51, 0.66)),
-    rgba(8, 24, 46, 0.72);
-  box-shadow: 0 26px 72px rgba(2, 8, 23, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 1;
+  width: min(760px, var(--container));
+  padding: clamp(0.52rem, 0.95vw, 0.72rem);
+  border-color: rgba(255, 244, 220, 0.3);
+  background: rgba(255, 248, 236, 0.18);
+  box-shadow: 0 26px 72px rgba(18, 13, 22, 0.26), inset 0 1px 0 rgba(255, 244, 220, 0.08);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 
 .subpage-shell--projects .projects-index-section::before {
-  content: "";
+  content: none;
   position: absolute;
   inset: 1px;
   z-index: 0;
@@ -9001,31 +9042,47 @@ html {
 }
 
 .subpage-shell--projects .projects-index-section::after {
-  opacity: 0.26;
+  content: none;
 }
 
-.subpage-shell--projects .project-index-card {
-  border-color: rgba(147, 197, 253, 0.24);
+.subpage-shell.subpage-shell--projects .project-index__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.44rem, 0.8vw, 0.6rem);
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card {
+  grid-template-columns: 72px minmax(0, 1fr);
+  grid-template-rows: minmax(114px, auto);
+  min-height: 0;
+  border-color: rgba(255, 244, 220, 0.42);
+  border-radius: 14px;
+  background: rgba(255, 252, 246, 0.9);
+  box-shadow: 0 14px 28px rgba(18, 13, 22, 0.16);
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card:hover,
+.subpage-shell.subpage-shell--projects .project-index-card:focus-visible {
+  border-color: rgba(247, 197, 109, 0.62);
+  box-shadow: 0 22px 46px rgba(18, 13, 22, 0.26);
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card::after {
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.45rem;
+  height: 2px;
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card__visual {
+  min-height: 100%;
+  border-right: 1px solid rgba(120, 84, 48, 0.16);
+  border-bottom: 0;
   background:
-    linear-gradient(180deg, rgba(248, 252, 255, 0.98), rgba(232, 244, 255, 0.94)),
-    #f8fcff;
-  box-shadow: 0 18px 42px rgba(2, 8, 23, 0.2);
+    linear-gradient(180deg, rgba(75, 52, 42, 0.88), rgba(41, 30, 34, 0.78)),
+    #2a2024;
 }
 
-.subpage-shell--projects .project-index-card:hover,
-.subpage-shell--projects .project-index-card:focus-visible {
-  border-color: rgba(34, 211, 238, 0.42);
-  box-shadow: 0 24px 58px rgba(2, 8, 23, 0.28);
-}
-
-.subpage-shell--projects .project-index-card__visual {
-  border-bottom-color: rgba(147, 197, 253, 0.24);
-  background:
-    linear-gradient(180deg, rgba(14, 44, 76, 0.88), rgba(11, 30, 51, 0.78)),
-    #0b1d31;
-}
-
-.subpage-shell--projects .project-index-card__visual::before {
+.subpage-shell.subpage-shell--projects .project-index-card__visual::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -9036,12 +9093,55 @@ html {
   background-size: 30px 30px;
 }
 
-.subpage-shell--projects .project-index-card__visual .project-card__pixel-icon {
-  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.34));
+.subpage-shell.subpage-shell--projects .project-index-card__visual .project-card__pixel-icon {
+  width: 44px;
+  height: 44px;
+  transform: scale(1);
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.34));
 }
 
-.subpage-shell--projects .project-index-card__eyebrow {
+.subpage-shell.subpage-shell--projects .project-index-card__eyebrow {
   color: var(--pixel-blue-600);
+  font-size: 0.62rem;
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card__content {
+  gap: 0.22rem;
+  min-width: 0;
+  padding: 0.5rem 0.62rem 0.82rem;
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card h3 {
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  line-height: 1.12;
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card__meta,
+.subpage-shell.subpage-shell--projects .project-index-card__description {
+  font-size: 0.68rem;
+  line-height: 1.28;
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card__description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card__stack {
+  gap: 0.2rem;
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card .chip {
+  min-height: 1.12rem;
+  padding: 0.08rem 0.3rem;
+  font-size: 0.56rem;
+  line-height: 1.1;
+}
+
+.subpage-shell.subpage-shell--projects .project-index-card__stack .chip:nth-child(n + 4) {
+  display: none;
 }
 
 .subpage-shell--projects .footer-cta--pixel {
@@ -9073,6 +9173,10 @@ html {
 
 .subpage-shell--projects .projects-index-section::after {
   opacity: 0.26;
+}
+
+.subpage-shell.subpage-shell--projects .projects-index-section::after {
+  content: none;
 }
 
 .subpage-shell .photography-viewer {
@@ -9570,145 +9674,8 @@ html {
   overflow: hidden;
 }
 
-.subpage-shell .interest-layout {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: clamp(0.9rem, 1.8vw, 1.15rem);
-}
-
-.subpage-shell .interest-layout--basketball {
-  grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);
-  align-items: stretch;
-}
-
-.subpage-shell .interest-feature-card,
-.subpage-shell .interest-list-panel,
-.subpage-shell .game-card {
-  position: relative;
-  border-radius: 22px;
-  padding: clamp(1rem, 2vw, 1.2rem);
-  overflow: hidden;
-}
-
-.subpage-shell .interest-feature-card {
-  display: grid;
-  align-content: end;
-  min-height: 280px;
-  gap: 0.7rem;
-}
-
-.subpage-shell .interest-feature-card::before,
-.subpage-shell .interest-list-panel::before,
-.subpage-shell .game-card::before {
-  content: "";
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: 0.8rem;
-  height: 3px;
-  border-radius: 999px;
-  opacity: 0.62;
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--pixel-blue-500) 0 10px,
-    transparent 10px 15px,
-    var(--pixel-cyan-400) 15px 22px,
-    transparent 22px 28px
-  );
-}
-
-.subpage-shell .interest-feature-card > *,
-.subpage-shell .interest-list-panel > *,
-.subpage-shell .game-card > * {
-  position: relative;
-  z-index: 1;
-}
-
-.subpage-shell .interest-feature-card h3,
-.subpage-shell .interest-list-panel h3,
-.subpage-shell .game-card h3 {
-  color: var(--pixel-ink);
-}
-
-.subpage-shell .interest-list-panel {
-  display: grid;
-  gap: 0.85rem;
-  padding-bottom: 1.6rem;
-}
-
-.subpage-shell .interest-panel-header {
-  display: grid;
-  gap: 0.4rem;
-  max-width: 680px;
-}
-
-.subpage-shell .rank-list,
-.subpage-shell .game-list {
-  display: grid;
-  gap: 0.68rem;
-  padding: 0;
-  list-style: none;
-}
-
-.subpage-shell .rank-list li {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  gap: 0.7rem;
-  align-items: start;
-  border-top: 1px dashed rgba(37, 99, 235, 0.18);
-  padding-top: 0.68rem;
-}
-
-.subpage-shell .rank-list__number,
-.subpage-shell .game-card__rank {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 1.7rem;
-  border: 1px solid rgba(37, 99, 235, 0.16);
-  border-radius: 999px;
-  background: rgba(239, 248, 255, 0.84);
-  color: var(--pixel-blue-700);
-  font-size: 0.74rem;
-  font-weight: 850;
-  letter-spacing: 0.08em;
-}
-
-.subpage-shell .rank-list h4 {
-  margin: 0;
-  color: var(--pixel-ink);
-  font-size: 1rem;
-}
-
-.subpage-shell .rank-list p,
-.subpage-shell .game-card p,
-.subpage-shell .interest-feature-card p,
-.subpage-shell .interest-panel-header p {
-  color: var(--pixel-ink-muted);
-}
-
-.subpage-shell .game-list {
-  position: relative;
-  z-index: 1;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
-}
-
-.subpage-shell .game-card {
-  display: grid;
-  gap: 0.56rem;
-  min-height: 190px;
-  align-content: start;
-  padding-bottom: 1.55rem;
-}
-
-.subpage-shell .game-card__rank {
-  width: 3rem;
-}
-
 @media (max-width: 980px) {
-  .subpage-shell .photography-viewer__stage,
-  .subpage-shell .interest-layout--basketball {
+  .subpage-shell .photography-viewer__stage {
     grid-template-columns: 1fr;
   }
 
@@ -9725,9 +9692,16 @@ html {
     background-size: 68% auto, 68% auto;
   }
 
+  .subpage-shell--projects .projects-page-backdrop {
+    min-height: calc(100svh - 74px);
+    gap: 0.45rem;
+    padding-top: 0.55rem;
+    padding-bottom: 0.85rem;
+  }
+
   .subpage-shell--projects .subpage-hero {
     align-items: center;
-    padding: 0.9rem 0.95rem 1.05rem;
+    padding: 0.62rem 0.75rem 0.78rem;
   }
 
   .subpage-shell--projects .subpage-hero__content {
@@ -9735,7 +9709,17 @@ html {
   }
 
   .subpage-shell--projects .subpage-hero h1 {
-    font-size: clamp(2rem, 10vw, 3rem);
+    font-size: clamp(1.48rem, 8vw, 2.15rem);
+  }
+
+  .subpage-shell--projects .projects-index-section {
+    width: var(--container);
+    padding: 0.52rem;
+  }
+
+  .subpage-shell.subpage-shell--projects .project-index__grid {
+    grid-template-columns: 1fr;
+    gap: 0.46rem;
   }
 
   .subpage-shell--projects .subpage-pixel-scene::before {
@@ -9749,6 +9733,16 @@ html {
   .subpage-shell--projects .subpage-pixel-icon,
   .subpage-shell--projects .subpage-cloud--one {
     display: none;
+  }
+
+  .subpage-shell.subpage-shell--projects .project-index-card {
+    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-rows: minmax(106px, auto);
+  }
+
+  .subpage-shell.subpage-shell--projects .project-index-card__visual .project-card__pixel-icon {
+    width: 38px;
+    height: 38px;
   }
 
   .subpage-shell .photography-viewer__toolbar {
@@ -9801,13 +9795,6 @@ html {
     top: 0.7rem;
   }
 
-  .subpage-shell .rank-list li {
-    grid-template-columns: 2.5rem minmax(0, 1fr);
-  }
-
-  .subpage-shell .interest-feature-card {
-    min-height: 220px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -10570,17 +10557,22 @@ html {
 }
 
 .subpage-shell--interests .interests-page-backdrop {
+  --interests-backdrop-aspect: 1672 / 941;
+
   position: relative;
   z-index: 0;
   isolation: isolate;
   display: grid;
+  justify-items: center;
   gap: clamp(0.5rem, 1vw, 0.75rem);
-  align-content: start;
-  min-height: calc(100svh - 72px);
-  padding-top: clamp(0.65rem, 1.4vw, 1rem);
-  padding-bottom: clamp(0.9rem, 1.8vw, 1.3rem);
+  align-content: center;
+  width: min(100%, 1672px);
+  min-height: 0;
+  margin-inline: auto;
+  aspect-ratio: var(--interests-backdrop-aspect);
+  padding: clamp(0.65rem, 1.4vw, 1rem) clamp(0.9rem, 2vw, 1.5rem) clamp(0.9rem, 1.8vw, 1.3rem);
   overflow: hidden;
-  background-color: #d9eafb;
+  background-color: #120622;
 }
 
 .subpage-shell--interests .interests-page-backdrop > .section-shell + .section-shell {
@@ -10588,19 +10580,27 @@ html {
 }
 
 .subpage-shell--interests .interests-page-backdrop .animated-pixel-background {
-  background-color: #d9eafb;
+  z-index: 0;
+  background-color: #120622;
 }
 
 .subpage-shell--interests .interests-page-backdrop .animated-pixel-background::after {
   background: linear-gradient(
     180deg,
-    rgba(247, 251, 255, 0.04),
-    rgba(239, 248, 255, 0.2) 48%,
-    rgba(247, 251, 255, 0.34)
+    rgba(8, 3, 24, 0.02),
+    rgba(8, 3, 24, 0.1) 48%,
+    rgba(8, 3, 24, 0.24)
   );
 }
 
+.subpage-shell--interests .interests-page-backdrop .animated-pixel-background--arcade .animated-pixel-background__layer--base {
+  object-fit: contain;
+  object-position: center top;
+}
+
 .subpage-shell--interests .subpage-hero {
+  position: relative;
+  z-index: 1;
   width: fit-content;
   max-width: var(--container);
   min-height: 0;
@@ -10627,20 +10627,23 @@ html {
 
 .subpage-shell--interests .subpage-hero h1 {
   max-width: none;
+  color: #fff7ff;
   font-size: clamp(1.9rem, 4vw, 3rem);
   line-height: 0.98;
-  text-shadow: 0 8px 26px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 18px rgba(236, 72, 153, 0.42), 0 8px 26px rgba(5, 2, 16, 0.44);
 }
 
 .subpage-shell--interests .interests-compact-section {
-  width: min(1180px, var(--container));
-  padding: clamp(0.9rem, 2vw, 1.35rem);
+  position: relative;
+  z-index: 1;
+  width: min(920px, 100%);
+  padding: clamp(0.7rem, 1.5vw, 1rem);
   overflow: visible;
-  border-color: rgba(255, 255, 255, 0.56);
-  background: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 18px 42px rgba(8, 24, 46, 0.08);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(27, 10, 48, 0.12);
+  box-shadow: 0 18px 42px rgba(5, 2, 16, 0.24);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
 }
 
 .subpage-shell--interests .interests-compact-section::after {
@@ -10651,22 +10654,22 @@ html {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
-  gap: clamp(0.85rem, 1.8vw, 1.15rem);
+  grid-template-columns: minmax(0, 1.36fr) minmax(320px, 0.64fr);
+  gap: clamp(0.7rem, 1.5vw, 1rem);
   align-items: start;
 }
 
-.hooper-board-card,
+.nba-predictions-card,
 .interest-games-card {
   position: relative;
   display: grid;
-  gap: clamp(0.8rem, 1.6vw, 1rem);
+  gap: clamp(0.6rem, 1.2vw, 0.85rem);
   border-radius: 18px;
-  padding: clamp(0.9rem, 1.8vw, 1.15rem);
+  padding: clamp(0.8rem, 1.5vw, 1.05rem);
   overflow: hidden;
 }
 
-.hooper-board-card::before,
+.nba-predictions-card::before,
 .interest-games-card::before {
   content: "";
   position: absolute;
@@ -10685,616 +10688,322 @@ html {
   );
 }
 
-.hooper-board-card > *,
+.nba-predictions-card > *,
 .interest-games-card > * {
   position: relative;
   z-index: 1;
 }
 
-.hooper-board-card {
-  align-content: start;
-}
-
-.hooper-board__header {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 0.85rem;
-}
-
-.hooper-board__header h2,
 .interest-games-card h2 {
   margin: 0.12rem 0 0;
   color: var(--pixel-ink);
   font-size: clamp(1.3rem, 2vw, 1.7rem);
   line-height: 1.12;
 }
-
-.hooper-board__header p:not(.section-kicker) {
-  margin-top: 0.36rem;
-  color: var(--pixel-ink-muted);
-  font-size: 0.92rem;
-  line-height: 1.45;
-}
-
-.hooper-board__progress {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 8.1rem;
-  min-height: 2.35rem;
-  border: 1px solid rgba(37, 99, 235, 0.18);
-  border-radius: 12px;
-  background: rgba(239, 248, 255, 0.86);
-  color: var(--pixel-blue-700);
-  font-size: 0.84rem;
-  font-weight: 850;
-  white-space: nowrap;
-}
-
-.hooper-board__progress span {
-  font-size: 1rem;
-}
-
-.hooper-board__controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.hooper-board__button {
-  min-height: 42px;
-  border: 1px solid rgba(37, 99, 235, 0.18);
-  border-radius: 10px;
-  padding: 0.42rem 0.74rem;
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--pixel-blue-700);
-  font: inherit;
-  font-weight: 850;
-  cursor: pointer;
-  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
-}
-
-.hooper-board__button--accent {
-  background: var(--pixel-blue-600);
-  color: #ffffff;
-}
-
-.hooper-board__button:hover,
-.hooper-board__button:focus-visible {
-  border-color: rgba(37, 99, 235, 0.38);
-  background: rgba(239, 248, 255, 0.96);
-  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.16);
-  transform: translateY(-1px);
-}
-
-.hooper-board__button--accent:hover,
-.hooper-board__button--accent:focus-visible {
-  background: var(--pixel-blue-700);
-}
-
-.hooper-board__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 172px), 1fr));
-  gap: 0.58rem;
-  padding: 0;
-  list-style: none;
-}
-
-.hooper-board__item {
-  display: grid;
-  min-width: 0;
-}
-
-.hooper-card {
-  position: relative;
-  min-height: 236px;
-  width: 100%;
-  display: grid;
-  align-content: space-between;
-  gap: 0.65rem;
-  overflow: hidden;
-  border: 1px solid rgba(37, 99, 235, 0.15);
-  border-radius: 14px;
-  padding: 0.72rem;
-  background:
-    radial-gradient(circle at 96% 4%, rgba(251, 191, 36, 0.28), transparent 6rem),
-    linear-gradient(150deg, rgba(255, 255, 255, 0.96), rgba(239, 248, 255, 0.84));
-  color: var(--pixel-ink);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  box-shadow: 0 12px 28px rgba(8, 24, 46, 0.06);
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
-}
-
-.hooper-card::before,
-.hooper-card::after {
-  content: "";
-  position: absolute;
-  inset: auto -24% -34% auto;
-  width: 10rem;
-  height: 10rem;
-  border: 2px solid rgba(217, 119, 6, 0.14);
-  border-radius: 999px;
-  pointer-events: none;
-}
-
-.hooper-card::after {
-  inset: -18% auto auto -30%;
-  border-color: rgba(37, 99, 235, 0.13);
-}
-
-.hooper-card:hover,
-.hooper-card:focus-visible {
-  transform: translateY(-2px);
-  border-color: rgba(37, 99, 235, 0.34);
-  box-shadow: 0 18px 36px rgba(8, 24, 46, 0.12);
-}
-
-.hooper-card.is-revealed {
-  border-color: rgba(217, 119, 6, 0.26);
-  background:
-    radial-gradient(circle at 86% 12%, rgba(251, 191, 36, 0.24), transparent 6rem),
-    linear-gradient(150deg, rgba(255, 252, 245, 0.98), rgba(239, 248, 255, 0.9));
-}
-
-.hooper-card__glow {
-  position: absolute;
-  inset: 0;
-  opacity: 0.36;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(37, 99, 235, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
-  background-size: 18px 18px;
-}
-
-.hooper-card > *:not(.hooper-card__glow) {
-  position: relative;
-  z-index: 1;
-}
-
-.hooper-card__topline,
-.hooper-card__tags,
-.hooper-card__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.hooper-card__topline {
-  justify-content: space-between;
-}
-
-.hooper-card__rank,
-.game-card__rank {
-  border-radius: 10px;
-}
-
-.hooper-card__rank,
-.hooper-card__state,
-.hooper-card__tag,
-.basketball-dna__chip {
-  display: inline-flex;
-  min-height: 1.55rem;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(37, 99, 235, 0.15);
-  border-radius: 999px;
-  padding: 0.15rem 0.48rem;
-  background: rgba(239, 248, 255, 0.84);
-  color: var(--pixel-blue-700);
-  font-size: 0.7rem;
-  font-weight: 850;
-}
-
-.hooper-card__state {
-  color: #9a5a05;
-  background: rgba(255, 247, 237, 0.88);
-  border-color: rgba(217, 119, 6, 0.16);
-}
-
-.hooper-card__jersey {
-  width: 3.7rem;
-  height: 3.15rem;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(217, 119, 6, 0.2);
-  border-radius: 12px 12px 16px 16px;
-  background:
-    linear-gradient(90deg, transparent 0 18%, rgba(255, 255, 255, 0.7) 18% 82%, transparent 82%),
-    linear-gradient(180deg, rgba(254, 243, 199, 0.94), rgba(255, 255, 255, 0.84));
-  color: #92400e;
-  font-family: var(--font-heading, "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif);
-  font-size: 1.05rem;
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  box-shadow: inset 0 -5px 0 rgba(251, 191, 36, 0.14);
-}
-
-.hooper-card__locked,
-.hooper-card__revealed {
-  display: grid;
-  gap: 0.45rem;
-}
-
-.hooper-card__hint,
-.hooper-card__name {
-  color: var(--pixel-ink);
-  font-family: var(--font-heading, "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif);
-  font-size: clamp(1.02rem, 1.7vw, 1.2rem);
-  font-weight: 850;
-  line-height: 1.08;
-}
-
-.hooper-card__prompt,
-.hooper-card__archetype,
-.hooper-card__note,
-.hooper-card__meta {
-  color: var(--pixel-ink-muted);
-  line-height: 1.38;
-}
-
-.hooper-card__prompt,
-.hooper-card__archetype {
-  font-size: 0.78rem;
-  font-weight: 800;
-}
-
-.hooper-card__note {
-  font-size: 0.8rem;
-}
-
-.hooper-card__meta {
-  min-height: 1.1rem;
-  font-size: 0.72rem;
-  font-weight: 780;
-}
-
-.starting-five-board,
-.basketball-dna {
-  display: grid;
-  gap: 0.75rem;
-  border: 1px solid rgba(37, 99, 235, 0.12);
-  border-radius: 16px;
-  padding: clamp(0.8rem, 1.6vw, 1rem);
-  background: rgba(248, 252, 255, 0.78);
-}
-
-.starting-five-board__header {
-  display: grid;
-  gap: 0.25rem;
-}
-
-.starting-five-board__header h3,
-.basketball-dna h3 {
-  color: var(--pixel-ink);
-  font-size: clamp(1.02rem, 1.7vw, 1.25rem);
-}
-
-.starting-five-board__header p:not(.section-kicker) {
-  color: var(--pixel-ink-muted);
-  font-size: 0.86rem;
-}
-
-.starting-five-court {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-template-areas:
-    ". pg . sg ."
-    "sf . c . pf"
-    ". sixth sixth sixth .";
-  gap: 0.55rem;
-  min-height: 285px;
-  overflow: hidden;
-  border: 1px solid rgba(37, 99, 235, 0.16);
-  border-radius: 18px;
-  padding: 0.8rem;
-  background:
-    radial-gradient(ellipse at center 15%, transparent 0 30%, rgba(37, 99, 235, 0.08) 31% 32%, transparent 33%),
-    linear-gradient(180deg, rgba(239, 248, 255, 0.92), rgba(255, 247, 237, 0.82));
-}
-
-.starting-five-court::before,
-.starting-five-court::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-
-.starting-five-court::before {
-  left: 50%;
-  top: 0.75rem;
-  bottom: 0.75rem;
-  width: 1px;
-  background: rgba(37, 99, 235, 0.12);
-}
-
-.starting-five-court::after {
-  left: 50%;
-  top: 50%;
-  width: 8rem;
-  height: 8rem;
-  border: 1px solid rgba(217, 119, 6, 0.2);
-  border-radius: 999px;
-  transform: translate(-50%, -50%);
-}
-
-.starting-five-slot {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  align-content: center;
-  gap: 0.2rem;
-  min-height: 5.1rem;
-  border: 1px solid rgba(37, 99, 235, 0.16);
-  border-radius: 14px;
-  padding: 0.62rem;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 10px 20px rgba(8, 24, 46, 0.06);
-}
-
-.starting-five-slot[data-role="PG"] {
-  grid-area: pg;
-}
-
-.starting-five-slot[data-role="SG"] {
-  grid-area: sg;
-}
-
-.starting-five-slot[data-role="SF"] {
-  grid-area: sf;
-}
-
-.starting-five-slot[data-role="PF"] {
-  grid-area: pf;
-}
-
-.starting-five-slot[data-role="C"] {
-  grid-area: c;
-}
-
-.starting-five-slot[data-role="6th Man"] {
-  grid-area: sixth;
-}
-
-.starting-five-slot__role {
-  color: var(--pixel-blue-700);
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-}
-
-.starting-five-slot__player {
-  color: var(--pixel-ink);
-  font-weight: 880;
-  line-height: 1.1;
-}
-
-.starting-five-slot__type {
-  color: var(--pixel-ink-muted);
-  font-size: 0.73rem;
-  line-height: 1.25;
-}
-
-.starting-five-board.is-locked .starting-five-slot {
-  border-style: dashed;
-  color: var(--pixel-ink-soft);
-  background: rgba(255, 255, 255, 0.58);
-}
-
-.basketball-dna {
-  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
-  align-items: center;
-}
-
-.basketball-dna__chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.42rem;
-}
-
-.basketball-dna__chip {
-  color: #9a5a05;
-  border-color: rgba(217, 119, 6, 0.16);
-  background: rgba(255, 247, 237, 0.9);
-}
-
 .interest-games-card {
   align-content: start;
   align-self: start;
 }
 
-@media (max-width: 980px) {
-  .interests-compact-grid {
-    grid-template-columns: 1fr;
-  }
+/* NBA Super-Early Predictions */
+.nba-predictions-card {
+  align-content: start;
 }
 
-@media (max-width: 640px) {
-  .hooper-board__header,
-  .basketball-dna {
-    grid-template-columns: 1fr;
-    display: grid;
-  }
-
-  .hooper-board__progress {
-    justify-self: start;
-  }
-
-  .hooper-board__button {
-    width: 100%;
-  }
-
-  .basketball-dna__chips {
-    justify-content: flex-start;
-  }
-
-  .starting-five-court {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "pg"
-      "sg"
-      "sf"
-      "pf"
-      "c"
-      "sixth";
-    min-height: 0;
-  }
-
-  .starting-five-court::before,
-  .starting-five-court::after {
-    content: none;
-  }
+.nba-predictions__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.85rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hooper-card,
-  .hooper-board__button,
-  .starting-five-slot {
-    transition: none !important;
-  }
-
-  .hooper-card:hover,
-  .hooper-card:focus-visible,
-  .hooper-board__button:hover,
-  .hooper-board__button:focus-visible {
-    transform: none !important;
-  }
-}
-
-.subpage-shell--interests .game-list.game-list--compact {
-  grid-template-columns: 1fr;
-  gap: 0.48rem;
-}
-
-.subpage-shell--interests .game-list__item {
+.nba-predictions__heading {
   display: grid;
-  min-width: 0;
+  gap: 0.28rem;
 }
 
-.subpage-shell--interests .game-card.game-card--compact {
-  width: 100%;
-  min-height: 0;
-  grid-template-columns: 3rem minmax(0, 1fr);
+.nba-predictions__heading h2 {
+  margin: 0.12rem 0 0;
+  color: var(--pixel-ink);
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  line-height: 1.12;
+}
+
+.nba-predictions__heading p:not(.section-kicker) {
+  margin: 0;
+  color: var(--pixel-ink-muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.nba-predictions__badge {
+  flex-shrink: 0;
+  display: inline-flex;
   align-items: center;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  background: rgba(255, 247, 237, 0.9);
+  color: #9a5a05;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.nba-predictions__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nba-prediction {
+  display: grid;
+  gap: 0.24rem;
+  align-content: start;
   border: 1px solid rgba(37, 99, 235, 0.12);
   border-radius: 12px;
-  padding: 0.5rem 0.55rem;
+  padding: 0.62rem 0.72rem;
   background: rgba(248, 252, 255, 0.82);
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
-.subpage-shell--interests .game-card.game-card--compact:hover,
-.subpage-shell--interests .game-card.game-card--compact:focus-visible {
-  border-color: rgba(37, 99, 235, 0.34);
+.nba-prediction:hover {
+  border-color: rgba(37, 99, 235, 0.32);
   background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 10px 24px rgba(8, 24, 46, 0.09);
   transform: translateY(-1px);
 }
 
-.subpage-shell--interests .game-card.game-card--compact::before {
-  content: none;
-}
-
-.subpage-shell--interests .game-card.game-card--compact h3 {
+.nba-prediction__category {
   margin: 0;
-  max-width: 100%;
-  font-size: clamp(0.92rem, 1.35vw, 1.02rem);
-  line-height: 1.2;
-}
-
-.game-detail-modal-shell {
-  position: fixed;
-  inset: 0;
-  z-index: 110;
-  display: grid;
-  place-items: center;
-  padding: 1rem;
-  background: rgba(6, 18, 37, 0.48);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-}
-
-.game-detail-modal {
-  position: relative;
-  width: min(520px, calc(100vw - 2rem));
-  border: 1px solid rgba(191, 219, 254, 0.48);
-  border-radius: 20px;
-  padding: clamp(1.15rem, 3vw, 1.6rem);
-  padding-top: clamp(3.25rem, 6vw, 3.65rem);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(242, 248, 255, 0.96)),
-    var(--pixel-surface);
-  box-shadow: 0 26px 78px rgba(2, 8, 23, 0.32);
-  color: var(--pixel-ink);
-}
-
-.game-detail-modal__close {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  min-height: 40px;
-  border: 1px solid rgba(37, 99, 235, 0.18);
-  border-radius: 12px;
-  padding: 0.4rem 0.75rem;
-  background: rgba(255, 255, 255, 0.86);
   color: var(--pixel-blue-700);
-  font: inherit;
+  font-size: 0.66rem;
   font-weight: 850;
-  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nba-prediction__pick {
+  margin: 0;
+  color: var(--pixel-ink);
+  font-size: 1rem;
+  font-weight: 850;
+  line-height: 1.18;
+}
+
+.nba-prediction__note {
+  margin: 0;
+  color: var(--pixel-ink-muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+/* Sahith's Game Shelf */
+.game-shelf {
+  display: grid;
+  gap: 0.42rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.game-shelf__item {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 12px;
+  padding: 0.48rem 0.6rem;
+  background: rgba(248, 252, 255, 0.82);
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
-.game-detail-modal__close:hover,
-.game-detail-modal__close:focus-visible {
-  border-color: rgba(37, 99, 235, 0.38);
-  background: #ffffff;
+.game-shelf__item:hover {
+  border-color: rgba(37, 99, 235, 0.32);
+  background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 10px 24px rgba(8, 24, 46, 0.09);
   transform: translateY(-1px);
 }
 
-.game-detail-modal__rank {
-  margin: 0 0 0.45rem;
+.game-shelf__rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.7rem;
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  border-radius: 999px;
+  background: rgba(239, 248, 255, 0.84);
   color: var(--pixel-blue-700);
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 850;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.game-detail-modal h2 {
-  margin: 0;
+.game-shelf__title {
+  min-width: 0;
   color: var(--pixel-ink);
-  font-size: clamp(1.55rem, 4vw, 2.25rem);
-  line-height: 1.05;
+  font-size: clamp(0.9rem, 1.35vw, 1rem);
+  font-weight: 750;
+  line-height: 1.2;
 }
 
-.game-detail-modal p:not(.game-detail-modal__rank) {
-  margin-top: 0.8rem;
+.game-shelf__tag {
+  flex-shrink: 0;
   color: var(--pixel-ink-muted);
-  line-height: 1.58;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media (min-width: 981px) {
+  .subpage-shell--interests .interests-page-backdrop {
+    gap: clamp(0.35rem, 0.7vw, 0.5rem);
+  }
+
+  .subpage-shell--interests .subpage-hero {
+    padding: 0.28rem 0.62rem;
+  }
+
+  .subpage-shell--interests .subpage-hero h1 {
+    font-size: clamp(1.55rem, 2.5vw, 2.25rem);
+  }
+
+  .subpage-shell--interests .interests-compact-section {
+    padding: 0.58rem;
+  }
+
+  .nba-predictions-card,
+  .interest-games-card {
+    gap: 0.5rem;
+    border-radius: 14px;
+    padding: 0.62rem 0.68rem 0.72rem;
+  }
+
+  .nba-predictions-card::before,
+  .interest-games-card::before {
+    left: 0.7rem;
+    right: 0.7rem;
+    bottom: 0.48rem;
+    height: 2px;
+  }
+
+  .nba-predictions__header {
+    gap: 0.58rem;
+  }
+
+  .nba-predictions__heading {
+    gap: 0.2rem;
+  }
+
+  .nba-predictions__heading h2,
+  .interest-games-card h2 {
+    font-size: clamp(1.02rem, 1.55vw, 1.32rem);
+  }
+
+  .nba-predictions__heading p:not(.section-kicker) {
+    font-size: 0.76rem;
+    line-height: 1.3;
+  }
+
+  .nba-predictions__badge {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.58rem;
+  }
+
+  .nba-predictions__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .nba-prediction {
+    gap: 0.16rem;
+    min-height: 5rem;
+    padding: 0.43rem 0.5rem;
+    border-radius: 10px;
+  }
+
+  .nba-prediction__category {
+    font-size: 0.54rem;
+  }
+
+  .nba-prediction__pick {
+    font-size: 0.82rem;
+  }
+
+  .nba-prediction__note {
+    font-size: 0.68rem;
+    line-height: 1.28;
+  }
+
+  .game-shelf {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.38rem;
+  }
+
+  .game-shelf__item {
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.34rem;
+    align-items: start;
+    padding: 0.38rem 0.42rem;
+    border-radius: 10px;
+  }
+
+  .game-shelf__rank {
+    min-height: 1.42rem;
+    font-size: 0.6rem;
+  }
+
+  .game-shelf__title {
+    font-size: 0.76rem;
+    line-height: 1.08;
+  }
+
+  .game-shelf__tag {
+    grid-column: 2;
+    font-size: 0.58rem;
+    line-height: 1.1;
+    text-align: left;
+    white-space: normal;
+  }
 }
 
 @media (max-width: 980px) {
-  .subpage-shell--interests .game-list.game-list--compact {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .subpage-shell--interests .interests-page-backdrop {
+    align-content: start;
+    min-height: calc(100svh - 72px);
+    aspect-ratio: auto;
+  }
+
+  .interests-compact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .nba-predictions__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-shelf__item {
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+  }
+
+  .game-shelf__tag {
+    grid-column: 2;
+    text-align: left;
+    white-space: normal;
   }
 }
 
 @media (max-width: 640px) {
-  .subpage-shell--interests .game-list.game-list--compact {
-    grid-template-columns: 1fr;
-  }
-
   .subpage-shell--interests .interests-page-backdrop {
     min-height: calc(100svh - 74px);
     padding-top: 0.6rem;

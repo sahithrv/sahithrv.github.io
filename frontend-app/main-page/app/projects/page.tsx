@@ -1,10 +1,11 @@
 ﻿import { promises as fs } from "node:fs";
 import path from "node:path";
-import FooterCTA from "@/components/FooterCTA";
+import AnimatedPixelBackground from "@/components/AnimatedPixelBackground";
 import ProjectIndex from "@/components/ProjectIndex";
 import SiteTopBar from "@/components/SiteTopBar";
 import SubpageHero from "@/components/SubpageHero";
 import { homepageContent, projects, type Project } from "@/data/portfolio";
+import projectsBackground from "../../../assets/projects_background.png";
 
 type ProjectWithImages = Project & {
   images: string[];
@@ -70,21 +71,26 @@ export default async function ProjectsPage() {
       <SiteTopBar navItems={homepageContent.navItems} variant="pixel" />
 
       <main id="top">
-        <SubpageHero
-          kicker="Projects"
-          title="Project deep dives"
-          description="A project-focused index for longer writeups about what I built, what was hard, and how each system was designed."
-          variant="projects"
-        />
+        <div className="projects-page-backdrop">
+          <AnimatedPixelBackground
+            baseSrc={projectsBackground}
+            className="animated-pixel-background--projects"
+            layers={[]}
+          />
+          <SubpageHero
+            kicker="Projects"
+            title="Project deep dives"
+            description="A project-focused index for longer writeups about what I built, what was hard, and how each system was designed."
+            variant="projects"
+          />
 
-        <section
-          className="section-shell section-frame section-stack subpage-panel projects-index-section"
-          aria-label="Project index"
-        >
-          <ProjectIndex projects={projectsWithImages} />
-        </section>
-
-        <FooterCTA />
+          <section
+            className="section-shell section-frame section-stack subpage-panel projects-index-section"
+            aria-label="Project index"
+          >
+            <ProjectIndex projects={projectsWithImages} />
+          </section>
+        </div>
       </main>
     </div>
   );
