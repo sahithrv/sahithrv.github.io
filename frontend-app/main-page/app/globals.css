@@ -2810,6 +2810,12 @@ ol {
     rgba(255, 255, 255, 0.04);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 10px 20px rgba(2, 8, 23, 0.18);
   image-rendering: pixelated;
+  overflow: hidden;
+}
+
+.brand__logo {
+  object-fit: cover;
+  image-rendering: pixelated;
 }
 
 .brand__pixel-face {
@@ -9172,10 +9178,8 @@ html {
     linear-gradient(135deg, rgba(6, 18, 37, 0.04), rgba(34, 211, 238, 0.08)),
     #f8fcff;
   overflow: hidden;
-  cursor: zoom-in;
 }
 
-.subpage-shell .photography-viewer__media-button:focus-visible,
 .subpage-shell .photography-viewer__thumb:focus-visible,
 .subpage-shell .project-index-card:focus-visible {
   outline: 3px solid rgba(37, 99, 235, 0.24);
@@ -9185,22 +9189,6 @@ html {
 .subpage-shell .photography-viewer__image {
   object-fit: contain;
   padding: clamp(0.4rem, 1vw, 0.75rem);
-}
-
-.subpage-shell .photography-viewer__open-label {
-  position: absolute;
-  left: 0.75rem;
-  bottom: 0.75rem;
-  min-height: 2rem;
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid rgba(191, 219, 254, 0.28);
-  border-radius: 999px;
-  padding: 0.2rem 0.68rem;
-  background: rgba(6, 18, 37, 0.78);
-  color: #ffffff;
-  font-size: 0.76rem;
-  font-weight: 850;
 }
 
 .subpage-shell .photography-viewer__details {
@@ -10005,33 +9993,11 @@ html {
   padding: 0;
   background: var(--photography-stage-bg);
   overflow: hidden;
-  cursor: zoom-in;
-}
-
-.subpage-shell .photography-viewer--post .photography-viewer__media-button:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.28);
-  outline-offset: -5px;
 }
 
 .subpage-shell .photography-viewer--post .photography-viewer__image {
   object-fit: contain;
   padding: 0;
-}
-
-.subpage-shell .photography-viewer--post .photography-viewer__open-label {
-  left: 0.85rem;
-  bottom: 0.85rem;
-  border-radius: 8px;
-  background: rgba(7, 20, 39, 0.82);
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 160ms ease, transform 160ms ease;
-}
-
-.subpage-shell .photography-viewer--post .photography-viewer__media-button:hover .photography-viewer__open-label,
-.subpage-shell .photography-viewer--post .photography-viewer__media-button:focus-visible .photography-viewer__open-label {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .subpage-shell .photography-viewer__post-footer {
@@ -10100,12 +10066,6 @@ html {
 
   .subpage-shell .photography-viewer--post .photography-viewer__media-button {
     aspect-ratio: 1 / 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .subpage-shell .photography-viewer--post .photography-viewer__open-label {
-    transition: none !important;
   }
 }
 

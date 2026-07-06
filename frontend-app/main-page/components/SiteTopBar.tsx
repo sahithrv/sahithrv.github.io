@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, useScroll } from "motion/react";
 import { profile, type NavItem, type SectionAnchor } from "@/data/portfolio";
+import logoImage from "../../assets/logo.png";
 
 type SiteTopBarProps = {
   navItems: NavItem[];
@@ -23,10 +25,18 @@ function isConfiguredLink(value: string) {
   );
 }
 
-function PixelAvatarMark() {
+function BrandLogoMark() {
   return (
     <span className="brand__mark" aria-hidden="true">
-      <span className="brand__pixel-face" />
+      <Image
+        alt=""
+        className="brand__logo"
+        draggable={false}
+        fill
+        sizes="40px"
+        src={logoImage}
+        unoptimized
+      />
     </span>
   );
 }
@@ -163,7 +173,7 @@ export default function SiteTopBar({ navItems, sectionAnchors = [], variant = "d
 
       <div className="site-nav__row">
         <Link href="/" className="brand" aria-label="Sahith home">
-          <PixelAvatarMark />
+          <BrandLogoMark />
           <span className="brand__text">
             <span className="brand__name">{profile.name}</span>
             <span className="brand__role">

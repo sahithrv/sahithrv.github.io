@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { type TravelPhoto } from "@/data/portfolio";
 
 type PhotographyGalleryProps = {
@@ -38,10 +38,6 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
   const safePhotos = useMemo(() => photos.filter(Boolean), [photos]);
   const total = safePhotos.length;
   const [featuredIndex, setFeaturedIndex] = useState(0);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const mediaButtonRef = useRef<HTMLButtonElement | null>(null);
-  const lightboxCloseButtonRef = useRef<HTMLButtonElement | null>(null);
-  const didOpenLightbox = useRef(false);
 
   useEffect(() => {
     if (total === 0) {
@@ -55,7 +51,6 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
       return;
     }
     setFeaturedIndex((current) => (current - 1 + total) % total);
-    setLightboxIndex((current) => (current === null ? current : (current - 1 + total) % total));
   }, [total]);
 
   const goToNext = useCallback(() => {
@@ -63,68 +58,11 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
       return;
     }
     setFeaturedIndex((current) => (current + 1) % total);
-    setLightboxIndex((current) => (current === null ? current : (current + 1) % total));
   }, [total]);
-
-  const openLightbox = () => {
-    if (total === 0) {
-      return;
-    }
-    didOpenLightbox.current = true;
-    setLightboxIndex(featuredIndex);
-  };
-
-  const closeLightbox = () => {
-    setLightboxIndex(null);
-  };
 
   const selectPhoto = (index: number) => {
     setFeaturedIndex(index);
   };
-
-  useEffect(() => {
-    if (lightboxIndex === null) {
-      if (!didOpenLightbox.current) {
-        return;
-      }
-      requestAnimationFrame(() => {
-        mediaButtonRef.current?.focus();
-      });
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    const previousPaddingRight = document.body.style.paddingRight;
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    lightboxCloseButtonRef.current?.focus();
-    document.body.style.overflow = "hidden";
-    if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-    }
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        closeLightbox();
-      }
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        goToPrevious();
-      }
-      if (event.key === "ArrowRight") {
-        event.preventDefault();
-        goToNext();
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = previousOverflow;
-      document.body.style.paddingRight = previousPaddingRight;
-    };
-  }, [goToNext, goToPrevious, lightboxIndex]);
 
   if (total === 0) {
     return <p className="photo-list-empty">No photos found in your photography gallery yet.</p>;
@@ -135,7 +73,6 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
   const featuredCaption = safeText(featuredPhoto.caption);
   const featuredLocation = safeText(featuredPhoto.location);
   const featuredDate = safeText(featuredPhoto.date);
-  const activePhoto = safePhotos[lightboxIndex ?? featuredIndex];
 
   return (
     <div className="photography-gallery photography-viewer photography-viewer--gallery">
@@ -177,13 +114,7 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
 
       <article className="photography-viewer__post" aria-live="polite" aria-label={`${featuredTitle} photo`}>
         <section className="photography-viewer__stage">
-          <button
-            type="button"
-            className="photography-viewer__media-button"
-            onClick={openLightbox}
-            aria-label={`Open ${featuredTitle} full screen`}
-            ref={mediaButtonRef}
-          >
+          <div className="photography-viewer__media-button">
             <Image
               alt={featuredTitle}
               className="photography-viewer__image"
@@ -193,8 +124,7 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
               src={featuredPhoto.src}
               unoptimized={shouldUseDirectImage(featuredPhoto.src)}
             />
-            <span className="photography-viewer__open-label">Open full screen</span>
-          </button>
+          </div>
         </section>
 
         <footer className="photography-viewer__post-footer">
@@ -239,73 +169,6 @@ export default function PhotographyGallery({ photos }: PhotographyGalleryProps) 
         })}
       </ol>
 
-      {lightboxIndex !== null ? (
-        <div className="travel-lightbox-backdrop" role="presentation" onClick={closeLightbox}>
-          <article
-            className="travel-lightbox"
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${activePhoto.title} photo details`}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="travel-lightbox__nav">
-              <button
-                type="button"
-                className="travel-lightbox__arrow"
-                onClick={goToPrevious}
-                aria-label="Previous photo"
-                disabled={total <= 1}
-              >
-                {"<"}
-              </button>
-
-              <p className="travel-lightbox__counter" aria-live="polite">
-                {formatCounter(lightboxIndex, total)}
-              </p>
-
-              <button
-                type="button"
-                className="travel-lightbox__arrow"
-                onClick={goToNext}
-                aria-label="Next photo"
-                disabled={total <= 1}
-              >
-                {">"}
-              </button>
-
-              <button
-                type="button"
-                className="travel-lightbox__close"
-                onClick={closeLightbox}
-                aria-label="Close photo lightbox"
-                ref={lightboxCloseButtonRef}
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="travel-lightbox__media">
-              <Image
-                alt={safeText(activePhoto.title)}
-                className="travel-lightbox__image"
-                fill
-                sizes="100vw"
-                src={activePhoto.src}
-                unoptimized={shouldUseDirectImage(activePhoto.src)}
-              />
-            </div>
-
-            <div className="travel-lightbox__details">
-              <h3>{safeText(activePhoto.title)}</h3>
-              <p className="photo-caption">{safeText(activePhoto.caption)}</p>
-              <div className="photo-meta">
-                <span>{safeText(activePhoto.location)}</span>
-                <span>{safeText(activePhoto.date)}</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      ) : null}
     </div>
   );
 }
