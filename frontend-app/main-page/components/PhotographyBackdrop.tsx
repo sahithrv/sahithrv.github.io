@@ -8,7 +8,7 @@ type PhotographyBackdropProps = {
 export default function PhotographyBackdrop({ children }: PhotographyBackdropProps) {
   return (
     <div className="photography-page-backdrop">
-      <AnimatedPixelBackground baseSrc="/images/backgrounds/background1.png" />
+      <AnimatedPixelBackground baseSrc="/images/backgrounds/background1-optimized.jpg" />
       {children}
     </div>
   );

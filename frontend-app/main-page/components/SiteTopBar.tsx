@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, useScroll } from "motion/react";
 import { profile, type NavItem, type SectionAnchor } from "@/data/portfolio";
-import logoImage from "../../assets/logo.png";
+import logoImage from "../../assets/logo-small.png";
 
 type SiteTopBarProps = {
   navItems: NavItem[];
@@ -33,6 +33,7 @@ function BrandLogoMark() {
         className="brand__logo"
         draggable={false}
         fill
+        priority
         sizes="40px"
         src={logoImage}
         unoptimized

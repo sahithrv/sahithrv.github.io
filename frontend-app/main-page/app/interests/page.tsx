@@ -5,7 +5,7 @@ import NbaPredictionsBoard, { type NbaPrediction } from "@/components/NbaPredict
 import SiteTopBar from "@/components/SiteTopBar";
 import SubpageHero from "@/components/SubpageHero";
 import { homepageContent } from "@/data/portfolio";
-import arcadeBackground from "../../../assets/arcade_background.png";
+import arcadeBackground from "../../../assets/arcade_background_optimized.jpg";
 
 const nbaPredictions: NbaPrediction[] = [
   {

@@ -7,7 +7,6 @@ import PhotographyGallery from "@/components/PhotographyGallery";
 import SiteTopBar from "@/components/SiteTopBar";
 
 const supportedImageExts = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
-const originalOnlyPhotoSlugs = new Set(["craterlake", "penghu"]);
 
 function normalizePath(value: string) {
   let next = value.trim().replace(/\\/g, "/");
@@ -68,10 +67,6 @@ function getOptimizedLocalPhoto(photo: TravelPhoto): OptimizedPhotographyPhoto {
 
   const fileName = path.posix.basename(normalizedSource);
   const baseName = fileName.replace(path.posix.extname(fileName), "").toLowerCase();
-
-  if (originalOnlyPhotoSlugs.has(baseName)) {
-    return { ...photo, src: normalizedSource };
-  }
 
   return {
     ...photo,

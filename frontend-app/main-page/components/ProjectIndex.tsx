@@ -41,6 +41,10 @@ function isUnoptimizedImage(value: ProjectImageSource) {
   return cleanValue.endsWith(".gif");
 }
 
+function getImagePlaceholder(value: ProjectImageSource): "empty" | "blur" {
+  return typeof value === "string" ? "empty" : "blur";
+}
+
 function projectId(project: Project) {
   return project.title
     .toLowerCase()
@@ -107,6 +111,7 @@ function ProjectCard({
             alt={`${project.title} preview`}
             className="project-index-card__image"
             fill
+            placeholder={getImagePlaceholder(coverImage)}
             sizes="(min-width: 1100px) 360px, (min-width: 760px) 44vw, 92vw"
             src={coverImage}
             unoptimized={isUnoptimizedImage(coverImage)}
@@ -228,6 +233,7 @@ function ProjectModal({
                 alt={`${project.title} project preview`}
                 className="project-detail-modal__image"
                 fill
+                placeholder={getImagePlaceholder(coverImage)}
                 sizes="(min-width: 1100px) 920px, 94vw"
                 src={coverImage}
                 unoptimized={isUnoptimizedImage(coverImage)}

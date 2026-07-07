@@ -8,7 +8,7 @@ import SubpageHero from "@/components/SubpageHero";
 import { homepageContent, projects, type Project } from "@/data/portfolio";
 import guessrImage from "../../../assets/project_assets/guessr_image.jpeg";
 import modelExpressImage from "../../../assets/project_assets/model_express_image.jpeg";
-import projectsBackground from "../../../assets/projects_background.png";
+import projectsBackground from "../../../assets/projects_background_optimized.jpg";
 
 type ProjectWithImages = Project & {
   images: ProjectImageSource[];
