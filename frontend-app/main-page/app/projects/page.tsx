@@ -1,14 +1,22 @@
 ﻿import { promises as fs } from "node:fs";
 import path from "node:path";
 import AnimatedPixelBackground from "@/components/AnimatedPixelBackground";
-import ProjectIndex from "@/components/ProjectIndex";
+import FooterCTA from "@/components/FooterCTA";
+import ProjectIndex, { type ProjectImageSource } from "@/components/ProjectIndex";
 import SiteTopBar from "@/components/SiteTopBar";
 import SubpageHero from "@/components/SubpageHero";
 import { homepageContent, projects, type Project } from "@/data/portfolio";
+import guessrImage from "../../../assets/project_assets/guessr_image.jpeg";
+import modelExpressImage from "../../../assets/project_assets/model_express_image.jpeg";
 import projectsBackground from "../../../assets/projects_background.png";
 
 type ProjectWithImages = Project & {
-  images: string[];
+  images: ProjectImageSource[];
+};
+
+const featuredProjectImages: Partial<Record<Project["title"], ProjectImageSource>> = {
+  Guessr: guessrImage,
+  ModelExpress: modelExpressImage
 };
 
 function normalizeSlug(value: string) {
@@ -58,10 +66,15 @@ export default async function ProjectsPage() {
   const projectImages = await loadProjectImages();
   const projectsWithImages = projects
     .filter((project) => project.title !== "Arthrex DevOps Validator")
-    .map((project) => ({
-      ...project,
-      images: resolveProjectImages(project.title, projectImages)
-    })) as ProjectWithImages[];
+    .map((project) => {
+      const resolvedImages = resolveProjectImages(project.title, projectImages);
+      const featuredImage = featuredProjectImages[project.title];
+
+      return {
+        ...project,
+        images: featuredImage ? [featuredImage, ...resolvedImages] : resolvedImages
+      };
+    }) as ProjectWithImages[];
 
   return (
     <div className="portfolio-shell portfolio-shell--pixel pixel-polished-theme pixel-page-bg subpage-shell subpage-shell--projects">
@@ -91,6 +104,8 @@ export default async function ProjectsPage() {
             <ProjectIndex projects={projectsWithImages} />
           </section>
         </div>
+
+        <FooterCTA />
       </main>
     </div>
   );

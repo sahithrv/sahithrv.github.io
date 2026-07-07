@@ -70,7 +70,12 @@ export default function InterestsPage() {
             className="animated-pixel-background--arcade"
             layers={[]}
           />
-          <SubpageHero title="Interests" variant="interests" />
+          <SubpageHero
+            kicker="Interests"
+            title="Hoops and games"
+            description="A compact arcade board for basketball takes and games I keep coming back to."
+            variant="interests"
+          />
 
           <section
             className="section-shell section-frame section-stack subpage-panel interests-compact-section interest-section"

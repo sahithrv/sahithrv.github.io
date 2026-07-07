@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { type Project } from "@/data/portfolio";
 
+export type ProjectImageSource = string | StaticImageData;
+
 type ProjectWithImages = Project & {
-  images?: string[];
+  images?: ProjectImageSource[];
 };
 
 type ProjectIndexProps = {
@@ -29,7 +32,11 @@ function isRoutableHref(href: string) {
   return href.startsWith("/") || href.startsWith("#");
 }
 
-function isUnoptimizedImage(value: string) {
+function isUnoptimizedImage(value: ProjectImageSource) {
+  if (typeof value !== "string") {
+    return false;
+  }
+
   const cleanValue = value.split("?")[0].toLowerCase();
   return cleanValue.endsWith(".gif");
 }
@@ -160,6 +167,8 @@ function ProjectModal({
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const coverImage = project.images?.[0];
   const activeLinks = project.links.filter((link) => isConfiguredLink(link.href));
+  const modalHost =
+    typeof document === "undefined" ? null : document.querySelector<HTMLElement>(".subpage-shell") ?? document.body;
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -173,7 +182,7 @@ function ProjectModal({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [onClose]);
 
-  return (
+  const modal = (
     <motion.article
       className="project-detail-modal-shell"
       initial={reducedMotion ? undefined : { opacity: 0 }}
@@ -264,6 +273,8 @@ function ProjectModal({
       </motion.div>
     </motion.article>
   );
+
+  return modalHost ? createPortal(modal, modalHost) : null;
 }
 
 export default function ProjectIndex({ projects }: ProjectIndexProps) {
@@ -281,15 +292,18 @@ export default function ProjectIndex({ projects }: ProjectIndexProps) {
       return;
     }
     const existingOverflow = document.body.style.overflow;
+    const existingHtmlOverflow = document.documentElement.style.overflow;
     const existingPaddingRight = document.body.style.paddingRight;
     const scrollWidth = window.innerWidth - document.documentElement.clientWidth;
 
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
     if (scrollWidth > 0) {
       document.body.style.paddingRight = `${scrollWidth}px`;
     }
 
     return () => {
+      document.documentElement.style.overflow = existingHtmlOverflow;
       document.body.style.overflow = existingOverflow;
       document.body.style.paddingRight = existingPaddingRight;
     };

@@ -176,10 +176,7 @@ export default function SiteTopBar({ navItems, sectionAnchors = [], variant = "d
           <BrandLogoMark />
           <span className="brand__text">
             <span className="brand__name">{profile.name}</span>
-            <span className="brand__role">
-              {profile.role}
-              <span className="brand__status-dot" aria-hidden="true" />
-            </span>
+            <span className="brand__role">{profile.role}</span>
           </span>
         </Link>
 
