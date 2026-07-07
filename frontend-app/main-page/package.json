@@ -9,10 +9,10 @@
     "lint": "eslint . --max-warnings=0"
   },
   "dependencies": {
+    "motion": "^12.19.2",
     "next": "^15.3.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "motion": "^12.19.2"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.0",
@@ -22,9 +22,13 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.3.3",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.16",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3"
+  },
+  "overrides": {
+    "js-yaml": "^4.2.0",
+    "postcss": "$postcss"
   },
   "allowScripts": {
     "fsevents@2.3.3": true,
