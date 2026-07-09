@@ -20,11 +20,17 @@ function isRoutableHref(href: string) {
   return href.startsWith("/") || href.startsWith("#");
 }
 
-function FooterPixelScene() {
+function FooterPixelScene({ ambient }: { ambient: boolean }) {
   return (
     <div className="footer-cta__scene" aria-hidden="true">
       <span className="footer-cta__star footer-cta__star--one" />
       <span className="footer-cta__star footer-cta__star--two" />
+      {ambient ? (
+        <>
+          <span className="footer-cta__shooting-star footer-cta__shooting-star--one" />
+          <span className="footer-cta__shooting-star footer-cta__shooting-star--two" />
+        </>
+      ) : null}
       <span className="footer-cta__city footer-cta__city--left" />
       <span className="footer-cta__city footer-cta__city--right" />
     </div>
@@ -63,15 +69,20 @@ function FooterActionLink({ action }: { action: HomepageLink }) {
 }
 
 export default function FooterCTA({
-  content = homepageContent.footerCta
+  content = homepageContent.footerCta,
+  ambient = false
 }: {
   content?: HomepageContent["footerCta"];
+  ambient?: boolean;
 }) {
   const actions = content.links.filter((action) => isConfiguredLink(action.href));
 
   return (
-    <footer className="footer-cta footer-cta--pixel" aria-labelledby="footer-cta-title">
-      <FooterPixelScene />
+    <footer
+      className={`footer-cta footer-cta--pixel${ambient ? " footer-cta--ambient" : ""}`}
+      aria-labelledby="footer-cta-title"
+    >
+      <FooterPixelScene ambient={ambient} />
       <div className="footer-cta__inner">
         <div className="footer-cta__copy">
           <p className="footer-cta__kicker">

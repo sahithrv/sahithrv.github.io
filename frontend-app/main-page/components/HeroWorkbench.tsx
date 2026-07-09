@@ -53,10 +53,12 @@ function PixelHeroScene() {
   return (
     <div className="hero-pixel-scene" aria-hidden="true">
       <span className="pixel-grid-texture" />
-      <span className="pixel-cloud hero-cloud hero-cloud--one float-subtle" />
-      <span className="pixel-cloud pixel-cloud--small hero-cloud hero-cloud--two float-subtle float-subtle--delay" />
+      <span className="pixel-cloud hero-cloud hero-cloud--one" />
+      <span className="pixel-cloud pixel-cloud--small hero-cloud hero-cloud--two" />
+      <span className="pixel-cloud pixel-cloud--small hero-cloud hero-cloud--three" />
       <span className="pixel-city hero-city hero-city--left" />
       <span className="pixel-city hero-city hero-city--right" />
+      <span className="hero-city-route" />
       <span className="pixel-sparkle hero-sparkle hero-sparkle--one" />
       <span className="pixel-sparkle pixel-sparkle--cyan hero-sparkle hero-sparkle--two" />
       <span className="pixel-sparkle pixel-sparkle--violet hero-sparkle hero-sparkle--three" />

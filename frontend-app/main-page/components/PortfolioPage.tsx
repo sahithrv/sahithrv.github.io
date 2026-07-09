@@ -129,7 +129,7 @@ export default async function PortfolioPage() {
           </div>
         </section>
 
-        <FooterCTA content={homepageContent.footerCta} />
+        <FooterCTA content={homepageContent.footerCta} ambient />
       </main>
     </div>
   );
